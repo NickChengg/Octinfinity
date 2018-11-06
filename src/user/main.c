@@ -27,7 +27,7 @@ int main() {
 	// Initialize Everything Here
 	rcc_init();
 	ticks_init();
-	
+	oled_init();
 	while (1) {
 		static u32 this_ticks = 0;
 		while (get_ticks() == this_ticks);
