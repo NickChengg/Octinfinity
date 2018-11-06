@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="library"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="library">
+				<Option output="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/library" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/."/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 library"/>
+					<CompileFile command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="library/fast">
+				<Option output="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/library" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/."/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 library/fast"/>
+					<CompileFile command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/local/bin/make -j4 -f &quot;/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/adc.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/adc.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/buttons.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/buttons.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/buzzer.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/buzzer.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/camera.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/camera.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/gpio.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/gpio.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/i2c.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/i2c.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/lcd_font.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/lcd_init.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/lcd_main.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/lcd_main.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/leds.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/leds.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/math.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/math.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/ov7725.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/ppi.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/ppi.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/pwm.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/pwm.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/rcc.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/rcc.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/spi.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/spi.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/ticks.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/ticks.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/uart.c">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/uart.h">
+			<Option target="library"/>
+		</Unit>
+		<Unit filename="/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

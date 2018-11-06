@@ -1,0 +1,163 @@
+The system is: Darwin - 17.7.0 - x86_64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /Library/Developer/CommandLineTools/usr/bin/cc 
+Build flags: 
+Id flags:  
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is AppleClang, found in "/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/3.10.3/CompilerIdC/a.out"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: /Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/local/bin/make" "cmTC_ba3d5/fast"
+/usr/local/bin/make -f CMakeFiles/cmTC_ba3d5.dir/build.make CMakeFiles/cmTC_ba3d5.dir/build
+make[1]: Entering directory `/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_ba3d5.dir/testCCompiler.c.o
+/Library/Developer/CommandLineTools/usr/bin/cc    -o CMakeFiles/cmTC_ba3d5.dir/testCCompiler.c.o   -c /Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_ba3d5
+"/Users/amrutavarsh/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/181.5540.8/CLion.app/Contents/bin/cmake/bin/cmake" -E cmake_link_script CMakeFiles/cmTC_ba3d5.dir/link.txt --verbose=1
+/Library/Developer/CommandLineTools/usr/bin/cc   -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_ba3d5.dir/testCCompiler.c.o  -o cmTC_ba3d5 
+make[1]: Leaving directory `/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp'
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/local/bin/make" "cmTC_4205b/fast"
+/usr/local/bin/make -f CMakeFiles/cmTC_4205b.dir/build.make CMakeFiles/cmTC_4205b.dir/build
+make[1]: Entering directory `/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_4205b.dir/CMakeCCompilerABI.c.o
+/Library/Developer/CommandLineTools/usr/bin/cc    -o CMakeFiles/cmTC_4205b.dir/CMakeCCompilerABI.c.o   -c "/Users/amrutavarsh/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/181.5540.8/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/CMakeCCompilerABI.c"
+Linking C executable cmTC_4205b
+"/Users/amrutavarsh/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/181.5540.8/CLion.app/Contents/bin/cmake/bin/cmake" -E cmake_link_script CMakeFiles/cmTC_4205b.dir/link.txt --verbose=1
+/Library/Developer/CommandLineTools/usr/bin/cc   -Wl,-search_paths_first -Wl,-headerpad_max_install_names  -v -Wl,-v CMakeFiles/cmTC_4205b.dir/CMakeCCompilerABI.c.o  -o cmTC_4205b 
+Apple LLVM version 10.0.0 (clang-1000.10.25.5)
+Target: x86_64-apple-darwin17.7.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+ "/Library/Developer/CommandLineTools/usr/bin/ld" -demangle -lto_library /Library/Developer/CommandLineTools/usr/lib/libLTO.dylib -dynamic -arch x86_64 -macosx_version_min 10.13.0 -o cmTC_4205b -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_4205b.dir/CMakeCCompilerABI.c.o -lSystem /Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/lib/darwin/libclang_rt.osx.a
+@(#)PROGRAM:ld  PROJECT:ld64-408.1.1
+BUILD 05:18:43 May 25 2018
+configured to support archs: armv6 armv7 armv7s arm64 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+Library search paths:
+	/usr/lib
+	/usr/local/lib
+Framework search paths:
+	/Library/Frameworks/
+	/System/Library/Frameworks/
+make[1]: Leaving directory `/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp'
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:"/usr/local/bin/make" "cmTC_4205b/fast"]
+  ignore line: [/usr/local/bin/make -f CMakeFiles/cmTC_4205b.dir/build.make CMakeFiles/cmTC_4205b.dir/build]
+  ignore line: [make[1]: Entering directory `/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_4205b.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/Library/Developer/CommandLineTools/usr/bin/cc    -o CMakeFiles/cmTC_4205b.dir/CMakeCCompilerABI.c.o   -c "/Users/amrutavarsh/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/181.5540.8/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/CMakeCCompilerABI.c"]
+  ignore line: [Linking C executable cmTC_4205b]
+  ignore line: ["/Users/amrutavarsh/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/181.5540.8/CLion.app/Contents/bin/cmake/bin/cmake" -E cmake_link_script CMakeFiles/cmTC_4205b.dir/link.txt --verbose=1]
+  ignore line: [/Library/Developer/CommandLineTools/usr/bin/cc   -Wl,-search_paths_first -Wl,-headerpad_max_install_names  -v -Wl,-v CMakeFiles/cmTC_4205b.dir/CMakeCCompilerABI.c.o  -o cmTC_4205b ]
+  ignore line: [Apple LLVM version 10.0.0 (clang-1000.10.25.5)]
+  ignore line: [Target: x86_64-apple-darwin17.7.0]
+  ignore line: [Thread model: posix]
+  ignore line: [InstalledDir: /Library/Developer/CommandLineTools/usr/bin]
+  link line: [ "/Library/Developer/CommandLineTools/usr/bin/ld" -demangle -lto_library /Library/Developer/CommandLineTools/usr/lib/libLTO.dylib -dynamic -arch x86_64 -macosx_version_min 10.13.0 -o cmTC_4205b -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_4205b.dir/CMakeCCompilerABI.c.o -lSystem /Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/lib/darwin/libclang_rt.osx.a]
+    arg [/Library/Developer/CommandLineTools/usr/bin/ld] ==> ignore
+    arg [-demangle] ==> ignore
+    arg [-lto_library] ==> ignore, skip following value
+    arg [/Library/Developer/CommandLineTools/usr/lib/libLTO.dylib] ==> skip value of -lto_library
+    arg [-dynamic] ==> ignore
+    arg [-arch] ==> ignore
+    arg [x86_64] ==> ignore
+    arg [-macosx_version_min] ==> ignore
+    arg [10.13.0] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_4205b] ==> ignore
+    arg [-search_paths_first] ==> ignore
+    arg [-headerpad_max_install_names] ==> ignore
+    arg [-v] ==> ignore
+    arg [CMakeFiles/cmTC_4205b.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-lSystem] ==> lib [System]
+    arg [/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/lib/darwin/libclang_rt.osx.a] ==> lib [/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/lib/darwin/libclang_rt.osx.a]
+  Library search paths: [;/usr/lib;/usr/local/lib]
+  Framework search paths: [;/Library/Frameworks/;/System/Library/Frameworks/]
+  remove lib [System]
+  remove lib [/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/lib/darwin/libclang_rt.osx.a]
+  collapse library dir [/usr/lib] ==> [/usr/lib]
+  collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+  collapse framework dir [/Library/Frameworks/] ==> [/Library/Frameworks]
+  collapse framework dir [/System/Library/Frameworks/] ==> [/System/Library/Frameworks]
+  implicit libs: []
+  implicit dirs: [/usr/lib;/usr/local/lib]
+  implicit fwks: [/Library/Frameworks;/System/Library/Frameworks]
+
+
+
+
+Detecting C [-std=c11] compiler features compiled with the following output:
+Change Dir: /Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/local/bin/make" "cmTC_cf216/fast"
+/usr/local/bin/make -f CMakeFiles/cmTC_cf216.dir/build.make CMakeFiles/cmTC_cf216.dir/build
+make[1]: Entering directory `/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_cf216.dir/feature_tests.c.o
+/Library/Developer/CommandLineTools/usr/bin/cc   -std=c11 -o CMakeFiles/cmTC_cf216.dir/feature_tests.c.o   -c /Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/feature_tests.c
+Linking C executable cmTC_cf216
+"/Users/amrutavarsh/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/181.5540.8/CLion.app/Contents/bin/cmake/bin/cmake" -E cmake_link_script CMakeFiles/cmTC_cf216.dir/link.txt --verbose=1
+/Library/Developer/CommandLineTools/usr/bin/cc   -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_cf216.dir/feature_tests.c.o  -o cmTC_cf216 
+make[1]: Leaving directory `/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp'
+
+
+    Feature record: C_FEATURE:1c_function_prototypes
+    Feature record: C_FEATURE:1c_restrict
+    Feature record: C_FEATURE:1c_static_assert
+    Feature record: C_FEATURE:1c_variadic_macros
+
+
+Detecting C [-std=c99] compiler features compiled with the following output:
+Change Dir: /Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/local/bin/make" "cmTC_39cdd/fast"
+/usr/local/bin/make -f CMakeFiles/cmTC_39cdd.dir/build.make CMakeFiles/cmTC_39cdd.dir/build
+make[1]: Entering directory `/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_39cdd.dir/feature_tests.c.o
+/Library/Developer/CommandLineTools/usr/bin/cc   -std=c99 -o CMakeFiles/cmTC_39cdd.dir/feature_tests.c.o   -c /Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/feature_tests.c
+Linking C executable cmTC_39cdd
+"/Users/amrutavarsh/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/181.5540.8/CLion.app/Contents/bin/cmake/bin/cmake" -E cmake_link_script CMakeFiles/cmTC_39cdd.dir/link.txt --verbose=1
+/Library/Developer/CommandLineTools/usr/bin/cc   -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_39cdd.dir/feature_tests.c.o  -o cmTC_39cdd 
+make[1]: Leaving directory `/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp'
+
+
+    Feature record: C_FEATURE:1c_function_prototypes
+    Feature record: C_FEATURE:1c_restrict
+    Feature record: C_FEATURE:0c_static_assert
+    Feature record: C_FEATURE:1c_variadic_macros
+
+
+Detecting C [-std=c90] compiler features compiled with the following output:
+Change Dir: /Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/local/bin/make" "cmTC_06b82/fast"
+/usr/local/bin/make -f CMakeFiles/cmTC_06b82.dir/build.make CMakeFiles/cmTC_06b82.dir/build
+make[1]: Entering directory `/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_06b82.dir/feature_tests.c.o
+/Library/Developer/CommandLineTools/usr/bin/cc   -std=c90 -o CMakeFiles/cmTC_06b82.dir/feature_tests.c.o   -c /Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/feature_tests.c
+Linking C executable cmTC_06b82
+"/Users/amrutavarsh/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/181.5540.8/CLion.app/Contents/bin/cmake/bin/cmake" -E cmake_link_script CMakeFiles/cmTC_06b82.dir/link.txt --verbose=1
+/Library/Developer/CommandLineTools/usr/bin/cc   -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_06b82.dir/feature_tests.c.o  -o cmTC_06b82 
+make[1]: Leaving directory `/Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug/CMakeFiles/CMakeTmp'
+
+
+    Feature record: C_FEATURE:1c_function_prototypes
+    Feature record: C_FEATURE:0c_restrict
+    Feature record: C_FEATURE:0c_static_assert
+    Feature record: C_FEATURE:0c_variadic_macros

@@ -1,0 +1,11 @@
+"/Users/amrutavarsh/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/181.5540.8/CLion.app/Contents/bin/cmake/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library
+-- The C compiler identification is AppleClang 10.0.0.10001025
+-- Check for working C compiler: /Library/Developer/CommandLineTools/usr/bin/cc
+-- Check for working C compiler: /Library/Developer/CommandLineTools/usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/amrutavarsh/Documents/workspace/HKUST-Robotics-Team-Software-Tutorial-2018/F1_Internal_201819/src/library/cmake-build-debug
