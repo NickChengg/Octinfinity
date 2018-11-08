@@ -1,95 +1,48 @@
-/*	
- *	UST Robotics Team Internal 2018
- *
- *  Author  : Anshuman Medhi
- *  Contact : amedhi@connect.ust.hk 
- *						68925193
- *
- */
+#define LT_F GPIO1;
+#define LT_L GPIO2;
+#define LT_R GPIO3;
+#define LT_B GPIO4;
 
 #include "main.h"
 
+
 // Include Library Headers Here
-#include "math.h"
+
 #include "rcc.h"
 #include "ticks.h"
 #include "gpio.h"
-#include "leds.h"
-#include "buttons.h"
-#include "buzzer.h"
-#include "uart.h"
 #include "lcd_main.h"
-#include "oled.h"
-#include "camera.h"
-#include "pwm.h"
-#include "adc.h"
 
-u16 mag_FL = 0, mag_FR = 0, mag_BL = 0, mag_BR = 0; //magnetic reading in (front/back)(left/right)
-u16 servo_OC = (int)(5000 * 1.5 /20); //0.9 for leftmost, 2.1 for rightmost
+int main(){
+// Initialize Everything Here
+rcc_init();
+ticks_init();
+gpio_init(LT_F, GPIO_Mode_IPU);
+gpio_init(LT_L, GPIO_Mode_IPU);
+gpio_init(LT_R, GPIO_Mode_IPD);
+gpio_init(LT_B, GPIO_Mode_IPD);
+tft_init(PIN_ON_TOP, WHITE, BLACK, BLUE, RED);
 
+while (1) {
+  static u32 this_ticks = 0;
+  static u32 last_ticks_50 = 0;
 
+  static u8 lt_f, lt_l, lt_r, lt_b;
+  while (get_ticks() == this_ticks);
+  this_ticks = get_ticks();
 
-void mag_read() {
-	mag_FL = get_adc(ADC_IO_1);
-	mag_FR = get_adc(ADC_IO_2);
-	mag_BL = get_adc(ADC_IO_3);
-	mag_BR = get_adc(ADC_IO_4);
-}
-
-int mag_OC_cal(int L_reading, int R_reading) { //left right reading from magnetic sensors
-	const u32 max_reading = 1200; //max reading of sensor(closest), test! 
-	const u32 min_reading = 300; //min reading of sensor(farest), i.e. the value of background noise, test!
-	const float sensitivity = 1; //0-1, increse to turn more, vice versa
-	s16 turning_percentage = 0; //turning percentage for servo, 100 for 100% of turning; -ve = left, +ve = right
-
-	if (ABS(mag_FR - mag_FL) * sensitivity < (max_reading - min_reading)) {
-		turning_percentage = (float)(R_reading - L_reading) / (max_reading - min_reading) * 100 * sensitivity;
-	}
-	else { // fix the range within -100 and 100
-		turning_percentage = R_reading > L_reading ? 100 : -100;
-	}
-	
-	return (int)(5000 * (1.5 + turning_percentage * 0.006) / 20);
-}
-
-void mag_compare() {
-	const u32 acceptable_diff = 0; //turn only when excess acceptable difference, test! really need??
-
-	if (ABS(mag_FL - mag_FR) > acceptable_diff) {
-		servo_OC = mag_OC_cal(mag_FL, mag_FR);
-	}
-	else if (ABS(mag_BL - mag_BR) > acceptable_diff) {
-		servo_OC = mag_OC_cal(mag_BL, mag_BR);
-	}
-}
-
-
-int main() {
-	// Initialize Everything Here
-	rcc_init();
-	ticks_init();
-	oled_init();
-	adc_channel_init(ADC_IO_1); //magnetic sensor in front left
-	adc_channel_init(ADC_IO_2); //magnetic sensor in front right
-	adc_channel_init(ADC_IO_3); //magnetic sensor in back left
-	adc_channel_init(ADC_IO_4); //magnetic sensor in back right
-	adc_init();
-	servo_init(SERVO1, 287, 5000, 375); //5000 * x /20	//x=1.5->mid
-	
-	
-	
-	while (1) {
-		static u32 this_ticks = 0;
-		while (get_ticks() == this_ticks);
-		this_ticks = get_ticks();
-
-		static u32 last_led_ticks=0;
-		if ((this_ticks - last_led_ticks) >= 25) {
-			last_led_ticks = this_ticks;
-			//Code in here will run every 25ms
-			mag_read();
-			mag_compare();
-			servo_control(SERVO1, servo_OC);
-		}
-	}
+  // every 50ms
+  if (this_ticks - last_ticks_50 >= 1) { 
+    last_ticks_50 = this_ticks;
+    lt_f = gpio_read(LT_F);
+    lt_l = gpio_read(LT_L);
+    lt_r = gpio_read(LT_R);
+    lt_b = gpio_read(LT_B);
+    tft_clear();
+    tft_prints(3, 0, "F %d", lt_f);
+    tft_prints(0, 1, "L %d", lt_l);
+    tft_prints(6, 1, "R %d", lt_r);
+    tft_prints(3, 2, "B %d", lt_b);
+    tft_update();
+  }
 }
