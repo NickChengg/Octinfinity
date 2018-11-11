@@ -33,6 +33,7 @@ void EchoPrint()
 	tft_clear();
 	tft_prints(0,0,"%d"	,TOTAL);
 	tft_update();
+	TOTAL=0;
 }
 
 

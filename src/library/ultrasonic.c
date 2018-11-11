@@ -33,11 +33,11 @@ void setReceive_listener(listener event)
 
 void set_cycle(int ticks, int cycle)
 {
-	if(ticks%cycle<(cycle*0.05))
+	if(ticks%cycle>(cycle*0.05)&&ticks%cycle<(2*cycle*0.05))
 	{
 		gpio_write(send_PIN,1);
 	}
-	else if(ticks%cycle<(2*cycle*0.05))
+	else /*if(ticks%cycle<(2*cycle*0.05))*/
 	{
 		gpio_write(send_PIN,0);
 	}
