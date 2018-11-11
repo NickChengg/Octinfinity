@@ -1,5 +1,6 @@
-.\objects\ultrasonic.o: ultrasonic.c
-.\objects\ultrasonic.o: ultrasonic.h
+.\objects\ultrasonic.o: src\library\ultrasonic.c
+.\objects\ultrasonic.o: src\library\ultrasonic.h
+.\objects\ultrasonic.o: src\library\gpio.h
 .\objects\ultrasonic.o: .\src\stm32f10x_std\inc\stm32f10x_gpio.h
 .\objects\ultrasonic.o: .\src\stm32f10x_std\inc\stm32f10x.h
 .\objects\ultrasonic.o: C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm3.h

@@ -37,3 +37,4 @@
 .\objects\main.o: .\src\library\camera.h
 .\objects\main.o: .\src\library\pwm.h
 .\objects\main.o: .\src\library\adc.h
+.\objects\main.o: .\src\library\ultrasonic.h
