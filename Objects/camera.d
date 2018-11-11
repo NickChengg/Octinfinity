@@ -1,11 +1,11 @@
 .\objects\camera.o: src\library\camera.c
 .\objects\camera.o: src\library\camera.h
 .\objects\camera.o: .\src\stm32f10x_std\inc\stm32f10x.h
-.\objects\camera.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm3.h
-.\objects\camera.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\camera.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_version.h
-.\objects\camera.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_compiler.h
-.\objects\camera.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_armcc.h
+.\objects\camera.o: C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm3.h
+.\objects\camera.o: C:\software\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\camera.o: C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_version.h
+.\objects\camera.o: C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_compiler.h
+.\objects\camera.o: C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_armcc.h
 .\objects\camera.o: .\src\stm32f10x_std\inc\system_stm32f10x.h
 .\objects\camera.o: .\src\stm32f10x_std\inc\stm32f10x_conf.h
 .\objects\camera.o: .\src\stm32f10x_std\inc\stm32f10x_dma.h
