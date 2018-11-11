@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //#define LT_F GPIO1;
 //#define LT_L GPIO2;
 //#define LT_R GPIO3;
@@ -7,29 +8,48 @@
 #include <string.h>
 #include <stdio.h>
 // Include Library Headers Here
+=======
+#define LT_F GPIO1;
+#define LT_L GPIO2;
+#define LT_R GPIO3;
+#define LT_B GPIO4;
+
+#include "main.h"
+
+
+// Include Library Headers Here
+
+>>>>>>> 8f38c08715b5f0d6578e193f7564573ff84dd15d
 #include "rcc.h"
 #include "ticks.h"
 #include "gpio.h"
-#include "leds.h"
-#include "buttons.h"
-#include "buzzer.h"
-#include "uart.h"
 #include "lcd_main.h"
+<<<<<<< HEAD
 #include "oled.h"
 #include "camera.h"
 #include "pwm.h"
 #include "adc.h"
 
+=======
+>>>>>>> 8f38c08715b5f0d6578e193f7564573ff84dd15d
 
 int main(){
 // Initialize Everything Here
 rcc_init();
 ticks_init();
+<<<<<<< HEAD
 gpio_init(GPIO5, GPIO_Mode_IPU);
 gpio_init(GPIO6, GPIO_Mode_IPU);
 gpio_init(GPIO7, GPIO_Mode_IPD);
 gpio_init(GPIO8, GPIO_Mode_IPD);
 tft_init(0, BLUE, RED, BLUE, RED);
+=======
+gpio_init(LT_F, GPIO_Mode_IPU);
+gpio_init(LT_L, GPIO_Mode_IPU);
+gpio_init(LT_R, GPIO_Mode_IPD);
+gpio_init(LT_B, GPIO_Mode_IPD);
+tft_init(PIN_ON_TOP, WHITE, BLACK, BLUE, RED);
+>>>>>>> 8f38c08715b5f0d6578e193f7564573ff84dd15d
 
 while (1) {
   static u32 this_ticks = 0;
@@ -40,6 +60,7 @@ while (1) {
   this_ticks = get_ticks();
 
   // every 50ms
+<<<<<<< HEAD
   if (this_ticks - last_ticks_50 >= 50) { 
     last_ticks_50 = this_ticks;
     lt_f = gpio_read(GPIO5);
@@ -71,4 +92,19 @@ while (1) {
     tft_update();
   }
 }
+=======
+  if (this_ticks - last_ticks_50 >= 1) { 
+    last_ticks_50 = this_ticks;
+    lt_f = gpio_read(LT_F);
+    lt_l = gpio_read(LT_L);
+    lt_r = gpio_read(LT_R);
+    lt_b = gpio_read(LT_B);
+    tft_clear();
+    tft_prints(3, 0, "F %d", lt_f);
+    tft_prints(0, 1, "L %d", lt_l);
+    tft_prints(6, 1, "R %d", lt_r);
+    tft_prints(3, 2, "B %d", lt_b);
+    tft_update();
+  }
+>>>>>>> 8f38c08715b5f0d6578e193f7564573ff84dd15d
 }
