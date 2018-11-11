@@ -26,14 +26,28 @@
 #include "ultrasonic.h"
 
 const int cycle=100;//100 ms as cycle
+int TOTAL=0;
+
+void EchoPrint()
+{
+	tft_clear();
+	tft_prints(0,0,"%d"	,TOTAL);
+	tft_update();
+}
+
 
 int main() {
 	// Initialize Everything Here
 	rcc_init();
 	ticks_init();
 	oled_init();
+	
+	tft_init(0, WHITE, RED, GREEN, DARK_RED);
+	tft_clear();
+	
 	us_init();
-	int total_tick=0;
+	setReceive_listener(EchoPrint);//set interupt to receive ultrasonic
+	
 	
 	
 	while (1) {
@@ -41,8 +55,8 @@ int main() {
 		while (get_ticks() == this_ticks);
 		this_ticks = get_ticks();
 
-		total_tick++;
-		set_cycle(total_tick,cycle);
+		TOTAL++;
+		set_cycle(TOTAL,cycle);
 		static u32 last_led_ticks=0;
 		if ((this_ticks - last_led_ticks) >= 25) {
 			last_led_ticks = this_ticks;
