@@ -23,6 +23,7 @@
 #include "camera.h"
 #include "pwm.h"
 #include "adc.h"
+#include "ultrasonic.h"
 
 u16 mag_FL = 0, mag_FR = 0, mag_BL = 0, mag_BR = 0; //magnetic reading in (front/back)(left/right)
 u16 servo_OC = (int)(5000 * 1.5 /20); //0.9 for leftmost, 2.1 for rightmost
@@ -69,12 +70,7 @@ int main() {
 	rcc_init();
 	ticks_init();
 	oled_init();
-	adc_channel_init(ADC_IO_1); //magnetic sensor in front left
-	adc_channel_init(ADC_IO_2); //magnetic sensor in front right
-	adc_channel_init(ADC_IO_3); //magnetic sensor in back left
-	adc_channel_init(ADC_IO_4); //magnetic sensor in back right
-	adc_init();
-	servo_init(SERVO1, 287, 5000, 375); //5000 * x /20	//x=1.5->mid
+	
 	
 	
 	
@@ -87,9 +83,7 @@ int main() {
 		if ((this_ticks - last_led_ticks) >= 25) {
 			last_led_ticks = this_ticks;
 			//Code in here will run every 25ms
-			mag_read();
-			mag_compare();
-			servo_control(SERVO1, servo_OC);
+			
 		}
 	}
 }
