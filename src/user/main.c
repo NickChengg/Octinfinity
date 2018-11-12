@@ -25,14 +25,13 @@
 #include "adc.h"
 #include "ultrasonic.h"
 
-const int cycle=100;//100 ms as cycle
+const int cycle=300;//100 ms as cycle
 int TOTAL=0;
+int FLAG=0;
 
 void EchoPrint()
 {
-	tft_clear();
-	tft_prints(0,0,"%d"	,TOTAL);
-	tft_update();
+	FLAG=1;
 	TOTAL=0;
 }
 
@@ -45,6 +44,8 @@ int main() {
 	
 	tft_init(0, WHITE, RED, GREEN, DARK_RED);
 	tft_clear();
+	tft_prints(0,0,"hello"	,TOTAL);
+	tft_update();
 	
 	us_init();
 	setReceive_listener(EchoPrint);//set interupt to receive ultrasonic
@@ -57,7 +58,26 @@ int main() {
 		this_ticks = get_ticks();
 
 		TOTAL++;
-		set_cycle(TOTAL,cycle);
+		if(set_cycle(TOTAL,cycle))
+		{
+			tft_clear();
+			tft_prints(0,0,"no %d"	,TOTAL);
+			tft_update();
+			TOTAL=0;
+		}
+		
+		if(TOTAL>cycle)
+		{
+			TOTAL=0;
+		}
+		
+		if(FLAG)
+		{
+			tft_clear();
+			tft_prints(0,0,"???"	,TOTAL);
+			tft_update();
+		}
+		
 		static u32 last_led_ticks=0;
 		if ((this_ticks - last_led_ticks) >= 25) {
 			last_led_ticks = this_ticks;

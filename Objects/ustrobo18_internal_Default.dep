@@ -753,7 +753,27 @@ I (.\src\stm32f10x_std\inc\stm32f10x_usart.h)(0x5BE10F5A)
 I (.\src\stm32f10x_std\inc\misc.h)(0x5BE10F5A)
 I (src\library\ticks.h)(0x5BE10F57)
 I (src\library\oled_font.h)(0x5BE10F57)
-F (.\src\user\main.c)(0x5BE7BFDA)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O0 -Otime --apcs=interwork --split_sections -I .\src\stm32f10x_std\inc -I .\src\library -I .\src\user-I.\RTE\_Default-IC:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IC:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\DSP\Include-IC:\software\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_ML-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\src\library\ultrasonic.c)(0x5BE968E2)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O0 -Otime --apcs=interwork --split_sections -I .\src\stm32f10x_std\inc -I .\src\library -I .\src\user-I.\RTE\_Default-IC:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IC:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\DSP\Include-IC:\software\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_ML-o .\objects\ultrasonic.o --omf_browse .\objects\ultrasonic.crf --depend .\objects\ultrasonic.d)
+I (src\library\ultrasonic.h)(0x5BE915F9)
+I (src\library\gpio.h)(0x5BE10F57)
+I (.\src\stm32f10x_std\inc\stm32f10x_gpio.h)(0x5BE10F5A)
+I (.\src\stm32f10x_std\inc\stm32f10x.h)(0x5BE10F5A)
+I (C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm3.h)(0x5B616274)
+I (C:\software\Keil\ARM\ARMCC\include\stdint.h)(0x599ECD2E)
+I (C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_version.h)(0x5B1F3084)
+I (C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5B5835B6)
+I (C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5B616274)
+I (.\src\stm32f10x_std\inc\system_stm32f10x.h)(0x5BE10F5B)
+I (.\src\stm32f10x_std\inc\stm32f10x_conf.h)(0x5BE10F5B)
+I (.\src\stm32f10x_std\inc\stm32f10x_dma.h)(0x5BE10F5A)
+I (.\src\stm32f10x_std\inc\stm32f10x_exti.h)(0x5BE10F5A)
+I (.\src\stm32f10x_std\inc\stm32f10x_flash.h)(0x5BE10F5A)
+I (.\src\stm32f10x_std\inc\stm32f10x_fsmc.h)(0x5BE10F5B)
+I (.\src\stm32f10x_std\inc\stm32f10x_rcc.h)(0x5BE10F5A)
+I (.\src\stm32f10x_std\inc\stm32f10x_spi.h)(0x5BE10F59)
+I (.\src\stm32f10x_std\inc\stm32f10x_usart.h)(0x5BE10F5A)
+I (.\src\stm32f10x_std\inc\misc.h)(0x5BE10F5A)
+F (.\src\user\main.c)(0x5BE9694F)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O0 -Otime --apcs=interwork --split_sections -I .\src\stm32f10x_std\inc -I .\src\library -I .\src\user-I.\RTE\_Default-IC:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IC:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\DSP\Include-IC:\software\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_ML-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (src\user\main.h)(0x5BE10F59)
 I (.\src\stm32f10x_std\inc\stm32f10x.h)(0x5BE10F5A)
 I (C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm3.h)(0x5B616274)
@@ -789,5 +809,5 @@ I (.\src\library\oled.h)(0x5BE10F57)
 I (.\src\library\camera.h)(0x5BE10F56)
 I (.\src\library\pwm.h)(0x5BE10F56)
 I (.\src\library\adc.h)(0x5BE10F56)
-I (.\src\library\ultrasonic.h)(0x5BE7BFDA)
+I (.\src\library\ultrasonic.h)(0x5BE915F9)
 F (C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Lib\ARM\arm_cortexM3l_math.lib)(0x5B2C608C)()
