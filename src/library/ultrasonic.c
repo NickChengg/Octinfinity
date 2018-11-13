@@ -26,7 +26,7 @@ static UltrasonicStruct TRIG_pin = {trig_PIN, 0};
 void us_init()
 {
 	gpio_init(send_PIN, GPIO_Mode_Out_PP);
-	gpio_init(trig_PIN, GPIO_Mode_IN_FLOATING);
+	gpio_init(trig_PIN, GPIO_Mode_IN_FLOATING);// no sure about the init mode is correct
 }
 
 void set_send_signal()
