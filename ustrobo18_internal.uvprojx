@@ -129,8 +129,8 @@
         </DebugOption>
         <Utilities>
           <Flash1>
-            <UseTargetDll>1</UseTargetDll>
-            <UseExternalTool>0</UseExternalTool>
+            <UseTargetDll>0</UseTargetDll>
+            <UseExternalTool>1</UseExternalTool>
             <RunIndependent>1</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
@@ -138,7 +138,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"C:\Users\amedhi\Documents\Dev\SWTutorial\F1_Internal_201819\flash.bat" (./Objects/ustrobo18_internal.hex 5 115200 STM32F1_Med-density_128K)</Flash3>
+          <Flash3>"C:\Users\nickc\OneDrive - HKUST Connect\Nick\RoboticTeam\F1_Internal_201819\flash.bat" (./Objects/ustrobo18_internal.hex 7 115200 STM32F1_Med-density_128K)</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp>user</pFcarmGrp>
@@ -642,11 +642,6 @@
               <FileName>oled.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\library\oled.c</FilePath>
-            </File>
-            <File>
-              <FileName>dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\library\dma.c</FilePath>
             </File>
           </Files>
         </Group>

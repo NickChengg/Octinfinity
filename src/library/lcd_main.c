@@ -28,8 +28,6 @@ char text_buf[2][CHAR_MAX_X][CHAR_MAX_Y];
 u16 text_color_buf[2][CHAR_MAX_X][CHAR_MAX_Y];
 u16 bg_color_buf[2][CHAR_MAX_X][CHAR_MAX_Y];
 
-//u16 pixel_buf[MAX_WIDTH][MAX_HEIGHT] = {0};
-
 /**
   * @brief  Initialization of SPI for TFT
   * @param  None
@@ -224,8 +222,6 @@ void tft_set_region(u16 x, u16 y, u16 w, u16 h) {
 	tft_write_data((endy)     & 0xFF);
 
 	tft_write_command(WRITE_RAM_COMMAND);
-
-	gpio_set(TFT_DC);
 }
 
 #define buf_coord(x, y) (((u16)(y)) * ((u16)char_max_x) + ((u16)(x)))
@@ -330,6 +326,7 @@ static void tft_set_buffer(u8 x, u8 y, u8 * fp) {
 			case '\r':
 			case '\n':
 				j++;
+				i = 0;
 				tft_incr_line();
 				break;
 			case '[':
