@@ -25,7 +25,7 @@
 #include "adc.h"
 #include "ultrasonic.h"
 
-const int cycle=300;//100 ms as cycle
+const int cycle=50;//in ms, 1 cycle for signal, 5 cycle after receive echo
 int TOTAL=0;
 int FLAG=0;
 
@@ -66,7 +66,7 @@ int main() {
 			TOTAL=0;
 		}
 		
-		if(TOTAL>cycle)
+		if(TOTAL>20*cycle)
 		{
 			TOTAL=0;
 		}

@@ -1,7 +1,7 @@
 #include "ultrasonic.h"
 
 #define send_PIN GPIO7
-#define recevie_PIN GPIO8
+#define trig_PIN GPIO8
 
 #include "gpio.h"	 
 
@@ -21,12 +21,12 @@ void setReceive_listener(listener event);
 int set_cycle(int ticks, int cycle);
 
 
-static UltrasonicStruct receive_pin = {recevie_PIN, 0};
+static UltrasonicStruct TRIG_pin = {trig_PIN, 0};
 
 void us_init()
 {
 	gpio_init(send_PIN, GPIO_Mode_Out_PP);
-	gpio_init(recevie_PIN, GPIO_Mode_IN_FLOATING);
+	gpio_init(trig_PIN, GPIO_Mode_IN_FLOATING);
 }
 
 void set_send_signal()
@@ -41,23 +41,26 @@ void reset_send_signal()
 
 void setReceive_listener(listener event)
 {
-		receive_pin.receive_action=event;
+		TRIG_pin.receive_action=event;
 }
 
 int set_cycle(int ticks, int cycle)//set cycle got problem
 {
-	if(ticks%cycle>(cycle/20)&&ticks%cycle<(cycle/10))
+	//1 cycle no receive
+	if(ticks<=cycle)
 	{
-		set_send_signal();
+		gpio_write(send_PIN,1);
 	}
-	else /*if(ticks%cycle<(2*cycle*0.05))*/
+	else
 	{
-		reset_send_signal();
+		gpio_write(send_PIN,0);
 	}
-	
-	if(gpio_read(recevie_PIN)&&ticks%cycle<(cycle/5))
+	if(ticks>5*cycle)
 	{
-		return 1;
+		if(gpio_read(trig_PIN))
+		{
+			return 1;
+		}
 	}
 	return 0;
 	
@@ -65,7 +68,7 @@ int set_cycle(int ticks, int cycle)//set cycle got problem
 
 int detect_signal()
 {
-	if(gpio_read(recevie_PIN))
+	if(gpio_read(trig_PIN))
 	{
 		return 1;
 	}
