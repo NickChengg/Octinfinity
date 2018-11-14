@@ -46,23 +46,25 @@ uint8_t camera_init(ImageType type) {
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
 	GPIO_Init(FIFO_DPORT, &GPIO_InitStructure);
 	
-	//	NVIC
-	NVIC_InitTypeDef NVIC_InitStructure;
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
-	//	EXTI
-	EXTI_InitTypeDef EXTI_InitStructure;
-	GPIO_EXTILineConfig(GPIO_PortSourceGPIOC, GPIO_PinSource12);
-	EXTI_InitStructure.EXTI_Line = EXTI_Line12;
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; 
-	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-	EXTI_Init(&EXTI_InitStructure);
-	EXTI_GenerateSWInterrupt(EXTI_Line12);
+	gpio_exti_init(FIFO_VSYNC, EXTI_Trigger_Falling);
+
+	// //	NVIC
+	// NVIC_InitTypeDef NVIC_InitStructure;
+	// NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+	// NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;
+	// NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	// NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+	// NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	// NVIC_Init(&NVIC_InitStructure);
+	// //	EXTI
+	// EXTI_InitTypeDef EXTI_InitStructure;
+	// GPIO_EXTILineConfig(GPIO_PortSourceGPIOC, GPIO_PinSource12);
+	// EXTI_InitStructure.EXTI_Line = EXTI_Line12;
+	// EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+	// EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; 
+	// EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+	// EXTI_Init(&EXTI_InitStructure);
+	// EXTI_GenerateSWInterrupt(EXTI_Line12);
 
 	FIFO_OE_L();
 	FIFO_WEN_H();
@@ -157,23 +159,18 @@ uint8_t camera_printing_done() {
 	return DMA_GetFlagStatus(DMA1_FLAG_TC5);
 }
 
-void EXTI15_10_IRQHandler(void)
-{
-	if ( EXTI_GetITStatus(EXTI_Line12) != RESET )
+void EXTI12_IRQHandler(void) {
+	if(camState == 0)
 	{
-		if(camState == 0)
-		{
-			FIFO_WRST_L();
-			FIFO_WEN_L();
-			camState = 1;	   	
-			FIFO_WEN_H();
-			FIFO_WRST_H();
-		}
-		else if(camState == 1)
-		{
-			FIFO_WEN_L();
-			camState = 2;
-		}
-		EXTI_ClearITPendingBit(EXTI_Line12);
+		FIFO_WRST_L();
+		FIFO_WEN_L();
+		camState = 1;	   	
+		FIFO_WEN_H();
+		FIFO_WRST_H();
+	}
+	else if(camState == 1)
+	{
+		FIFO_WEN_L();
+		camState = 2;
 	}
 }

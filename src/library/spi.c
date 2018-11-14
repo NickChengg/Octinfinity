@@ -10,7 +10,7 @@ IRQn_Type spi_get_irq(SPI_TypeDef* spi) {
 		default:
 		case ((u32)SPI1): return SPI1_IRQn;
 		case ((u32)SPI2): return SPI2_IRQn;
-		case ((u32)SPI3): return SPI3_IRQn;
+		// case ((u32)SPI3): return SPI3_IRQn;
 	}
 }
 

@@ -36,11 +36,17 @@ void buttons_init(void);
  */
 u8 button_pressed(Button button);
 
-// HINT: what about a button hold listener? /**
-//  * { list_item_description }
-// @brief      Button update function with button pressed and released listeners */
-//
+/**
+ * @brief      Check state of buttons and call listeners
+ * 
+ * Needed if you dont use buttons_interrupt_init
+ */
 void button_update(void);
+
+/**
+ * @brief      Initialize the interrupts for all onboard buttons
+ */
+void buttons_interrupt_init(void);
 
 /**
  * @brief      Sets the button down listener.
@@ -53,7 +59,7 @@ void set_button_down_listener(Button button, ButtonListener listener);
 /**
  * @brief      Resets the button down listener.
  *
- * @param      button    The button
+ * @param      button  The button
  */
 void reset_button_down_listener(Button button);
 
@@ -68,7 +74,7 @@ void set_button_up_listener(Button button, ButtonListener listener);
 /**
  * @brief      Resets the button up listener.
  *
- * @param      button    The button
+ * @param      button  The button
  */
 void reset_button_up_listener(Button button);
 

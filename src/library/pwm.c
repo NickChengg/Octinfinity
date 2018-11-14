@@ -11,10 +11,12 @@ const MotorPort __MOTOR1 = {{PWM_CHANNEL_1,&PC6,&MOTOR_TIM->CCR1},&PC3};
 const MotorPort __MOTOR2 = {{PWM_CHANNEL_2,&PC7,&MOTOR_TIM->CCR2},&PA8};
 const MotorPort __MOTOR3 = {{PWM_CHANNEL_3,&PC8,&MOTOR_TIM->CCR3},&PC9};
 
-const PwmIOPort __PWM_IO1 = {PWM_CHANNEL_1,&PA0,&PWMIO_TIM->CCR1};
-const PwmIOPort __PWM_IO2 = {PWM_CHANNEL_2,&PA1,&PWMIO_TIM->CCR2};
-const PwmIOPort __PWM_IO3 = {PWM_CHANNEL_3,&PA2,&PWMIO_TIM->CCR3};
-const PwmIOPort __PWM_IO4 = {PWM_CHANNEL_4,&PA3,&PWMIO_TIM->CCR4};
+const PwmIOPort __PWM_IO1 = {{PWM_CHANNEL_1,&PA0,&TIM5->CCR1}, TIM5};
+const PwmIOPort __PWM_IO2 = {{PWM_CHANNEL_2,&PA1,&TIM5->CCR2}, TIM5};
+const PwmIOPort __PWM_IO3 = {{PWM_CHANNEL_3,&PA2,&TIM5->CCR3}, TIM5};
+const PwmIOPort __PWM_IO4 = {{PWM_CHANNEL_4,&PA3,&TIM5->CCR4}, TIM5};
+const PwmIOPort __PWM_IO7 = {{PWM_CHANNEL_1,&PA6,&TIM3->CCR1}, TIM3};
+const PwmIOPort __PWM_IO8 = {{PWM_CHANNEL_2,&PA7,&TIM3->CCR2}, TIM3};
 
 void pwm_init(TIM_TypeDef* timer, const PWMChannel* channel, u16 prescaler, u16 autoreload, u16 initial) {
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
@@ -98,7 +100,7 @@ void servo_control(const ServoPort* servo, u16 position) {
 }
 
 void pwm_io_init(const PwmIOPort* io, u16 prescaler, u16 autoreload, u16 initial) {
-	pwm_init(PWMIO_TIM, (const PWMChannel*) io, prescaler, autoreload, initial);
+	pwm_init(io->tim, (const PWMChannel*) io, prescaler, autoreload, initial);
 
 }
 
