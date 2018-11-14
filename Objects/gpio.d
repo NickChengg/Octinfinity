@@ -19,3 +19,4 @@
 .\objects\gpio.o: .\src\stm32f10x_std\inc\stm32f10x_spi.h
 .\objects\gpio.o: .\src\stm32f10x_std\inc\stm32f10x_usart.h
 .\objects\gpio.o: .\src\stm32f10x_std\inc\misc.h
+.\objects\gpio.o: src\library\leds.h

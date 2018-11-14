@@ -1,6 +1,6 @@
 #include "ultrasonic.h"
 
-#define send_PIN GPIO7
+#define echo_PIN GPIO7
 #define trig_PIN GPIO8
 
 #include "gpio.h"	 
@@ -24,21 +24,22 @@ long int set_cycle(int ticks, int cycle);
 static UltrasonicStruct TRIG_pin = {trig_PIN, 0};
 long int ULTRA_EMIT=0;//used to store hardware emit signal time
 
+
 void us_init()
 {
-	gpio_init(send_PIN, GPIO_Mode_Out_PP);
+	gpio_init(echo_PIN, GPIO_Mode_Out_PP);
 	//gpio_init(trig_PIN, GPIO_Mode_IN_FLOATING);// no sure about the init mode is correct
 	gpio_init(trig_PIN, GPIO_Mode_IPU);// no sure about the init mode is correct
 }
 
 void set_send_signal()
 {
-	gpio_set(send_PIN);
+	gpio_write(echo_PIN,1);
 }
 
 void reset_send_signal()
 {
-	gpio_reset(send_PIN);
+	gpio_write(echo_PIN,0);
 }
 
 void setReceive_listener(listener event)
@@ -51,13 +52,13 @@ long int set_cycle(int ticks, int cycle)//set cycle got problem
 	//1 cycle no receive
 	if(SysTick->VAL-ULTRA_EMIT<5)//send signal in 5 clock
 	{
-		gpio_write(send_PIN,1);
+		set_send_signal();
 	}
 	else //if(ticks<=3*cycle)
 	{
-		gpio_write(send_PIN,0);
+		reset_send_signal();
 	}
-	if(ticks>10*cycle)
+	if(SysTick->VAL-ULTRA_EMIT>10)
 	{
 		if(gpio_read(trig_PIN))
 		{
@@ -77,4 +78,17 @@ int detect_signal()
 		return 1;
 	}
 	return 0;
+}
+
+void EXTI7_IRQHandler()
+{
+	
+		if(gpio_read(trig_PIN))
+		{
+			long int temp=SysTick->VAL-ULTRA_EMIT;
+			ULTRA_EMIT=SysTick->VAL;
+			OUT_NUM=temp;
+			FLAG=1;
+		}
+	
 }

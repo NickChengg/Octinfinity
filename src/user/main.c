@@ -27,7 +27,7 @@
 
 const int cycle=5;//in ms, 1 cycle for signal, 5 cycle after receive echo
 int TOTAL=0;
-int FLAG=0;
+
 
 void EchoPrint()
 {
@@ -49,27 +49,15 @@ int main() {
 	
 	us_init();
 	setReceive_listener(EchoPrint);//set interupt to receive ultrasonic
-	
+	gpio_exti_init(GPIO8,);
 	
 	
 	while (1) {
 		static u32 this_ticks = 0;
+		static long int temp= 0;
+		temp = set_cycle(0,cycle);
 		while (get_ticks() == this_ticks);
 		this_ticks = get_ticks();
-
-		TOTAL++;
-		if(set_cycle(TOTAL,cycle))
-		{
-			tft_clear();
-			tft_prints(0,0,"detected at %d"	,TOTAL);
-			tft_update();
-			//TOTAL=0;
-		}
-		
-		if(TOTAL>2000*cycle)
-		{
-			TOTAL=0;
-		}
 		
 		if(FLAG)
 		{
@@ -81,6 +69,14 @@ int main() {
 		static u32 last_led_ticks=0;
 		if ((this_ticks - last_led_ticks) >= 25) {
 			last_led_ticks = this_ticks;
+			long int temp=set_cycle(TOTAL,cycle);
+		if(temp)
+		{
+			tft_clear();
+			tft_prints(0,0,"detected at %d"	,temp);
+			tft_update();
+			//TOTAL=0;
+		}
 			//Code in here will run every 25ms
 			
 		}
