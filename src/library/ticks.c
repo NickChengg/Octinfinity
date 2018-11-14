@@ -17,8 +17,8 @@ void ticks_init(void) {
 	NVIC_InitStructure.NVIC_IRQChannel = SysTick_IRQn; //Ignore this warning
 	NVIC_Init(&NVIC_InitStructure);
 	
-	//SysTick_Config(SystemCoreClock / 1000); //modify
-	SysTick_Config(SystemCoreClock / 1000000); //modify to 1 nanosecond
+	SysTick_Config(SystemCoreClock / 1000); //modify
+	//SysTick_Config(SystemCoreClock / 1000000); //modify to 1 nanosecond
 	msec = 0;
 }
 

@@ -47,11 +47,11 @@ void setReceive_listener(listener event)
 
 int set_cycle(int ticks, int cycle)//set cycle got problem
 {
-	SysTick->VAL;
 	//1 cycle no receive
 	if(ticks<=5*cycle)
 	{
 		gpio_write(send_PIN,1);
+		ULTRA_EMIT=SysTick->VAL;
 	}
 	else //if(ticks<=3*cycle)
 	{
@@ -61,7 +61,7 @@ int set_cycle(int ticks, int cycle)//set cycle got problem
 	{
 		if(gpio_read(trig_PIN))
 		{
-			return 1;
+			return SysTick->VAL-ULTRA_EMIT;
 		}
 	}
 	return 0;

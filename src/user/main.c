@@ -28,6 +28,7 @@
 const int cycle=5;//in ms, 1 cycle for signal, 5 cycle after receive echo
 int TOTAL=0;
 int FLAG=0;
+long int ULTRA_EMIT=0;
 
 void EchoPrint()
 {
