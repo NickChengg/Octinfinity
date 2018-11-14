@@ -11,4 +11,4 @@ void us_init();
 void set_send_signal();
 void reset_send_signal();
 void setReceive_listener(listener event);
-int set_cycle(int ticks, int cycle);
+long int set_cycle(int ticks, int cycle);
