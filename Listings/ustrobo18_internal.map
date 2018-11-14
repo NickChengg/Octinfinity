@@ -1952,112 +1952,112 @@ Image Symbol Table
     i.gpio_write                             0x08002366   Section        0  ultrasonic.o(i.gpio_write)
     gpio_write                               0x08002367   Thumb Code    28  ultrasonic.o(i.gpio_write)
     i.main                                   0x08002384   Section        0  main.o(i.main)
-    i.oled_clear                             0x08002480   Section        0  oled.o(i.oled_clear)
-    i.oled_init                              0x080024a0   Section        0  oled.o(i.oled_init)
-    i.rcc_init                               0x08002578   Section        0  rcc.o(i.rcc_init)
-    i.reset                                  0x080025a8   Section        0  oled.o(i.reset)
-    reset                                    0x080025a9   Thumb Code    34  oled.o(i.reset)
-    i.setReceive_listener                    0x080025d0   Section        0  ultrasonic.o(i.setReceive_listener)
-    i.set_cycle                              0x080025dc   Section        0  ultrasonic.o(i.set_cycle)
-    i.set_region                             0x08002618   Section        0  oled.o(i.set_region)
-    set_region                               0x08002619   Thumb Code    48  oled.o(i.set_region)
-    i.spi_init                               0x08002648   Section        0  spi.o(i.spi_init)
-    i.spi_irq_handler                        0x080028ac   Section        0  spi.o(i.spi_irq_handler)
-    spi_irq_handler                          0x080028ad   Thumb Code    72  spi.o(i.spi_irq_handler)
-    i.spi_rcc_init                           0x080028f4   Section        0  rcc.o(i.spi_rcc_init)
-    i.spi_tx                                 0x08002934   Section        0  spi.o(i.spi_tx)
-    i.tft_char_is_changed                    0x08002954   Section        0  lcd_main.o(i.tft_char_is_changed)
-    tft_char_is_changed                      0x08002955   Thumb Code   200  lcd_main.o(i.tft_char_is_changed)
-    i.tft_clear                              0x08002a30   Section        0  lcd_main.o(i.tft_clear)
-    i.tft_clear_line                         0x08002a58   Section        0  lcd_main.o(i.tft_clear_line)
-    i.tft_config                             0x08002aec   Section        0  lcd_main.o(i.tft_config)
-    tft_config                               0x08002aed   Thumb Code    92  lcd_main.o(i.tft_config)
-    i.tft_enable                             0x08002b54   Section        0  lcd_main.o(i.tft_enable)
-    i.tft_fill_color                         0x08002b60   Section        0  lcd_main.o(i.tft_fill_color)
-    i.tft_incr_line                          0x08002ba8   Section        0  lcd_main.o(i.tft_incr_line)
-    tft_incr_line                            0x08002ba9   Thumb Code    30  lcd_main.o(i.tft_incr_line)
-    i.tft_init                               0x08002bd0   Section        0  lcd_main.o(i.tft_init)
-    i.tft_prints                             0x08002cb4   Section        0  lcd_main.o(i.tft_prints)
-    i.tft_reset                              0x08002d00   Section        0  lcd_main.o(i.tft_reset)
-    i.tft_set_bg_color                       0x08002d20   Section        0  lcd_main.o(i.tft_set_bg_color)
-    i.tft_set_buffer                         0x08002d2c   Section        0  lcd_main.o(i.tft_set_buffer)
-    tft_set_buffer                           0x08002d2d   Thumb Code   302  lcd_main.o(i.tft_set_buffer)
-    i.tft_set_highlight_color                0x08002e88   Section        0  lcd_main.o(i.tft_set_highlight_color)
-    i.tft_set_region                         0x08002e94   Section        0  lcd_main.o(i.tft_set_region)
-    i.tft_set_special_color                  0x08002f38   Section        0  lcd_main.o(i.tft_set_special_color)
-    i.tft_set_text_color                     0x08002f44   Section        0  lcd_main.o(i.tft_set_text_color)
-    i.tft_spi_init                           0x08002f50   Section        0  lcd_main.o(i.tft_spi_init)
-    i.tft_update                             0x08002f84   Section        0  lcd_main.o(i.tft_update)
-    i.tft_write_color                        0x080030fc   Section        0  lcd_main.o(i.tft_write_color)
-    i.tft_write_command                      0x08003110   Section        0  lcd_main.o(i.tft_write_command)
-    tft_write_command                        0x08003111   Thumb Code    20  lcd_main.o(i.tft_write_command)
-    i.tft_write_data                         0x0800312c   Section        0  lcd_main.o(i.tft_write_data)
-    tft_write_data                           0x0800312d   Thumb Code    20  lcd_main.o(i.tft_write_data)
-    i.ticks_init                             0x08003148   Section        0  ticks.o(i.ticks_init)
-    i.uart_irq_handler                       0x080031cc   Section        0  uart.o(i.uart_irq_handler)
-    uart_irq_handler                         0x080031cd   Thumb Code    78  uart.o(i.uart_irq_handler)
-    i.us_init                                0x0800321c   Section        0  ultrasonic.o(i.us_init)
-    i.write_command                          0x08003238   Section        0  oled.o(i.write_command)
-    write_command                            0x08003239   Thumb Code    34  oled.o(i.write_command)
-    i.write_data                             0x08003264   Section        0  oled.o(i.write_data)
-    write_data                               0x08003265   Thumb Code    34  oled.o(i.write_data)
-    locale$$code                             0x08003290   Section       44  lc_numeric_c.o(locale$$code)
-    locale$$code                             0x080032bc   Section       44  lc_ctype_c.o(locale$$code)
-    x$fpl$printf1                            0x080032e8   Section        4  printf1.o(x$fpl$printf1)
-    x$fpl$printf2                            0x080032ec   Section        4  printf2.o(x$fpl$printf2)
-    .constdata                               0x080032f0   Section       32  uart.o(.constdata)
-    x$fpl$usenofp                            0x080032f0   Section        0  usenofp.o(x$fpl$usenofp)
-    PA9                                      0x080032f0   Data           8  uart.o(.constdata)
-    PA10                                     0x080032f8   Data           8  uart.o(.constdata)
-    PC10                                     0x08003300   Data           8  uart.o(.constdata)
-    PC11                                     0x08003308   Data           8  uart.o(.constdata)
-    .constdata                               0x08003310   Section       24  spi.o(.constdata)
-    PB13                                     0x08003310   Data           8  spi.o(.constdata)
-    PB14                                     0x08003318   Data           8  spi.o(.constdata)
-    PB15                                     0x08003320   Data           8  spi.o(.constdata)
-    .constdata                               0x08003328   Section      133  lcd_main.o(.constdata)
-    PB12                                     0x08003328   Data           8  lcd_main.o(.constdata)
-    PB14                                     0x08003330   Data           8  lcd_main.o(.constdata)
-    .constdata                               0x080033b0   Section       64  adc.o(.constdata)
-    PA0                                      0x080033b0   Data           8  adc.o(.constdata)
-    PA1                                      0x080033b8   Data           8  adc.o(.constdata)
-    PA2                                      0x080033c0   Data           8  adc.o(.constdata)
-    PA3                                      0x080033c8   Data           8  adc.o(.constdata)
-    PA4                                      0x080033d0   Data           8  adc.o(.constdata)
-    PA5                                      0x080033d8   Data           8  adc.o(.constdata)
-    PA6                                      0x080033e0   Data           8  adc.o(.constdata)
-    PA7                                      0x080033e8   Data           8  adc.o(.constdata)
-    .constdata                               0x080033f0   Section     1296  oled.o(.constdata)
-    PB12                                     0x080033f0   Data           8  oled.o(.constdata)
-    PB14                                     0x080033f8   Data           8  oled.o(.constdata)
-    font                                     0x08003400   Data        1280  oled.o(.constdata)
-    .constdata                               0x08003900   Section       16  ultrasonic.o(.constdata)
-    PA6                                      0x08003900   Data           8  ultrasonic.o(.constdata)
-    PA7                                      0x08003908   Data           8  ultrasonic.o(.constdata)
-    .constdata                               0x08003910   Section        8  _printf_wctomb.o(.constdata)
-    initial_mbstate                          0x08003910   Data           8  _printf_wctomb.o(.constdata)
-    .constdata                               0x08003918   Section       40  _printf_hex_int_ll_ptr.o(.constdata)
-    uc_hextab                                0x08003918   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
-    lc_hextab                                0x0800392c   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
-    .constdata                               0x08003940   Section       17  __printf_flags_ss_wp.o(.constdata)
-    maptable                                 0x08003940   Data          17  __printf_flags_ss_wp.o(.constdata)
-    .constdata                               0x08003951   Section       38  _printf_fp_hex.o(.constdata)
-    lc_hextab                                0x08003951   Data          19  _printf_fp_hex.o(.constdata)
-    uc_hextab                                0x08003964   Data          19  _printf_fp_hex.o(.constdata)
-    .constdata                               0x08003978   Section      148  bigflt0.o(.constdata)
-    tenpwrs_x                                0x08003978   Data          60  bigflt0.o(.constdata)
-    tenpwrs_i                                0x080039b4   Data          64  bigflt0.o(.constdata)
-    locale$$data                             0x08003a2c   Section       28  lc_numeric_c.o(locale$$data)
-    __lcnum_c_name                           0x08003a30   Data           2  lc_numeric_c.o(locale$$data)
-    __lcnum_c_start                          0x08003a38   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_point                          0x08003a44   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_thousands                      0x08003a46   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_grouping                       0x08003a47   Data           0  lc_numeric_c.o(locale$$data)
-    locale$$data                             0x08003a48   Section      272  lc_ctype_c.o(locale$$data)
-    __lcnum_c_end                            0x08003a48   Data           0  lc_numeric_c.o(locale$$data)
-    __lcctype_c_name                         0x08003a4c   Data           2  lc_ctype_c.o(locale$$data)
-    __lcctype_c_start                        0x08003a54   Data           0  lc_ctype_c.o(locale$$data)
-    __lcctype_c_end                          0x08003b58   Data           0  lc_ctype_c.o(locale$$data)
+    i.oled_clear                             0x08002484   Section        0  oled.o(i.oled_clear)
+    i.oled_init                              0x080024a4   Section        0  oled.o(i.oled_init)
+    i.rcc_init                               0x0800257c   Section        0  rcc.o(i.rcc_init)
+    i.reset                                  0x080025ac   Section        0  oled.o(i.reset)
+    reset                                    0x080025ad   Thumb Code    34  oled.o(i.reset)
+    i.setReceive_listener                    0x080025d4   Section        0  ultrasonic.o(i.setReceive_listener)
+    i.set_cycle                              0x080025e0   Section        0  ultrasonic.o(i.set_cycle)
+    i.set_region                             0x08002624   Section        0  oled.o(i.set_region)
+    set_region                               0x08002625   Thumb Code    48  oled.o(i.set_region)
+    i.spi_init                               0x08002654   Section        0  spi.o(i.spi_init)
+    i.spi_irq_handler                        0x080028b8   Section        0  spi.o(i.spi_irq_handler)
+    spi_irq_handler                          0x080028b9   Thumb Code    72  spi.o(i.spi_irq_handler)
+    i.spi_rcc_init                           0x08002900   Section        0  rcc.o(i.spi_rcc_init)
+    i.spi_tx                                 0x08002940   Section        0  spi.o(i.spi_tx)
+    i.tft_char_is_changed                    0x08002960   Section        0  lcd_main.o(i.tft_char_is_changed)
+    tft_char_is_changed                      0x08002961   Thumb Code   200  lcd_main.o(i.tft_char_is_changed)
+    i.tft_clear                              0x08002a3c   Section        0  lcd_main.o(i.tft_clear)
+    i.tft_clear_line                         0x08002a64   Section        0  lcd_main.o(i.tft_clear_line)
+    i.tft_config                             0x08002af8   Section        0  lcd_main.o(i.tft_config)
+    tft_config                               0x08002af9   Thumb Code    92  lcd_main.o(i.tft_config)
+    i.tft_enable                             0x08002b60   Section        0  lcd_main.o(i.tft_enable)
+    i.tft_fill_color                         0x08002b6c   Section        0  lcd_main.o(i.tft_fill_color)
+    i.tft_incr_line                          0x08002bb4   Section        0  lcd_main.o(i.tft_incr_line)
+    tft_incr_line                            0x08002bb5   Thumb Code    30  lcd_main.o(i.tft_incr_line)
+    i.tft_init                               0x08002bdc   Section        0  lcd_main.o(i.tft_init)
+    i.tft_prints                             0x08002cc0   Section        0  lcd_main.o(i.tft_prints)
+    i.tft_reset                              0x08002d0c   Section        0  lcd_main.o(i.tft_reset)
+    i.tft_set_bg_color                       0x08002d2c   Section        0  lcd_main.o(i.tft_set_bg_color)
+    i.tft_set_buffer                         0x08002d38   Section        0  lcd_main.o(i.tft_set_buffer)
+    tft_set_buffer                           0x08002d39   Thumb Code   302  lcd_main.o(i.tft_set_buffer)
+    i.tft_set_highlight_color                0x08002e94   Section        0  lcd_main.o(i.tft_set_highlight_color)
+    i.tft_set_region                         0x08002ea0   Section        0  lcd_main.o(i.tft_set_region)
+    i.tft_set_special_color                  0x08002f44   Section        0  lcd_main.o(i.tft_set_special_color)
+    i.tft_set_text_color                     0x08002f50   Section        0  lcd_main.o(i.tft_set_text_color)
+    i.tft_spi_init                           0x08002f5c   Section        0  lcd_main.o(i.tft_spi_init)
+    i.tft_update                             0x08002f90   Section        0  lcd_main.o(i.tft_update)
+    i.tft_write_color                        0x08003108   Section        0  lcd_main.o(i.tft_write_color)
+    i.tft_write_command                      0x0800311c   Section        0  lcd_main.o(i.tft_write_command)
+    tft_write_command                        0x0800311d   Thumb Code    20  lcd_main.o(i.tft_write_command)
+    i.tft_write_data                         0x08003138   Section        0  lcd_main.o(i.tft_write_data)
+    tft_write_data                           0x08003139   Thumb Code    20  lcd_main.o(i.tft_write_data)
+    i.ticks_init                             0x08003154   Section        0  ticks.o(i.ticks_init)
+    i.uart_irq_handler                       0x080031dc   Section        0  uart.o(i.uart_irq_handler)
+    uart_irq_handler                         0x080031dd   Thumb Code    78  uart.o(i.uart_irq_handler)
+    i.us_init                                0x0800322c   Section        0  ultrasonic.o(i.us_init)
+    i.write_command                          0x08003248   Section        0  oled.o(i.write_command)
+    write_command                            0x08003249   Thumb Code    34  oled.o(i.write_command)
+    i.write_data                             0x08003274   Section        0  oled.o(i.write_data)
+    write_data                               0x08003275   Thumb Code    34  oled.o(i.write_data)
+    locale$$code                             0x080032a0   Section       44  lc_numeric_c.o(locale$$code)
+    locale$$code                             0x080032cc   Section       44  lc_ctype_c.o(locale$$code)
+    x$fpl$printf1                            0x080032f8   Section        4  printf1.o(x$fpl$printf1)
+    x$fpl$printf2                            0x080032fc   Section        4  printf2.o(x$fpl$printf2)
+    .constdata                               0x08003300   Section       32  uart.o(.constdata)
+    x$fpl$usenofp                            0x08003300   Section        0  usenofp.o(x$fpl$usenofp)
+    PA9                                      0x08003300   Data           8  uart.o(.constdata)
+    PA10                                     0x08003308   Data           8  uart.o(.constdata)
+    PC10                                     0x08003310   Data           8  uart.o(.constdata)
+    PC11                                     0x08003318   Data           8  uart.o(.constdata)
+    .constdata                               0x08003320   Section       24  spi.o(.constdata)
+    PB13                                     0x08003320   Data           8  spi.o(.constdata)
+    PB14                                     0x08003328   Data           8  spi.o(.constdata)
+    PB15                                     0x08003330   Data           8  spi.o(.constdata)
+    .constdata                               0x08003338   Section      133  lcd_main.o(.constdata)
+    PB12                                     0x08003338   Data           8  lcd_main.o(.constdata)
+    PB14                                     0x08003340   Data           8  lcd_main.o(.constdata)
+    .constdata                               0x080033c0   Section       64  adc.o(.constdata)
+    PA0                                      0x080033c0   Data           8  adc.o(.constdata)
+    PA1                                      0x080033c8   Data           8  adc.o(.constdata)
+    PA2                                      0x080033d0   Data           8  adc.o(.constdata)
+    PA3                                      0x080033d8   Data           8  adc.o(.constdata)
+    PA4                                      0x080033e0   Data           8  adc.o(.constdata)
+    PA5                                      0x080033e8   Data           8  adc.o(.constdata)
+    PA6                                      0x080033f0   Data           8  adc.o(.constdata)
+    PA7                                      0x080033f8   Data           8  adc.o(.constdata)
+    .constdata                               0x08003400   Section     1296  oled.o(.constdata)
+    PB12                                     0x08003400   Data           8  oled.o(.constdata)
+    PB14                                     0x08003408   Data           8  oled.o(.constdata)
+    font                                     0x08003410   Data        1280  oled.o(.constdata)
+    .constdata                               0x08003910   Section       16  ultrasonic.o(.constdata)
+    PA6                                      0x08003910   Data           8  ultrasonic.o(.constdata)
+    PA7                                      0x08003918   Data           8  ultrasonic.o(.constdata)
+    .constdata                               0x08003920   Section        8  _printf_wctomb.o(.constdata)
+    initial_mbstate                          0x08003920   Data           8  _printf_wctomb.o(.constdata)
+    .constdata                               0x08003928   Section       40  _printf_hex_int_ll_ptr.o(.constdata)
+    uc_hextab                                0x08003928   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
+    lc_hextab                                0x0800393c   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
+    .constdata                               0x08003950   Section       17  __printf_flags_ss_wp.o(.constdata)
+    maptable                                 0x08003950   Data          17  __printf_flags_ss_wp.o(.constdata)
+    .constdata                               0x08003961   Section       38  _printf_fp_hex.o(.constdata)
+    lc_hextab                                0x08003961   Data          19  _printf_fp_hex.o(.constdata)
+    uc_hextab                                0x08003974   Data          19  _printf_fp_hex.o(.constdata)
+    .constdata                               0x08003988   Section      148  bigflt0.o(.constdata)
+    tenpwrs_x                                0x08003988   Data          60  bigflt0.o(.constdata)
+    tenpwrs_i                                0x080039c4   Data          64  bigflt0.o(.constdata)
+    locale$$data                             0x08003a3c   Section       28  lc_numeric_c.o(locale$$data)
+    __lcnum_c_name                           0x08003a40   Data           2  lc_numeric_c.o(locale$$data)
+    __lcnum_c_start                          0x08003a48   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_point                          0x08003a54   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_thousands                      0x08003a56   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_grouping                       0x08003a57   Data           0  lc_numeric_c.o(locale$$data)
+    locale$$data                             0x08003a58   Section      272  lc_ctype_c.o(locale$$data)
+    __lcnum_c_end                            0x08003a58   Data           0  lc_numeric_c.o(locale$$data)
+    __lcctype_c_name                         0x08003a5c   Data           2  lc_ctype_c.o(locale$$data)
+    __lcctype_c_start                        0x08003a64   Data           0  lc_ctype_c.o(locale$$data)
+    __lcctype_c_end                          0x08003b68   Data           0  lc_ctype_c.o(locale$$data)
     .data                                    0x20000000   Section       20  system_stm32f10x.o(.data)
     .data                                    0x20000014   Section        9  ticks.o(.data)
     .data                                    0x20000020   Section       48  uart.o(.data)
@@ -2346,42 +2346,42 @@ Image Symbol Table
     afio_rcc_init                            0x08002273   Thumb Code    12  rcc.o(i.afio_rcc_init)
     delay                                    0x08002281   Thumb Code    16  ticks.o(i.delay)
     get_ticks                                0x08002295   Thumb Code     6  ticks.o(i.get_ticks)
-    main                                     0x08002385   Thumb Code   212  main.o(i.main)
-    oled_clear                               0x08002481   Thumb Code    32  oled.o(i.oled_clear)
-    oled_init                                0x080024a1   Thumb Code   204  oled.o(i.oled_init)
-    rcc_init                                 0x08002579   Thumb Code    48  rcc.o(i.rcc_init)
-    setReceive_listener                      0x080025d1   Thumb Code     6  ultrasonic.o(i.setReceive_listener)
-    set_cycle                                0x080025dd   Thumb Code    52  ultrasonic.o(i.set_cycle)
-    spi_init                                 0x08002649   Thumb Code   536  spi.o(i.spi_init)
-    spi_rcc_init                             0x080028f5   Thumb Code    52  rcc.o(i.spi_rcc_init)
-    spi_tx                                   0x08002935   Thumb Code    30  spi.o(i.spi_tx)
-    tft_clear                                0x08002a31   Thumb Code    32  lcd_main.o(i.tft_clear)
-    tft_clear_line                           0x08002a59   Thumb Code   120  lcd_main.o(i.tft_clear_line)
-    tft_enable                               0x08002b55   Thumb Code     8  lcd_main.o(i.tft_enable)
-    tft_fill_color                           0x08002b61   Thumb Code    66  lcd_main.o(i.tft_fill_color)
-    tft_init                                 0x08002bd1   Thumb Code   194  lcd_main.o(i.tft_init)
-    tft_prints                               0x08002cb5   Thumb Code    66  lcd_main.o(i.tft_prints)
-    tft_reset                                0x08002d01   Thumb Code    28  lcd_main.o(i.tft_reset)
-    tft_set_bg_color                         0x08002d21   Thumb Code     6  lcd_main.o(i.tft_set_bg_color)
-    tft_set_highlight_color                  0x08002e89   Thumb Code     6  lcd_main.o(i.tft_set_highlight_color)
-    tft_set_region                           0x08002e95   Thumb Code   152  lcd_main.o(i.tft_set_region)
-    tft_set_special_color                    0x08002f39   Thumb Code     6  lcd_main.o(i.tft_set_special_color)
-    tft_set_text_color                       0x08002f45   Thumb Code     6  lcd_main.o(i.tft_set_text_color)
-    tft_spi_init                             0x08002f51   Thumb Code    40  lcd_main.o(i.tft_spi_init)
-    tft_update                               0x08002f85   Thumb Code   340  lcd_main.o(i.tft_update)
-    tft_write_color                          0x080030fd   Thumb Code    18  lcd_main.o(i.tft_write_color)
-    ticks_init                               0x08003149   Thumb Code   116  ticks.o(i.ticks_init)
-    us_init                                  0x0800321d   Thumb Code    20  ultrasonic.o(i.us_init)
-    _get_lc_numeric                          0x08003291   Thumb Code    44  lc_numeric_c.o(locale$$code)
-    _get_lc_ctype                            0x080032bd   Thumb Code    44  lc_ctype_c.o(locale$$code)
-    _printf_fp_dec                           0x080032e9   Thumb Code     4  printf1.o(x$fpl$printf1)
-    _printf_fp_hex                           0x080032ed   Thumb Code     4  printf2.o(x$fpl$printf2)
-    __I$use$fp                               0x080032f0   Number         0  usenofp.o(x$fpl$usenofp)
-    tft_init_code                            0x08003338   Data         113  lcd_main.o(.constdata)
-    tft_orientation_init_code                0x080033a9   Data           4  lcd_main.o(.constdata)
-    Region$$Table$$Base                      0x08003a0c   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08003a2c   Number         0  anon$$obj.o(Region$$Table)
-    __ctype                                  0x08003a55   Data           0  lc_ctype_c.o(locale$$data)
+    main                                     0x08002385   Thumb Code   208  main.o(i.main)
+    oled_clear                               0x08002485   Thumb Code    32  oled.o(i.oled_clear)
+    oled_init                                0x080024a5   Thumb Code   204  oled.o(i.oled_init)
+    rcc_init                                 0x0800257d   Thumb Code    48  rcc.o(i.rcc_init)
+    setReceive_listener                      0x080025d5   Thumb Code     6  ultrasonic.o(i.setReceive_listener)
+    set_cycle                                0x080025e1   Thumb Code    58  ultrasonic.o(i.set_cycle)
+    spi_init                                 0x08002655   Thumb Code   536  spi.o(i.spi_init)
+    spi_rcc_init                             0x08002901   Thumb Code    52  rcc.o(i.spi_rcc_init)
+    spi_tx                                   0x08002941   Thumb Code    30  spi.o(i.spi_tx)
+    tft_clear                                0x08002a3d   Thumb Code    32  lcd_main.o(i.tft_clear)
+    tft_clear_line                           0x08002a65   Thumb Code   120  lcd_main.o(i.tft_clear_line)
+    tft_enable                               0x08002b61   Thumb Code     8  lcd_main.o(i.tft_enable)
+    tft_fill_color                           0x08002b6d   Thumb Code    66  lcd_main.o(i.tft_fill_color)
+    tft_init                                 0x08002bdd   Thumb Code   194  lcd_main.o(i.tft_init)
+    tft_prints                               0x08002cc1   Thumb Code    66  lcd_main.o(i.tft_prints)
+    tft_reset                                0x08002d0d   Thumb Code    28  lcd_main.o(i.tft_reset)
+    tft_set_bg_color                         0x08002d2d   Thumb Code     6  lcd_main.o(i.tft_set_bg_color)
+    tft_set_highlight_color                  0x08002e95   Thumb Code     6  lcd_main.o(i.tft_set_highlight_color)
+    tft_set_region                           0x08002ea1   Thumb Code   152  lcd_main.o(i.tft_set_region)
+    tft_set_special_color                    0x08002f45   Thumb Code     6  lcd_main.o(i.tft_set_special_color)
+    tft_set_text_color                       0x08002f51   Thumb Code     6  lcd_main.o(i.tft_set_text_color)
+    tft_spi_init                             0x08002f5d   Thumb Code    40  lcd_main.o(i.tft_spi_init)
+    tft_update                               0x08002f91   Thumb Code   340  lcd_main.o(i.tft_update)
+    tft_write_color                          0x08003109   Thumb Code    18  lcd_main.o(i.tft_write_color)
+    ticks_init                               0x08003155   Thumb Code   114  ticks.o(i.ticks_init)
+    us_init                                  0x0800322d   Thumb Code    20  ultrasonic.o(i.us_init)
+    _get_lc_numeric                          0x080032a1   Thumb Code    44  lc_numeric_c.o(locale$$code)
+    _get_lc_ctype                            0x080032cd   Thumb Code    44  lc_ctype_c.o(locale$$code)
+    _printf_fp_dec                           0x080032f9   Thumb Code     4  printf1.o(x$fpl$printf1)
+    _printf_fp_hex                           0x080032fd   Thumb Code     4  printf2.o(x$fpl$printf2)
+    __I$use$fp                               0x08003300   Number         0  usenofp.o(x$fpl$usenofp)
+    tft_init_code                            0x08003348   Data         113  lcd_main.o(.constdata)
+    tft_orientation_init_code                0x080033b9   Data           4  lcd_main.o(.constdata)
+    Region$$Table$$Base                      0x08003a1c   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08003a3c   Number         0  anon$$obj.o(Region$$Table)
+    __ctype                                  0x08003a65   Data           0  lc_ctype_c.o(locale$$data)
     SystemCoreClock                          0x20000000   Data           4  system_stm32f10x.o(.data)
     AHBPrescTable                            0x20000004   Data          16  system_stm32f10x.o(.data)
     msec                                     0x20000014   Data           4  ticks.o(.data)
@@ -2434,9 +2434,9 @@ Memory Map of the image
 
   Image Entry point : 0x080000ed
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000042e8, Max: 0x00080000, ABSOLUTE, COMPRESSED[0x00003f18])
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000042f8, Max: 0x00080000, ABSOLUTE, COMPRESSED[0x00003f24])
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00003b58, Max: 0x00080000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00003b68, Max: 0x00080000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -2620,71 +2620,71 @@ Memory Map of the image
     0x08002358   0x08002358   0x0000000e   Code   RO         4561    i.gpio_set          oled.o
     0x08002366   0x08002366   0x0000001c   Code   RO         4696    i.gpio_write        ultrasonic.o
     0x08002382   0x08002382   0x00000002   PAD
-    0x08002384   0x08002384   0x000000fc   Code   RO         4772    i.main              main.o
-    0x08002480   0x08002480   0x00000020   Code   RO         4562    i.oled_clear        oled.o
-    0x080024a0   0x080024a0   0x000000d8   Code   RO         4564    i.oled_init         oled.o
-    0x08002578   0x08002578   0x00000030   Code   RO         4418    i.rcc_init          rcc.o
-    0x080025a8   0x080025a8   0x00000028   Code   RO         4573    i.reset             oled.o
-    0x080025d0   0x080025d0   0x0000000c   Code   RO         4698    i.setReceive_listener  ultrasonic.o
-    0x080025dc   0x080025dc   0x0000003c   Code   RO         4699    i.set_cycle         ultrasonic.o
-    0x08002618   0x08002618   0x00000030   Code   RO         4574    i.set_region        oled.o
-    0x08002648   0x08002648   0x00000264   Code   RO         3842    i.spi_init          spi.o
-    0x080028ac   0x080028ac   0x00000048   Code   RO         3843    i.spi_irq_handler   spi.o
-    0x080028f4   0x080028f4   0x00000040   Code   RO         4419    i.spi_rcc_init      rcc.o
-    0x08002934   0x08002934   0x0000001e   Code   RO         3853    i.spi_tx            spi.o
-    0x08002952   0x08002952   0x00000002   PAD
-    0x08002954   0x08002954   0x000000dc   Code   RO         3958    i.tft_char_is_changed  lcd_main.o
-    0x08002a30   0x08002a30   0x00000028   Code   RO         3959    i.tft_clear         lcd_main.o
-    0x08002a58   0x08002a58   0x00000094   Code   RO         3960    i.tft_clear_line    lcd_main.o
-    0x08002aec   0x08002aec   0x00000068   Code   RO         3961    i.tft_config        lcd_main.o
-    0x08002b54   0x08002b54   0x0000000c   Code   RO         3963    i.tft_enable        lcd_main.o
-    0x08002b60   0x08002b60   0x00000048   Code   RO         3964    i.tft_fill_color    lcd_main.o
-    0x08002ba8   0x08002ba8   0x00000028   Code   RO         3969    i.tft_incr_line     lcd_main.o
-    0x08002bd0   0x08002bd0   0x000000e4   Code   RO         3970    i.tft_init          lcd_main.o
-    0x08002cb4   0x08002cb4   0x0000004c   Code   RO         3973    i.tft_prints        lcd_main.o
-    0x08002d00   0x08002d00   0x00000020   Code   RO         3975    i.tft_reset         lcd_main.o
-    0x08002d20   0x08002d20   0x0000000c   Code   RO         3976    i.tft_set_bg_color  lcd_main.o
-    0x08002d2c   0x08002d2c   0x0000015c   Code   RO         3977    i.tft_set_buffer    lcd_main.o
-    0x08002e88   0x08002e88   0x0000000c   Code   RO         3978    i.tft_set_highlight_color  lcd_main.o
-    0x08002e94   0x08002e94   0x000000a4   Code   RO         3979    i.tft_set_region    lcd_main.o
-    0x08002f38   0x08002f38   0x0000000c   Code   RO         3980    i.tft_set_special_color  lcd_main.o
-    0x08002f44   0x08002f44   0x0000000c   Code   RO         3981    i.tft_set_text_color  lcd_main.o
-    0x08002f50   0x08002f50   0x00000034   Code   RO         3982    i.tft_spi_init      lcd_main.o
-    0x08002f84   0x08002f84   0x00000178   Code   RO         3983    i.tft_update        lcd_main.o
-    0x080030fc   0x080030fc   0x00000012   Code   RO         3984    i.tft_write_color   lcd_main.o
-    0x0800310e   0x0800310e   0x00000002   PAD
-    0x08003110   0x08003110   0x0000001c   Code   RO         3985    i.tft_write_command  lcd_main.o
-    0x0800312c   0x0800312c   0x0000001c   Code   RO         3986    i.tft_write_data    lcd_main.o
-    0x08003148   0x08003148   0x00000084   Code   RO         3402    i.ticks_init        ticks.o
-    0x080031cc   0x080031cc   0x0000004e   Code   RO         3737    i.uart_irq_handler  uart.o
-    0x0800321a   0x0800321a   0x00000002   PAD
-    0x0800321c   0x0800321c   0x0000001c   Code   RO         4701    i.us_init           ultrasonic.o
-    0x08003238   0x08003238   0x0000002c   Code   RO         4576    i.write_command     oled.o
-    0x08003264   0x08003264   0x0000002c   Code   RO         4577    i.write_data        oled.o
-    0x08003290   0x08003290   0x0000002c   Code   RO         5211    locale$$code        c_w.l(lc_numeric_c.o)
-    0x080032bc   0x080032bc   0x0000002c   Code   RO         5237    locale$$code        c_w.l(lc_ctype_c.o)
-    0x080032e8   0x080032e8   0x00000004   Code   RO         5130    x$fpl$printf1       fz_ws.l(printf1.o)
-    0x080032ec   0x080032ec   0x00000004   Code   RO         5132    x$fpl$printf2       fz_ws.l(printf2.o)
-    0x080032f0   0x080032f0   0x00000000   Code   RO         5138    x$fpl$usenofp       fz_ws.l(usenofp.o)
-    0x080032f0   0x080032f0   0x00000020   Data   RO         3744    .constdata          uart.o
-    0x08003310   0x08003310   0x00000018   Data   RO         3854    .constdata          spi.o
-    0x08003328   0x08003328   0x00000085   Data   RO         3988    .constdata          lcd_main.o
-    0x080033ad   0x080033ad   0x00000003   PAD
-    0x080033b0   0x080033b0   0x00000040   Data   RO         4353    .constdata          adc.o
-    0x080033f0   0x080033f0   0x00000510   Data   RO         4579    .constdata          oled.o
-    0x08003900   0x08003900   0x00000010   Data   RO         4702    .constdata          ultrasonic.o
-    0x08003910   0x08003910   0x00000008   Data   RO         5054    .constdata          c_w.l(_printf_wctomb.o)
-    0x08003918   0x08003918   0x00000028   Data   RO         5083    .constdata          c_w.l(_printf_hex_int_ll_ptr.o)
-    0x08003940   0x08003940   0x00000011   Data   RO         5103    .constdata          c_w.l(__printf_flags_ss_wp.o)
-    0x08003951   0x08003951   0x00000026   Data   RO         5163    .constdata          c_w.l(_printf_fp_hex.o)
-    0x08003977   0x08003977   0x00000001   PAD
-    0x08003978   0x08003978   0x00000094   Data   RO         5186    .constdata          c_w.l(bigflt0.o)
-    0x08003a0c   0x08003a0c   0x00000020   Data   RO         5361    Region$$Table       anon$$obj.o
-    0x08003a2c   0x08003a2c   0x0000001c   Data   RO         5210    locale$$data        c_w.l(lc_numeric_c.o)
-    0x08003a48   0x08003a48   0x00000110   Data   RO         5236    locale$$data        c_w.l(lc_ctype_c.o)
+    0x08002384   0x08002384   0x00000100   Code   RO         4772    i.main              main.o
+    0x08002484   0x08002484   0x00000020   Code   RO         4562    i.oled_clear        oled.o
+    0x080024a4   0x080024a4   0x000000d8   Code   RO         4564    i.oled_init         oled.o
+    0x0800257c   0x0800257c   0x00000030   Code   RO         4418    i.rcc_init          rcc.o
+    0x080025ac   0x080025ac   0x00000028   Code   RO         4573    i.reset             oled.o
+    0x080025d4   0x080025d4   0x0000000c   Code   RO         4698    i.setReceive_listener  ultrasonic.o
+    0x080025e0   0x080025e0   0x00000044   Code   RO         4699    i.set_cycle         ultrasonic.o
+    0x08002624   0x08002624   0x00000030   Code   RO         4574    i.set_region        oled.o
+    0x08002654   0x08002654   0x00000264   Code   RO         3842    i.spi_init          spi.o
+    0x080028b8   0x080028b8   0x00000048   Code   RO         3843    i.spi_irq_handler   spi.o
+    0x08002900   0x08002900   0x00000040   Code   RO         4419    i.spi_rcc_init      rcc.o
+    0x08002940   0x08002940   0x0000001e   Code   RO         3853    i.spi_tx            spi.o
+    0x0800295e   0x0800295e   0x00000002   PAD
+    0x08002960   0x08002960   0x000000dc   Code   RO         3958    i.tft_char_is_changed  lcd_main.o
+    0x08002a3c   0x08002a3c   0x00000028   Code   RO         3959    i.tft_clear         lcd_main.o
+    0x08002a64   0x08002a64   0x00000094   Code   RO         3960    i.tft_clear_line    lcd_main.o
+    0x08002af8   0x08002af8   0x00000068   Code   RO         3961    i.tft_config        lcd_main.o
+    0x08002b60   0x08002b60   0x0000000c   Code   RO         3963    i.tft_enable        lcd_main.o
+    0x08002b6c   0x08002b6c   0x00000048   Code   RO         3964    i.tft_fill_color    lcd_main.o
+    0x08002bb4   0x08002bb4   0x00000028   Code   RO         3969    i.tft_incr_line     lcd_main.o
+    0x08002bdc   0x08002bdc   0x000000e4   Code   RO         3970    i.tft_init          lcd_main.o
+    0x08002cc0   0x08002cc0   0x0000004c   Code   RO         3973    i.tft_prints        lcd_main.o
+    0x08002d0c   0x08002d0c   0x00000020   Code   RO         3975    i.tft_reset         lcd_main.o
+    0x08002d2c   0x08002d2c   0x0000000c   Code   RO         3976    i.tft_set_bg_color  lcd_main.o
+    0x08002d38   0x08002d38   0x0000015c   Code   RO         3977    i.tft_set_buffer    lcd_main.o
+    0x08002e94   0x08002e94   0x0000000c   Code   RO         3978    i.tft_set_highlight_color  lcd_main.o
+    0x08002ea0   0x08002ea0   0x000000a4   Code   RO         3979    i.tft_set_region    lcd_main.o
+    0x08002f44   0x08002f44   0x0000000c   Code   RO         3980    i.tft_set_special_color  lcd_main.o
+    0x08002f50   0x08002f50   0x0000000c   Code   RO         3981    i.tft_set_text_color  lcd_main.o
+    0x08002f5c   0x08002f5c   0x00000034   Code   RO         3982    i.tft_spi_init      lcd_main.o
+    0x08002f90   0x08002f90   0x00000178   Code   RO         3983    i.tft_update        lcd_main.o
+    0x08003108   0x08003108   0x00000012   Code   RO         3984    i.tft_write_color   lcd_main.o
+    0x0800311a   0x0800311a   0x00000002   PAD
+    0x0800311c   0x0800311c   0x0000001c   Code   RO         3985    i.tft_write_command  lcd_main.o
+    0x08003138   0x08003138   0x0000001c   Code   RO         3986    i.tft_write_data    lcd_main.o
+    0x08003154   0x08003154   0x00000088   Code   RO         3402    i.ticks_init        ticks.o
+    0x080031dc   0x080031dc   0x0000004e   Code   RO         3737    i.uart_irq_handler  uart.o
+    0x0800322a   0x0800322a   0x00000002   PAD
+    0x0800322c   0x0800322c   0x0000001c   Code   RO         4701    i.us_init           ultrasonic.o
+    0x08003248   0x08003248   0x0000002c   Code   RO         4576    i.write_command     oled.o
+    0x08003274   0x08003274   0x0000002c   Code   RO         4577    i.write_data        oled.o
+    0x080032a0   0x080032a0   0x0000002c   Code   RO         5211    locale$$code        c_w.l(lc_numeric_c.o)
+    0x080032cc   0x080032cc   0x0000002c   Code   RO         5237    locale$$code        c_w.l(lc_ctype_c.o)
+    0x080032f8   0x080032f8   0x00000004   Code   RO         5130    x$fpl$printf1       fz_ws.l(printf1.o)
+    0x080032fc   0x080032fc   0x00000004   Code   RO         5132    x$fpl$printf2       fz_ws.l(printf2.o)
+    0x08003300   0x08003300   0x00000000   Code   RO         5138    x$fpl$usenofp       fz_ws.l(usenofp.o)
+    0x08003300   0x08003300   0x00000020   Data   RO         3744    .constdata          uart.o
+    0x08003320   0x08003320   0x00000018   Data   RO         3854    .constdata          spi.o
+    0x08003338   0x08003338   0x00000085   Data   RO         3988    .constdata          lcd_main.o
+    0x080033bd   0x080033bd   0x00000003   PAD
+    0x080033c0   0x080033c0   0x00000040   Data   RO         4353    .constdata          adc.o
+    0x08003400   0x08003400   0x00000510   Data   RO         4579    .constdata          oled.o
+    0x08003910   0x08003910   0x00000010   Data   RO         4702    .constdata          ultrasonic.o
+    0x08003920   0x08003920   0x00000008   Data   RO         5054    .constdata          c_w.l(_printf_wctomb.o)
+    0x08003928   0x08003928   0x00000028   Data   RO         5083    .constdata          c_w.l(_printf_hex_int_ll_ptr.o)
+    0x08003950   0x08003950   0x00000011   Data   RO         5103    .constdata          c_w.l(__printf_flags_ss_wp.o)
+    0x08003961   0x08003961   0x00000026   Data   RO         5163    .constdata          c_w.l(_printf_fp_hex.o)
+    0x08003987   0x08003987   0x00000001   PAD
+    0x08003988   0x08003988   0x00000094   Data   RO         5186    .constdata          c_w.l(bigflt0.o)
+    0x08003a1c   0x08003a1c   0x00000020   Data   RO         5361    Region$$Table       anon$$obj.o
+    0x08003a3c   0x08003a3c   0x0000001c   Data   RO         5210    locale$$data        c_w.l(lc_numeric_c.o)
+    0x08003a58   0x08003a58   0x00000110   Data   RO         5236    locale$$data        c_w.l(lc_ctype_c.o)
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08003b58, Size: 0x00001620, Max: 0x00010000, ABSOLUTE, COMPRESSED[0x000003c0])
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08003b68, Size: 0x00001620, Max: 0x00010000, ABSOLUTE, COMPRESSED[0x000003bc])
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -2717,7 +2717,7 @@ Image component sizes
         96         16         64         85         96       3535   adc.o
         96         12          0        157          0       7762   camera.o
       2094        282        133       1557       2000      17388   lcd_main.o
-       276         50          0         16          0       1222   main.o
+       280         58          0         16          0       1218   main.o
        112         12          0          0          0     241284   misc.o
        484         38       1296          0          0       5197   oled.o
        124         12          0          0          0       1630   rcc.o
@@ -2731,12 +2731,12 @@ Image component sizes
        232          0          0          0          0       5917   stm32f10x_spi.o
        124          0          0          0          0       3226   stm32f10x_usart.o
        328         28          0         20          0       2145   system_stm32f10x.o
-       204         38          0          9          0      27722   ticks.o
+       208         44          0          9          0      27722   ticks.o
        110         12         32         48          0       4126   uart.o
-       174         22         16          8          0       4392   ultrasonic.o
+       182         24         16          8          0       4392   ultrasonic.o
 
     ----------------------------------------------------------------------
-      5986        678       1836       1936       3632     351523   Object Totals
+      6002        694       1836       1936       3632     351519   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         16          0          3          8          0          0   (incl. Padding)
 
@@ -2844,15 +2844,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     12804        944       2388       1936       3728     348907   Grand Totals
-     12804        944       2388        960       3728     348907   ELF Image Totals (compressed)
-     12804        944       2388        960          0          0   ROM Totals
+     12820        960       2388       1936       3728     348903   Grand Totals
+     12820        960       2388        956       3728     348903   ELF Image Totals (compressed)
+     12820        960       2388        956          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                15192 (  14.84kB)
+    Total RO  Size (Code + RO Data)                15208 (  14.85kB)
     Total RW  Size (RW Data + ZI Data)              5664 (   5.53kB)
-    Total ROM Size (Code + RO Data + RW Data)      16152 (  15.77kB)
+    Total ROM Size (Code + RO Data + RW Data)      16164 (  15.79kB)
 
 ==============================================================================
 

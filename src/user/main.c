@@ -25,7 +25,7 @@
 #include "adc.h"
 #include "ultrasonic.h"
 
-const int cycle=50;//in ms, 1 cycle for signal, 5 cycle after receive echo
+const int cycle=5;//in ms, 1 cycle for signal, 5 cycle after receive echo
 int TOTAL=0;
 int FLAG=0;
 
@@ -61,12 +61,12 @@ int main() {
 		if(set_cycle(TOTAL,cycle))
 		{
 			tft_clear();
-			tft_prints(0,0,"no %d"	,TOTAL);
+			tft_prints(0,0,"detected at %d"	,TOTAL);
 			tft_update();
-			TOTAL=0;
+			//TOTAL=0;
 		}
 		
-		if(TOTAL>20*cycle)
+		if(TOTAL>2000*cycle)
 		{
 			TOTAL=0;
 		}

@@ -26,7 +26,8 @@ static UltrasonicStruct TRIG_pin = {trig_PIN, 0};
 void us_init()
 {
 	gpio_init(send_PIN, GPIO_Mode_Out_PP);
-	gpio_init(trig_PIN, GPIO_Mode_IN_FLOATING);// no sure about the init mode is correct
+	//gpio_init(trig_PIN, GPIO_Mode_IN_FLOATING);// no sure about the init mode is correct
+	gpio_init(trig_PIN, GPIO_Mode_IPU);// no sure about the init mode is correct
 }
 
 void set_send_signal()
@@ -46,16 +47,17 @@ void setReceive_listener(listener event)
 
 int set_cycle(int ticks, int cycle)//set cycle got problem
 {
+	SysTick->VAL;
 	//1 cycle no receive
-	if(ticks<=cycle)
+	if(ticks<=5*cycle)
 	{
 		gpio_write(send_PIN,1);
 	}
-	else
+	else //if(ticks<=3*cycle)
 	{
 		gpio_write(send_PIN,0);
 	}
-	if(ticks>5*cycle)
+	if(ticks>10*cycle)
 	{
 		if(gpio_read(trig_PIN))
 		{
