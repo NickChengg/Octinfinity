@@ -17,8 +17,8 @@ void ticks_init(void) {
 	NVIC_InitStructure.NVIC_IRQChannel = SysTick_IRQn; //Ignore this warning
 	NVIC_Init(&NVIC_InitStructure);
 	
-	SysTick_Config(SystemCoreClock / 1000); //modify
-	//SysTick_Config(SystemCoreClock / 1000000); //modify to 1 nanosecond
+	SysTick_Config(SystemCoreClock / 1000); 
+
 	msec = 0;
 }
 
@@ -53,6 +53,10 @@ u32 get_ticks(void) {
 	return msec;
 }
 
+u32 get_subticks(void) {
+  return SysTick->VAL;
+}
+
 /**
   * @brief  Wait fot the time specified by the user
   * @param  ms Amount of time in ms
@@ -69,6 +73,5 @@ void delay(u32 ms){
  */		
 void ms_loop_handler() {
 	while (tick_tock); //the magic of interrupts will reset this variable every 1ms
-
 	tick_tock = 1;
 }
