@@ -24,59 +24,21 @@
 #include "pwm.h"
 #include "adc.h"
 
-u16 mag_FL = 0, mag_FR = 0, mag_BL = 0, mag_BR = 0; //magnetic reading in (front/back)(left/right)
-u16 servo_OC = (int)(5000 * 1.5 /20); //0.9 for leftmost, 2.1 for rightmost
-
-
-
-void mag_read() {
-	mag_FL = get_adc(ADC_IO_1);
-	mag_FR = get_adc(ADC_IO_2);
-	mag_BL = get_adc(ADC_IO_3);
-	mag_BR = get_adc(ADC_IO_4);
-}
-
-int mag_OC_cal(int L_reading, int R_reading) { //left right reading from magnetic sensors
-	const u32 max_reading = 1200; //max reading of sensor(closest), test! 
-	const u32 min_reading = 300; //min reading of sensor(farest), i.e. the value of background noise, test!
-	const float sensitivity = 1; //0-1, increse to turn more, vice versa
-	s16 turning_percentage = 0; //turning percentage for servo, 100 for 100% of turning; -ve = left, +ve = right
-
-	if (ABS(mag_FR - mag_FL) * sensitivity < (max_reading - min_reading)) {
-		turning_percentage = (float)(R_reading - L_reading) / (max_reading - min_reading) * 100 * sensitivity;
-	}
-	else { // fix the range within -100 and 100
-		turning_percentage = R_reading > L_reading ? 100 : -100;
-	}
-	
-	return (int)(5000 * (1.5 + turning_percentage * 0.006) / 20);
-}
-
-void mag_compare() {
-	const u32 acceptable_diff = 0; //turn only when excess acceptable difference, test! really need??
-
-	if (ABS(mag_FL - mag_FR) > acceptable_diff) {
-		servo_OC = mag_OC_cal(mag_FL, mag_FR);
-	}
-	else if (ABS(mag_BL - mag_BR) > acceptable_diff) {
-		servo_OC = mag_OC_cal(mag_BL, mag_BR);
-	}
-}
-
+u16 fullSpeed =100;
+int16_t OC1 = 0, OC2 = 0;//
+u32 move_tick = 0; //count 1s
+u8 debounce1 = 0, debounce2 = 0, debounce3 = 0;
+u8 moveDirection1 = 1, moveDirection2 = 1;
+u8 select_motor = 1;
 
 int main() {
 	// Initialize Everything Here
 	rcc_init();
 	ticks_init();
-	oled_init();
-	adc_channel_init(ADC_IO_1); //magnetic sensor in front left
-	adc_channel_init(ADC_IO_2); //magnetic sensor in front right
-	adc_channel_init(ADC_IO_3); //magnetic sensor in back left
-	adc_channel_init(ADC_IO_4); //magnetic sensor in back right
-	adc_init();
-	servo_init(SERVO1, 287, 5000, 375); //5000 * x /20	//x=1.5->mid
-	
-	
+	buttons_init();
+	tft_init(PIN_ON_TOP, WHITE, BLACK, RED, YELLOW); 
+	motor_init(MOTOR1, 144, fullSpeed, OC1, moveDirection1); //at rest
+	motor_init(MOTOR2, 144, fullSpeed, OC2, moveDirection2); //at rest
 	
 	while (1) {
 		static u32 this_ticks = 0;
@@ -84,12 +46,65 @@ int main() {
 		this_ticks = get_ticks();
 
 		static u32 last_led_ticks=0;
-		if ((this_ticks - last_led_ticks) >= 25) {
+		if ((this_ticks - last_led_ticks) >= 10) {
 			last_led_ticks = this_ticks;
-			//Code in here will run every 25ms
-			mag_read();
-			mag_compare();
-			servo_control(SERVO1, servo_OC);
+			//Code in here will run every xx ms
+			
+			if (!button_pressed(BUTTON1) && debounce1) {	//button pressed
+				debounce1 = 0;
+			}
+			if (button_pressed(BUTTON1) && !debounce1) {
+				debounce1 = 1;
+				if (select_motor == 1)
+					OC1 += fullSpeed / 20;
+				else OC2 += fullSpeed / 20;
+				
+			}
+			
+			if (!button_pressed(BUTTON2) && debounce2) {
+				debounce2 = 0;
+			}
+			if (button_pressed(BUTTON2) && !debounce2) {
+				debounce2 = 1;
+				if (select_motor == 1)
+					OC1 -= fullSpeed / 20;
+				else OC2 -= fullSpeed / 20;
+				
+			}
+			
+			if (!button_pressed(BUTTON3) && debounce3) {
+				debounce3 = 0;
+			}
+			if (button_pressed(BUTTON3) && !debounce3) {
+				debounce3 = 1;
+				if (select_motor == 1) {
+					select_motor = 2;
+				}
+				else select_motor = 1;
+			}
+
+			OC1 = OC1>100? 100: OC1;
+			OC1 = OC1<-100? -100: OC1;
+			OC2 = OC2>100? 100: OC2;
+			OC2 = OC2<-100? -100: OC2;
+			
+			if (OC1>=0) {
+				moveDirection1 = 1;
+			}
+			else {
+				moveDirection1 = 0;
+			}
+			if (OC2>=0) {
+				moveDirection2 = 1;
+			}
+			else {
+				moveDirection2 = 0;
+			}
+			tft_clear();
+			tft_prints(0,0,"OC1:%d\nOC2:%d\n\nmotor sel:%d", OC1, OC2, select_motor);
+			tft_update();
+			motor_control(MOTOR1, ABS((int)OC1), moveDirection1);
+			motor_control(MOTOR2, ABS((int)OC2), moveDirection2);
 		}
 	}
 }

@@ -330,6 +330,7 @@ static void tft_set_buffer(u8 x, u8 y, u8 * fp) {
 			case '\r':
 			case '\n':
 				j++;
+				i=0;
 				tft_incr_line();
 				break;
 			case '[':
