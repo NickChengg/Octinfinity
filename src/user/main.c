@@ -28,7 +28,10 @@
 const int cycle=5;//in ms, 1 cycle for signal, 5 cycle after receive echo
 int TOTAL=0;
 
-
+void EXTI5_IRQHandler()
+{
+	FLAG=1;
+}
 void EchoPrint()
 {
 	FLAG=1;
@@ -49,7 +52,7 @@ int main() {
 	
 	us_init();
 	setReceive_listener(EchoPrint);//set interupt to receive ultrasonic
-	gpio_exti_init(GPIO8,);
+	gpio_exti_init(GPIO8,EXTI_Trigger_Rising_Falling);
 	
 	
 	while (1) {
