@@ -22,7 +22,7 @@ long int set_cycle(int ticks, int cycle);
 
 
 static UltrasonicStruct TRIG_pin = {trig_PIN, 0};
-long int ULTRA_EMIT=0;//used to store hardware emit signal time
+
 
 
 void us_init()
@@ -71,6 +71,9 @@ long int set_cycle(int ticks, int cycle)//set cycle got problem
 	
 }
 
+
+
+
 int detect_signal()
 {
 	if(gpio_read(trig_PIN))
@@ -80,15 +83,3 @@ int detect_signal()
 	return 0;
 }
 
-void EXTI7_IRQHandler()
-{
-	
-		if(gpio_read(trig_PIN))
-		{
-			long int temp=SysTick->VAL-ULTRA_EMIT;
-			ULTRA_EMIT=SysTick->VAL;
-			OUT_NUM=temp;
-			FLAG=1;
-		}
-	
-}

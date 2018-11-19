@@ -28,16 +28,30 @@
 const int cycle=5;//in ms, 1 cycle for signal, 5 cycle after receive echo
 int TOTAL=0;
 
+/*
 void EXTI5_IRQHandler()
 {
 	FLAG=1;
 }
+*/
 void EchoPrint()
 {
-	FLAG=1;
+	//FLAG=1;
 	TOTAL=0;
 }
 
+void EXTI8_IRQHandler()
+{
+	
+		//if(gpio_read(trig_PIN))
+		{
+			uint32_t temp=SysTick->VAL-ULTRA_EMIT;
+			ULTRA_EMIT=SysTick->VAL;
+			OUT_NUM=temp;
+			FLAG=1;
+		}
+	
+}
 
 int main() {
 	// Initialize Everything Here
@@ -52,7 +66,7 @@ int main() {
 	
 	us_init();
 	setReceive_listener(EchoPrint);//set interupt to receive ultrasonic
-	gpio_exti_init(GPIO8,EXTI_Trigger_Rising_Falling);
+	gpio_exti_init(GPIO8,EXTI_Trigger_Rising);
 	
 	
 	while (1) {
@@ -68,11 +82,13 @@ int main() {
 			tft_prints(0,0,"???"	,TOTAL);
 			tft_update();
 		}
+		//long int reflection=set_cycle(TOTAL,cycle);
 		
 		static u32 last_led_ticks=0;
 		if ((this_ticks - last_led_ticks) >= 25) {
 			last_led_ticks = this_ticks;
-			long int temp=set_cycle(TOTAL,cycle);
+			
+			/*
 		if(temp)
 		{
 			tft_clear();
@@ -80,6 +96,7 @@ int main() {
 			tft_update();
 			//TOTAL=0;
 		}
+			*/
 			//Code in here will run every 25ms
 			
 		}

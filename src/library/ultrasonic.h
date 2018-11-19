@@ -13,5 +13,6 @@ void reset_send_signal();
 void setReceive_listener(listener event);
 long int set_cycle(int ticks, int cycle);
 
-int FLAG=0;
-long int OUT_NUM=0;
+static int FLAG=0;
+static long int OUT_NUM=0;
+static uint32_t ULTRA_EMIT=0;//used to store hardware emit signal time
