@@ -38,7 +38,6 @@
 ".\objects\rcc.o"
 ".\objects\math.o"
 ".\objects\oled.o"
-".\objects\ultrasonic.o"
 ".\objects\main.o"
 "C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Lib\ARM\arm_cortexM3l_math.lib"
 --strict --scatter ".\Objects\ustrobo18_internal.sct"
