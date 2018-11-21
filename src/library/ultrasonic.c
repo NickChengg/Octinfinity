@@ -51,7 +51,7 @@ void setReceive_listener(listener event)
 long int set_cycle(int ticks, int cycle)//set cycle got problem
 {
 	//1 cycle no receive
-	if(SysTick->VAL-ULTRA_EMIT<10)//send signal in 5 clock
+	if(SysTick->VAL-ULTRA_EMIT<1000)//1000clock cycle= 13.8us
 	{
 		set_send_signal();
 	}
@@ -59,14 +59,14 @@ long int set_cycle(int ticks, int cycle)//set cycle got problem
 	{
 		reset_send_signal();
 	}
-	if(SysTick->VAL-ULTRA_EMIT>11)
+	if(SysTick->VAL-ULTRA_EMIT>1100)//start to detect after 100 more cycle
 	{
-		if(SysTick->VAL-ULTRA_EMIT>200)
+		if(SysTick->VAL-ULTRA_EMIT>100000)
 		{
 			ULTRA_EMIT=SysTick->VAL;
 			
 		}
-		if(gpio_read(trig_PIN))
+		//if(gpio_read(trig_PIN))//no use now
 		{
 			//long int temp=SysTick->VAL-ULTRA_EMIT;
 			//ULTRA_EMIT=SysTick->VAL;

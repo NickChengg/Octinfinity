@@ -83,7 +83,7 @@ int main() {
 		
 		
 		//while (get_ticks() == this_ticks)
-		while(SysTick->VAL==this_ticks)
+		while(SysTick->VAL==this_ticks)//the speed of code become 1/72,000,000
 		{
 			
 		}
