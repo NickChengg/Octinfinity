@@ -30,6 +30,7 @@ void us_init()
 	gpio_init(echo_PIN, GPIO_Mode_Out_PP);
 	//gpio_init(trig_PIN, GPIO_Mode_IN_FLOATING);// no sure about the init mode is correct
 	gpio_init(trig_PIN, GPIO_Mode_IPU);// no sure about the init mode is correct
+	//gpio_init(trig_PIN, GPIO_Mode_IPD);// no sure about the init mode is correct
 }
 
 void set_send_signal()
@@ -50,7 +51,7 @@ void setReceive_listener(listener event)
 long int set_cycle(int ticks, int cycle)//set cycle got problem
 {
 	//1 cycle no receive
-	if(SysTick->VAL-ULTRA_EMIT<5)//send signal in 5 clock
+	if(SysTick->VAL-ULTRA_EMIT<10)//send signal in 5 clock
 	{
 		set_send_signal();
 	}
@@ -58,8 +59,13 @@ long int set_cycle(int ticks, int cycle)//set cycle got problem
 	{
 		reset_send_signal();
 	}
-	if(SysTick->VAL-ULTRA_EMIT>10)
+	if(SysTick->VAL-ULTRA_EMIT>11)
 	{
+		if(SysTick->VAL-ULTRA_EMIT>200)
+		{
+			ULTRA_EMIT=SysTick->VAL;
+			
+		}
 		if(gpio_read(trig_PIN))
 		{
 			long int temp=SysTick->VAL-ULTRA_EMIT;
