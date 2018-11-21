@@ -56,8 +56,8 @@ STAY = 15,
 } PROGRESS;
 
 //init
-MOVEMENT movement= STILL;
-PROGRESS progress = INIT;
+static MOVEMENT movement= STILL;
+static PROGRESS progress = INIT;
 u32 escape_ticks = 0; //time of start turning
 u8 move_count = 0; //no. of grip+turn to go
 

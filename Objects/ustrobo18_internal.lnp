@@ -39,7 +39,7 @@
 ".\objects\math.o"
 ".\objects\oled.o"
 ".\objects\main.o"
-"C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Lib\ARM\arm_cortexM3l_math.lib"
+"C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Lib\ARM\arm_cortexM3l_math.lib"
 --strict --scatter ".\Objects\ustrobo18_internal.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
