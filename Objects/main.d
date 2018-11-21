@@ -33,3 +33,4 @@
 .\objects\main.o: .\src\library\adc.h
 .\objects\main.o: C:\software\Keil\ARM\ARMCC\Bin\..\include\math.h
 .\objects\main.o: .\src\stm32f10x_std\inc\stm32f10x_tim.h
+.\objects\main.o: C:\software\Keil\ARM\ARMCC\Bin\..\include\stdio.h
