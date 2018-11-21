@@ -68,9 +68,9 @@ long int set_cycle(int ticks, int cycle)//set cycle got problem
 		}
 		if(gpio_read(trig_PIN))
 		{
-			long int temp=SysTick->VAL-ULTRA_EMIT;
-			ULTRA_EMIT=SysTick->VAL;
-			return temp;
+			//long int temp=SysTick->VAL-ULTRA_EMIT;
+			//ULTRA_EMIT=SysTick->VAL;
+			//return temp;
 		}
 	}
 	return 0;

@@ -50,9 +50,9 @@ void EXTI7_IRQHandler()
 	
 		//if(gpio_read(trig_PIN))
 		{
-			//uint32_t temp=SysTick->VAL-ULTRA_EMIT;
-			//ULTRA_EMIT=SysTick->VAL;
-			//OUT_NUM=temp;
+			uint32_t temp=SysTick->VAL-ULTRA_EMIT;
+			ULTRA_EMIT=SysTick->VAL;
+			OUT_NUM=temp;
 			FLAG=1;
 		}
 	
@@ -107,7 +107,7 @@ int main() {
 		if(FLAG)
 		{
 			tft_clear();
-			tft_prints(0,0,"??? %d"	,output);
+			tft_prints(0,0,"??? %d"	,OUT_NUM);
 			tft_update();
 			FLAG=0;
 		}
