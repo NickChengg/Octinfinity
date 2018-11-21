@@ -18,7 +18,7 @@ void us_init();
 void set_send_signal();
 void reset_send_signal();
 void setReceive_listener(listener event);
-long int set_cycle(int ticks, int cycle);
+void set_cycle();
 
 
 static UltrasonicStruct TRIG_pin = {trig_PIN, 0};
@@ -48,7 +48,7 @@ void setReceive_listener(listener event)
 		TRIG_pin.receive_action=event;
 }
 
-long int set_cycle(int ticks, int cycle)//set cycle got problem
+void set_cycle()//set cycle got problem
 {
 	//1 cycle no receive
 	if(SysTick->VAL-ULTRA_EMIT<1000)//1000clock cycle= 13.8us
@@ -73,7 +73,7 @@ long int set_cycle(int ticks, int cycle)//set cycle got problem
 			//return temp;
 		}
 	}
-	return 0;
+	//return 0;
 	
 }
 
