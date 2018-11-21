@@ -489,6 +489,7 @@ Section Cross References
     main.o(i.main) refers to d2f.o(x$fpl$d2f) for __aeabi_d2f
     main.o(i.main) refers to f2d.o(x$fpl$f2d) for __aeabi_f2d
     main.o(i.main) refers to main.o(.constdata) for PA7
+    main.o(i.main) refers to main.o(.data) for ULTRA_EMIT
     arm_cos_q15.o(.text) refers to arm_common_tables.o(.constdata) for sinTable_q15
     arm_sin_q15.o(.text) refers to arm_common_tables.o(.constdata) for sinTable_q15
     vsprintf.o(.text) refers (Special) to _printf_a.o(.ARM.Collect$$_printf_percent$$00000006) for _printf_a
