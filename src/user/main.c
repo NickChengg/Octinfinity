@@ -194,6 +194,8 @@ void motor_action(u32 this_ticks) {
 			}
 			break;
 		}
+		default:
+			break;
 	}
 	
 	switch (movement) {
@@ -264,6 +266,8 @@ void motor_action(u32 this_ticks) {
 			}
 			break;
 		}
+		default:
+			break;
 	}
 }
 
