@@ -61,7 +61,7 @@ long int set_cycle(int ticks, int cycle)//set cycle got problem
 	}
 	if(SysTick->VAL-ULTRA_EMIT>1100)//start to detect after 100 more cycle
 	{
-		if(SysTick->VAL-ULTRA_EMIT>100000)
+		if(SysTick->VAL-ULTRA_EMIT>1000000)
 		{
 			ULTRA_EMIT=SysTick->VAL;
 			

@@ -28,7 +28,8 @@
 const int cycle=5;//in ms, 1 cycle for signal, 5 cycle after receive echo
 int TOTAL=0;
 static long int output= 0;
-
+const double TRAN_CM=1*340.0*100/72000000.0;
+float dist_cm=0;
 /*
 void EXTI8_IRQHandler()
 {
@@ -51,6 +52,10 @@ void EXTI7_IRQHandler()
 		//if(gpio_read(trig_PIN))
 		{
 			uint32_t temp=SysTick->VAL-ULTRA_EMIT;
+			if(temp>1000000)
+			{
+				temp=1000000;
+			}
 			ULTRA_EMIT=SysTick->VAL;
 			OUT_NUM=temp;
 			FLAG=1;
@@ -106,8 +111,9 @@ int main() {
 		
 		if(FLAG)
 		{
+			dist_cm=OUT_NUM*TRAN_CM;
 			tft_clear();
-			tft_prints(0,0,"??? %d"	,OUT_NUM);
+			tft_prints(0,0,"??? %lu \nDetected at distances:%f\n%f"	,OUT_NUM,dist_cm,TRAN_CM);
 			tft_update();
 			FLAG=0;
 		}
