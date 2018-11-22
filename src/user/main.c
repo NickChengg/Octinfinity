@@ -23,44 +23,48 @@
 #include "camera.h"
 #include "pwm.h"
 #include "adc.h"
+#include "ultrasonic.h"
 
-u16 mag_FL = 0, mag_FR = 0, mag_BL = 0, mag_BR = 0; //magnetic reading in (front/back)(left/right)
-u16 servo_OC = (int)(5000 * 1.5 /20); //0.9 for leftmost, 2.1 for rightmost
-
-
-
-void mag_read() {
-	mag_FL = get_adc(ADC_IO_1);
-	mag_FR = get_adc(ADC_IO_2);
-	mag_BL = get_adc(ADC_IO_3);
-	mag_BR = get_adc(ADC_IO_4);
+const int cycle=5;//in ms, 1 cycle for signal, 5 cycle after receive echo
+int TOTAL=0;
+static long int output= 0;
+const double TRAN_CM=1*340.0*100/72000000.0;
+float dist_cm=0;
+static uint32_t this_ticks = 0;
+void EchoPrint()
+{
+	//FLAG=1;
+	TOTAL=0;
 }
 
-int mag_OC_cal(int L_reading, int R_reading) { //left right reading from magnetic sensors
-	const u32 max_reading = 1200; //max reading of sensor(closest), test! 
-	const u32 min_reading = 300; //min reading of sensor(farest), i.e. the value of background noise, test!
-	const float sensitivity = 1; //0-1, increse to turn more, vice versa
-	s16 turning_percentage = 0; //turning percentage for servo, 100 for 100% of turning; -ve = left, +ve = right
 
-	if (ABS(mag_FR - mag_FL) * sensitivity < (max_reading - min_reading)) {
-		turning_percentage = (float)(R_reading - L_reading) / (max_reading - min_reading) * 100 * sensitivity;
-	}
-	else { // fix the range within -100 and 100
-		turning_percentage = R_reading > L_reading ? 100 : -100;
-	}
+void EXTI7_IRQHandler()
+{
+	uint32_t temp=SysTick->VAL;//fix the clock cycle
+	if(temp-ULTRA_EMIT>10)
+	{
+			if(temp-ULTRA_EMIT>10)
+			{
+				OUT_NUM=temp-ULTRA_EMIT;//now sysclock-sysclock of sending signal
+			}
+			else
+			{
+				//OUT_NUM=temp+72000000-ULTRA_EMIT;
+				OUT_NUM=temp;
+			}
+			
+			//if(temp>1000000)//check out of bound by clock
+			if(OUT_NUM>1000000)
+			{
+				OUT_NUM=1000000;
+			}
+			ULTRA_EMIT=SysTick->VAL;
+			//OUT_NUM=temp;
+			//translate into cm
+			dist_cm=OUT_NUM*TRAN_CM;
+			FLAG=1;
+		}
 	
-	return (int)(5000 * (1.5 + turning_percentage * 0.006) / 20);
-}
-
-void mag_compare() {
-	const u32 acceptable_diff = 0; //turn only when excess acceptable difference, test! really need??
-
-	if (ABS(mag_FL - mag_FR) > acceptable_diff) {
-		servo_OC = mag_OC_cal(mag_FL, mag_FR);
-	}
-	else if (ABS(mag_BL - mag_BR) > acceptable_diff) {
-		servo_OC = mag_OC_cal(mag_BL, mag_BR);
-	}
 }
 
 
@@ -69,27 +73,51 @@ int main() {
 	rcc_init();
 	ticks_init();
 	oled_init();
-	adc_channel_init(ADC_IO_1); //magnetic sensor in front left
-	adc_channel_init(ADC_IO_2); //magnetic sensor in front right
-	adc_channel_init(ADC_IO_3); //magnetic sensor in back left
-	adc_channel_init(ADC_IO_4); //magnetic sensor in back right
-	adc_init();
-	servo_init(SERVO1, 287, 5000, 375); //5000 * x /20	//x=1.5->mid
 	
+	tft_init(0, WHITE, RED, GREEN, DARK_RED);
+	tft_clear();
+	tft_prints(0,0,"hello",TOTAL);
+	tft_update();
 	
+	us_init();
+	//setReceive_listener(EchoPrint);//set interupt to receive ultrasonic
+	gpio_exti_init(GPIO8,EXTI_Trigger_Rising_Falling);
+	//gpio_exti_init(GPIO8,EXTI_Trigger_Rising);
+	ULTRA_EMIT=SysTick->VAL;
 	
 	while (1) {
-		static u32 this_ticks = 0;
-		while (get_ticks() == this_ticks);
-		this_ticks = get_ticks();
-
+		
+		
+		//while (get_ticks() == this_ticks)
+		while(SysTick->VAL==this_ticks)//the speed of code become 1/72,000,000
+		{
+			
+		}
+		//this_ticks =get_ticks(); 
+		this_ticks =SysTick->VAL;//
+		
+		set_cycle(this_ticks);
+		//this_ticks = SysTick->VAL;//get_ticks();
+		
+		
+		if(FLAG)
+		{
+			tft_clear();
+			tft_prints(0,0,"??? %lu \nDetected at distances:%f\n%f"	,OUT_NUM,dist_cm,TRAN_CM);
+			tft_update();
+			FLAG=0;
+		}
+		
+		//long int reflection=set_cycle(TOTAL,cycle);
 		static u32 last_led_ticks=0;
 		if ((this_ticks - last_led_ticks) >= 25) {
 			last_led_ticks = this_ticks;
+			
+		
+		
+
 			//Code in here will run every 25ms
-			mag_read();
-			mag_compare();
-			servo_control(SERVO1, servo_OC);
+			
 		}
 	}
 }
