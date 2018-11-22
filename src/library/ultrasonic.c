@@ -69,7 +69,7 @@ void set_cycle(u32 this_ticks)//set cycle got problem
 	}
 	*/
 	
-	if(this_ticks%100==1)
+	if(this_ticks%100==0)
 	{
 		set_send_signal();
 		ULTRA_EMIT=SysTick->VAL;

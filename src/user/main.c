@@ -30,6 +30,7 @@
 //static long int output= 0;
 const double TRAN_CM=1*340.0*100/72000000.0;
 float dist_cm=0;
+static u32 this_ticks = 0;
 /*
 void EXTI8_IRQHandler()
 {
@@ -47,17 +48,23 @@ void EXTI7_IRQHandler()
 	
 		//if(gpio_read(trig_PIN))
 		{
-			uint32_t temp=SysTick->VAL;//fix the clock cycle
+			if(this_ticks%100==0)
+			{
+				return;
+			}
+			u32 temp=SysTick->VAL;//fix the clock cycle
 			if(temp>ULTRA_EMIT)
 			{
 				OUT_NUM=temp-ULTRA_EMIT;//now sysclock-sysclock of sending signal
 			}
 			else
 			{
-				OUT_NUM=temp+72000000-ULTRA_EMIT;
+				//OUT_NUM=temp+72000000-ULTRA_EMIT;
+				OUT_NUM=temp;
 			}
-			//if(temp>1000000)//check out of bound by clock
-			if(OUT_NUM>1000000)
+			
+			if(temp>1000000)//check out of bound by clock
+			//if(OUT_NUM>72000000)
 			{
 				OUT_NUM=1000000;
 			}
@@ -84,21 +91,21 @@ int main() {
 	
 	us_init();
 	gpio_exti_init(GPIO8,EXTI_Trigger_Rising_Falling);
+	//gpio_exti_init(GPIO8,EXTI_Trigger_Rising);
 	ULTRA_EMIT=SysTick->VAL;
 	
 	while (1) {
-		static u32 this_ticks = 0;
+		
 		
 		while (get_ticks() == this_ticks)
 		//while(SysTick->VAL==this_ticks)//the speed of code become 1/72,000,000
 		{
 			
 		}
-		
-		set_cycle(this_ticks);
 		this_ticks =get_ticks(); 
 		//this_ticks =SysTick->VAL;//
 		
+		set_cycle(this_ticks);
 		
 		
 		if(FLAG)
