@@ -49,7 +49,7 @@ void setReceive_listener(listener event)
 
 void set_cycle(u32 this_ticks)//set cycle got problem
 {
-	/*
+	
 	//1 cycle no receive
 	if(SysTick->VAL-ULTRA_EMIT<1000)//1000clock cycle= 13.8us
 	{
@@ -59,7 +59,7 @@ void set_cycle(u32 this_ticks)//set cycle got problem
 	{
 		reset_send_signal();
 	}
-	if(SysTick->VAL-ULTRA_EMIT>1100)//start to detect after 100 more cycle
+	if(SysTick->VAL-ULTRA_EMIT>1000)//start to detect after 100 more cycle
 	{
 		if(SysTick->VAL-ULTRA_EMIT>1000000)
 		{
@@ -67,8 +67,8 @@ void set_cycle(u32 this_ticks)//set cycle got problem
 			
 		}
 	}
-	*/
 	
+	/*
 	if(this_ticks%100==0)
 	{
 		set_send_signal();
@@ -78,6 +78,7 @@ void set_cycle(u32 this_ticks)//set cycle got problem
 	{
 		reset_send_signal();
 	}
+	*/
 }
 
 

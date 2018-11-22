@@ -52,10 +52,12 @@ void EXTI7_IRQHandler()
 	
 		//if(gpio_read(trig_PIN))
 		{
+			/*
 			if(this_ticks%100==0)
 			{
 				return;
 			}
+			*/
 			u32 temp=SysTick->VAL;//fix the clock cycle
 			if(temp>ULTRA_EMIT)
 			{
@@ -72,8 +74,8 @@ void EXTI7_IRQHandler()
 			{
 				OUT_NUM=1000000;
 			}
-			//ULTRA_EMIT=SysTick->VAL;
-			//OUT_NUM=temp;
+			ULTRA_EMIT=SysTick->VAL;
+			OUT_NUM=temp;
 			//translate into cm
 			dist_cm=OUT_NUM*TRAN_CM;
 			FLAG=1;
@@ -102,20 +104,17 @@ int main() {
 	while (1) {
 		
 		
-		while (get_ticks() == this_ticks)
-		//while(SysTick->VAL==this_ticks)//the speed of code become 1/72,000,000
+		//while (get_ticks() == this_ticks)
+		while(SysTick->VAL==this_ticks)//the speed of code become 1/72,000,000
 		{
 			
 		}
-<<<<<<< HEAD
-		this_ticks =get_ticks(); 
-		//this_ticks =SysTick->VAL;//
+		//this_ticks =get_ticks(); 
+		this_ticks =SysTick->VAL;//
 		
 		set_cycle(this_ticks);
-=======
-		output = set_cycle(0,cycle);
-		this_ticks = SysTick->VAL;//get_ticks();
->>>>>>> parent of 00ecc8b... trial to larger distance
+		//output = set_cycle(0,cycle);
+		//this_ticks = SysTick->VAL;//get_ticks();
 		
 		
 		if(FLAG)
