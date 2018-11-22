@@ -30,16 +30,7 @@ int TOTAL=0;
 static long int output= 0;
 const double TRAN_CM=1*340.0*100/72000000.0;
 float dist_cm=0;
-static u32 this_ticks = 0;
-/*
-void EXTI8_IRQHandler()
-{
-	uint32_t temp=SysTick->VAL-ULTRA_EMIT;
-			ULTRA_EMIT=SysTick->VAL;
-			OUT_NUM=temp;
-	FLAG=1;
-}
-*/
+static uint32_t this_ticks = 0;
 void EchoPrint()
 {
 	//FLAG=1;
@@ -49,17 +40,10 @@ void EchoPrint()
 
 void EXTI7_IRQHandler()
 {
-	
-		//if(gpio_read(trig_PIN))
-		{
-			/*
-			if(this_ticks%100==0)
-			{
-				return;
-			}
-			*/
-			u32 temp=SysTick->VAL;//fix the clock cycle
-			if(temp>ULTRA_EMIT)
+	uint32_t temp=SysTick->VAL;//fix the clock cycle
+	if(temp-ULTRA_EMIT>10)
+	{
+			if(temp-ULTRA_EMIT>10)
 			{
 				OUT_NUM=temp-ULTRA_EMIT;//now sysclock-sysclock of sending signal
 			}
@@ -69,13 +53,13 @@ void EXTI7_IRQHandler()
 				OUT_NUM=temp;
 			}
 			
-			if(temp>1000000)//check out of bound by clock
-			//if(OUT_NUM>72000000)
+			//if(temp>1000000)//check out of bound by clock
+			if(OUT_NUM>1000000)
 			{
 				OUT_NUM=1000000;
 			}
 			ULTRA_EMIT=SysTick->VAL;
-			OUT_NUM=temp;
+			//OUT_NUM=temp;
 			//translate into cm
 			dist_cm=OUT_NUM*TRAN_CM;
 			FLAG=1;
@@ -92,11 +76,11 @@ int main() {
 	
 	tft_init(0, WHITE, RED, GREEN, DARK_RED);
 	tft_clear();
-	tft_prints(0,0,"hello"	,TOTAL);
+	tft_prints(0,0,"hello",TOTAL);
 	tft_update();
 	
 	us_init();
-	setReceive_listener(EchoPrint);//set interupt to receive ultrasonic
+	//setReceive_listener(EchoPrint);//set interupt to receive ultrasonic
 	gpio_exti_init(GPIO8,EXTI_Trigger_Rising_Falling);
 	//gpio_exti_init(GPIO8,EXTI_Trigger_Rising);
 	ULTRA_EMIT=SysTick->VAL;
@@ -113,7 +97,6 @@ int main() {
 		this_ticks =SysTick->VAL;//
 		
 		set_cycle(this_ticks);
-		//output = set_cycle(0,cycle);
 		//this_ticks = SysTick->VAL;//get_ticks();
 		
 		
@@ -126,7 +109,6 @@ int main() {
 		}
 		
 		//long int reflection=set_cycle(TOTAL,cycle);
-		
 		static u32 last_led_ticks=0;
 		if ((this_ticks - last_led_ticks) >= 25) {
 			last_led_ticks = this_ticks;

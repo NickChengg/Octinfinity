@@ -51,7 +51,7 @@ void set_cycle(u32 this_ticks)//set cycle got problem
 {
 	
 	//1 cycle no receive
-	if(SysTick->VAL-ULTRA_EMIT<1000)//1000clock cycle= 13.8us
+	if(SysTick->VAL<(ULTRA_EMIT+100))//1000clock cycle= 13.8us
 	{
 		set_send_signal();
 	}
@@ -59,9 +59,9 @@ void set_cycle(u32 this_ticks)//set cycle got problem
 	{
 		reset_send_signal();
 	}
-	if(SysTick->VAL-ULTRA_EMIT>1000)//start to detect after 100 more cycle
+	if(SysTick->VAL-ULTRA_EMIT>100)//start to detect after 100 more cycle
 	{
-		if(SysTick->VAL-ULTRA_EMIT>1000000)
+		if(SysTick->VAL-ULTRA_EMIT>100000)
 		{
 			ULTRA_EMIT=SysTick->VAL;
 			
