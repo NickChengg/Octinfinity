@@ -11,7 +11,7 @@ void us_init();
 void set_send_signal();
 void reset_send_signal();
 void setReceive_listener(listener event);
-void set_cycle();
+void set_cycle(u32 this_ticks);
 
 static int FLAG=0;
 static uint32_t OUT_NUM=0;

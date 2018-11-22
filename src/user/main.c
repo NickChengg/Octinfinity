@@ -47,13 +47,24 @@ void EXTI7_IRQHandler()
 	
 		//if(gpio_read(trig_PIN))
 		{
-			uint32_t temp=SysTick->VAL-ULTRA_EMIT;
-			if(temp>1000000)
+			uint32_t temp=SysTick->VAL;//fix the clock cycle
+			if(temp>ULTRA_EMIT)
 			{
-				temp=1000000;
+				OUT_NUM=temp-ULTRA_EMIT;//now sysclock-sysclock of sending signal
 			}
-			ULTRA_EMIT=SysTick->VAL;
-			OUT_NUM=temp;
+			else
+			{
+				OUT_NUM=temp+72000000-ULTRA_EMIT;
+			}
+			//if(temp>1000000)//check out of bound by clock
+			if(OUT_NUM>1000000)
+			{
+				OUT_NUM=1000000;
+			}
+			//ULTRA_EMIT=SysTick->VAL;
+			//OUT_NUM=temp;
+			//translate into cm
+			dist_cm=OUT_NUM*TRAN_CM;
 			FLAG=1;
 		}
 	
@@ -78,35 +89,20 @@ int main() {
 	while (1) {
 		static u32 this_ticks = 0;
 		
-		
-		
-		
-		
-		//while (get_ticks() == this_ticks)
-		while(SysTick->VAL==this_ticks)//the speed of code become 1/72,000,000
+		while (get_ticks() == this_ticks)
+		//while(SysTick->VAL==this_ticks)//the speed of code become 1/72,000,000
 		{
 			
 		}
-		set_cycle();
-		this_ticks = SysTick->VAL;//get_ticks();
 		
-		/*
-		if(temp)
-		{
-			if(temp<0)
-			{
-				temp+=72000000;
-			}
-			tft_clear();
-			tft_prints(0,0,"detected at %d"	,temp);
-			tft_update();
-			temp=0;
-		}
-		*/
+		set_cycle(this_ticks);
+		this_ticks =get_ticks(); 
+		//this_ticks =SysTick->VAL;//
+		
+		
 		
 		if(FLAG)
 		{
-			dist_cm=OUT_NUM*TRAN_CM;
 			tft_clear();
 			tft_prints(0,0,"??? %lu \nDetected at distances:%f\n%f"	,OUT_NUM,dist_cm,TRAN_CM);
 			tft_update();

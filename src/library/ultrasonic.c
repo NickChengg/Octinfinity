@@ -1,9 +1,8 @@
 #include "ultrasonic.h"
+#include "gpio.h"	
 
 #define echo_PIN GPIO7
 #define trig_PIN GPIO8
-
-#include "gpio.h"	 
 
 typedef void (*listener)(void);
 
@@ -18,7 +17,7 @@ void us_init();
 void set_send_signal();
 void reset_send_signal();
 void setReceive_listener(listener event);
-void set_cycle();
+void set_cycle(u32 this_ticks);
 
 
 static UltrasonicStruct TRIG_pin = {trig_PIN, 0};
@@ -48,8 +47,9 @@ void setReceive_listener(listener event)
 		TRIG_pin.receive_action=event;
 }
 
-void set_cycle()//set cycle got problem
+void set_cycle(u32 this_ticks)//set cycle got problem
 {
+	/*
 	//1 cycle no receive
 	if(SysTick->VAL-ULTRA_EMIT<1000)//1000clock cycle= 13.8us
 	{
@@ -66,15 +66,18 @@ void set_cycle()//set cycle got problem
 			ULTRA_EMIT=SysTick->VAL;
 			
 		}
-		//if(gpio_read(trig_PIN))//no use now
-		{
-			//long int temp=SysTick->VAL-ULTRA_EMIT;
-			//ULTRA_EMIT=SysTick->VAL;
-			//return temp;
-		}
 	}
-	//return 0;
+	*/
 	
+	if(this_ticks%100==1)
+	{
+		set_send_signal();
+		ULTRA_EMIT=SysTick->VAL;
+	}
+	else
+	{
+		reset_send_signal();
+	}
 }
 
 
