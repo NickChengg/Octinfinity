@@ -278,13 +278,17 @@ void UARTOnReceiveHandler(const u8 received){
 	//if (!(received == 'W' ||received == 'w' ||received == 'A' ||received == 'a' ||received == 'S' ||received == 's' ||received == 'D' ||received == 'd')){
 		//motor_move(0, 0);
 	//}
+	
+	//fail to receive interupt!
+	led_on(LED2);
 	movement = MANUAL;
 	switch (received) {
 		case 1:
-		case '1':led_on(LED1);break;
+		case '1':
 		case 'W':
 		case 'w': {
 			motor_move(motor1_fullSpeed, motor2_fullSpeed);
+			led_on(LED1);break;
 			break;
 		}
 		case 'S':
