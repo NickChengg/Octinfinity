@@ -29,8 +29,8 @@
 u16 const servo_OC_min = 275, servo_OC_midd = 300, servo_OC_max = 425; //min->left, max->right (160,285,410)
 u16 mag_FL = 0, mag_FR = 0, mag_BL = 0, mag_BR = 0; //magnetic reading in (front/back)(left/right)
 u16 servo_OC = 300; //midd
-u16 const motor1_fullSpeed = 35, motor2_fullSpeed = 35;
-u16 motor1_OC = 35, motor2_OC = 35;// test vlaue, or changed by encoder. range: -100 to 100
+u16 const motor_fullSpeed =100;
+u16 motor1_OC = 0, motor2_OC = 0;// test vlaue, or changed by encoder. range: -100 to 100
 
 typedef enum {
 	forward = 0,
@@ -62,9 +62,9 @@ void mag_read() {
 int mag_OC_cal(int L_reading, int R_reading) { //left right reading from magnetic sensors
 	switch (1) { //test diff algo
 		case 1: {
-			const u32 max_reading = 700; //max reading of sensor(closest), test! 
-			const u32 min_reading = 200; //min reading of sensor(farest), i.e. the value of background noise, test!
-			const float sensitivity = 1.2; //0-1, increse to turn more, vice versa
+			const u32 max_reading = 1200; //max reading of sensor(closest), test! 
+			const u32 min_reading = 300; //min reading of sensor(farest), i.e. the value of background noise, test!
+			const float sensitivity = 1; //0-1, increse to turn more, vice versa
 			s16 turning_percentage = 0; //turning percentage for servo, 100 for 100% of turning; -ve = left, +ve = right
 
 			if (ABS(mag_FR - mag_FL) * sensitivity < (max_reading - min_reading)) {
@@ -79,15 +79,15 @@ int mag_OC_cal(int L_reading, int R_reading) { //left right reading from magneti
 			return (int) servo_OC_midd + (servo_OC_max - servo_OC_midd) * turning_percentage / 100; //(5000 * (1.5 + turning_percentage * 0.006) / 20); // OC servo
 		}
 		case 2: {
-			double distance_diff = 0;
-			double static distance_max_diff = 1;
+			float distance_diff = 0;
+			float static distance_max_diff = 0;
 			u8 servo_max_angle = 150; //max angle of servo
 			if (ABS(1/sqrt(mag_FR) - 1/sqrt(mag_FL)) < distance_max_diff) {
 				distance_diff = (1/sqrt(mag_FR) - 1/sqrt(mag_FL)) ;
-			}/*
+			}
 			else { 
 				distance_max_diff = ABS(1/sqrt(mag_FR) - 1/sqrt(mag_FL));
-			}*/
+			}
 			tft_prints(0, 5, "TURN: %d\n ", (int) distance_diff/distance_max_diff * 100);
 			uart_tx_str(COM1, "TURN: %d\n ", (int) distance_diff/distance_max_diff * 100);
 			
@@ -97,7 +97,7 @@ int mag_OC_cal(int L_reading, int R_reading) { //left right reading from magneti
 }
 
 void mag_compare() {
-	const u32 acceptable_diff = 100; //turn only when excess acceptable difference, test! really need??
+	const u32 acceptable_diff = 0; //turn only when excess acceptable difference, test! really need??
 
 	if (ABS(mag_FL - mag_FR) > acceptable_diff) {
 		servo_OC = mag_OC_cal(mag_FL, mag_FR);//L>R -> turn L
@@ -105,8 +105,9 @@ void mag_compare() {
 	else if (ABS(mag_BL - mag_BR) > acceptable_diff) {
 		servo_OC = mag_OC_cal(mag_BR, mag_BL); //L>R -> turn R
 	}
-	else if(ABS(mag_BL - mag_BR) < acceptable_diff){
-		servo_OC=servo_OC_midd;
+	
+	if (ABS(servo_OC - servo_OC_midd) > servo_OC_max - servo_OC_midd) {
+		servo_OC =  servo_OC > servo_OC_max? servo_OC_max: servo_OC_min;
 	}
 	
 	//servo_OC = mag_OC_cal(mag_FL, mag_FR) - mag_OC_cal(mag_BR, mag_BL); //alternative
@@ -114,9 +115,8 @@ void mag_compare() {
 
 
 void motor_move() {
-	//if (ABS(servo_OC-servo_OC_midd)
-	motor_control(MOTOR1, 100 - (int)motor1_OC, moveDirection);
-	motor_control(MOTOR2, 100 - (int)motor2_OC, moveDirection);
+	motor_control(MOTOR1, (int)motor1_OC, moveDirection);
+	motor_control(MOTOR2, (int)motor2_OC, moveDirection);
 }
 int main() {
 	// Initialize Everything Here
@@ -130,8 +130,8 @@ int main() {
 	adc_init();
 	//buzzer_init();
 	servo_init(SERVO2, 287, 5000, servo_OC_midd); //5000 * x /20	//x=1.5->mid//375
-	motor_init(MOTOR1, 144, 100, 100, moveDirection); //at rest
-	motor_init(MOTOR2, 144, 100, 100, moveDirection); //at rest
+	motor_init(MOTOR1, 144, motor_fullSpeed, motor1_OC, moveDirection); //at rest
+	motor_init(MOTOR2, 144, motor_fullSpeed, motor2_OC, moveDirection); //at rest
 	tft_init(PIN_ON_TOP, WHITE, BLACK, RED, YELLOW); //debug
 	uart_init(COM1,115200); //debug
 	
@@ -148,7 +148,7 @@ int main() {
 			//Code in here will run every 25ms
 			led_on(LED1);
 			tft_clear();
-			//mag_read();
+			mag_read();
 			mag_compare();
 			servo_control(SERVO2, servo_OC);
 			motor_move();
