@@ -24,15 +24,16 @@
 #include "pwm.h"
 #include "adc.h"
 
+
 //def
 typedef enum {	//movement
-STILL = 0, //stay still, indicate waiting for next movement
+STILL = 0 , //stay still, indicate waiting for next movement
 FORWARD = 1, //move forward
-LEFTTURN = 2, // 90 degree left turn
-RIGHTTURN = 3, // 90 degree right turn
-ABOUTTURN = 4, // 180 degree right turn
-ACTION = 5,	//non-movement: picking or throwing
-MANUAL=6
+BACKWARD = 2, //for manual mode only
+LEFTTURN = 3, // 90 degree left turn
+RIGHTTURN = 4, // 90 degree right turn
+ABOUTTURN = 5, // 180 degree right turn
+ACTION = 6,	//non-movement: picking or throwing
 } MOVEMENT;
 
 
@@ -53,17 +54,22 @@ THROWING = 10, // action
 LEAVE_TZ_TURN = 11, // right turn (~30 degree)
 
 STAY = 15,
+
+MANUAL = 20, //enter manual mode
 } PROGRESS;
+
+
 
 //init
 MOVEMENT movement= STILL;
 PROGRESS progress = INIT;
-u32 escape_ticks = 0; //time of start turning
+MOVEMENT manual_move = STILL; //for manual
+u32 escape_ticks, difference_ticks = 0; //time of start turning; record the ticks difference(manual mode)
 u8 move_count = 0; //no. of grip+turn to go
 
 //testing value
 u16 const motor1_fullSpeed =100, motor2_fullSpeed =100; // test value, range ~100, <=100
-int32_t const motor_turnTO_OC = 0, motor_turnAWAY_OC = 0;// test vlaue, turn TO the direction(TO < AWAY). range: -100 to 100
+int32_t const motor_turnTO_OC = -100, motor_turnAWAY_OC = 100;// test vlaue, turn TO the direction(TO < AWAY). range: -100 to 100
 u32 const turn_90_ticks = 100, turn_180_ticks = 200; // test value, for ticks difference of turning 90 or 180 degree
 u32 const turn_30_ticks = 20; //test value, for ticks difference of turning 30 degree(to face to house)
 
@@ -74,8 +80,8 @@ void compensate_cal(int L_reading, int R_reading) { //time difference from left&
 }
 
 void motor_move(int motor_left_OC, int motor_right_OC) {
-	u8 moveDirection_left = motor_left_OC > 0 ? 1 : 0; //
-	u8 moveDirection_right = motor_right_OC > 0 ? 1 : 0; //
+	u8 moveDirection_left = motor_left_OC > 0 ? 0 : 1; //
+	u8 moveDirection_right = motor_right_OC > 0 ? 0 : 1; //
 	motor_control(MOTOR1, 100 - ABS((int)motor_left_OC), moveDirection_left);
 	motor_control(MOTOR2, 100 - ABS((int)motor_right_OC), moveDirection_right);
 }
@@ -188,11 +194,28 @@ void motor_action(u32 this_ticks) {
 			}
 			break;
 		}
+		
+		
+		case MANUAL: {
+			if (this_ticks - escape_ticks>1000) {
+				buzzer_off();
+			}
+			switch (manual_move) {
+				case STILL: motor_move(0,0);break;
+				case FORWARD: motor_move(50,50);break;
+				case BACKWARD: motor_move(-50,-50);break;
+				case LEFTTURN: motor_move(50,50);break;
+				case RIGHTTURN: motor_move(50,50);break;
+				default:break;
+			}
+			return;
+		}
 		default: break;
 	}
 	
 	switch (movement) {
 		case STILL:
+			motor_move(0,0);
 			break;
 		case FORWARD: {
 			if (move_count > 0) {
@@ -284,48 +307,48 @@ void UARTOnReceiveHandler(const u8 received){
     //whenever you type something in coolterm, 
     //each character will triger this function 
     //the character will be the argument for this function
-	//if (!(received == 'W' ||received == 'w' ||received == 'A' ||received == 'a' ||received == 'S' ||received == 's' ||received == 'D' ||received == 'd')){
-		//motor_move(0, 0);
-	//}
+	progress = MANUAL;
 	
-	//fail to receive interupt!
-	led_on(LED2);
-	movement = MANUAL;
-	switch (received) {
-		case '1': led_on(LED1);break; //testing
-		case 'W':
-		case 'w': {
-			motor_move(motor1_fullSpeed, motor2_fullSpeed);
-			led_on(LED1);break;
-			break;
-		}
-		case 'A':
-		case 'a': {
-			motor_move(motor_turnTO_OC, motor_turnAWAY_OC);
-			break;
-		}
-		case 'S':
-		case 's': {
-			motor_move(-motor1_fullSpeed, -motor2_fullSpeed);
-			break;
-		}
-		case 'D':
-		case 'd': {
-			motor_move(motor_turnAWAY_OC, motor_turnTO_OC);
-			break;
-		}
-		case 'T':
-		case 't': {
-				//throw
-			break;
-		}
-		case 'P':
-		case 'p': {
-				//pick rack or shuttlecock
-			break;
+	if (manual_move != STILL) {
+		manual_move = STILL;
+		difference_ticks = get_ticks() - escape_ticks; 
+	}
+	else {
+		escape_ticks = get_ticks();
+		switch (received) {
+			case '1': buzzer_on();break; //testing
+			case 'W':
+			case 'w': {
+				manual_move = FORWARD;
+				break;
+			}
+			case 'A':
+			case 'a': {
+				manual_move = LEFTTURN;
+				break;
+			}
+			case 'S':
+			case 's': {
+				manual_move = BACKWARD;
+				break;
+			}
+			case 'D':
+			case 'd': {
+				manual_move = RIGHTTURN;;
+				break;
+			}
+			case 'T':
+			case 't': {
+					//throw
+				break;
+			}
+			case 'P':
+			case 'p': {
+					//pick rack or shuttlecock
+				break;
+			}
 		}
 	}
-    return;
 }
 
 int main() {
@@ -333,6 +356,7 @@ int main() {
 	rcc_init();
 	ticks_init();
 	oled_init();
+	buzzer_init();
 	leds_init();
 	motor_init(MOTOR1, 144, 100, 100, 1); //at rest
 	motor_init(MOTOR2, 144, 100, 100, 1); //at rest
@@ -354,10 +378,14 @@ int main() {
 			tft_clear();
 			
 			motor_action(this_ticks);
-			tft_prints(0, 0, "movement: %d\nprogress: %d", movement,progress);
-			tft_update();
-			uart_tx_str(COM1, "movement: %d\nprogress: %d", movement,progress);
 			
+			uart_tx_str(COM1, "movement: %d\nprogress: %d", movement,progress);
+			tft_prints(0, 0, "movement: %d\nprogress: %d", movement,progress);
+			if (progress == MANUAL) {
+				uart_tx_str(COM1, "maual_movement: %d\nticks diff: %d", manual_move,difference_ticks);
+				tft_prints(0, 5, "maual_movement: %d\nticks diff: %d", manual_move,difference_ticks);
+			}
+			tft_update();
 		}
 	}
 }
