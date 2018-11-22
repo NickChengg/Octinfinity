@@ -25,18 +25,18 @@
 #include "adc.h"
 
 //def
-typedef enum {
+typedef enum {	//movement
 STILL = 0, //stay still, indicate waiting for next movement
 FORWARD = 1, //move forward
 LEFTTURN = 2, // 90 degree left turn
 RIGHTTURN = 3, // 90 degree right turn
 ABOUTTURN = 4, // 180 degree right turn
 ACTION = 5,	//non-movement: picking or throwing
-MANUAL = 6
+MANUAL=6
 } MOVEMENT;
 
 
-typedef enum {
+typedef enum {	//progress
 INIT = 0, //wait to start
 TO_LZ = 1, //move forward
 PICK_RACK = 2, // action
@@ -56,8 +56,8 @@ STAY = 15,
 } PROGRESS;
 
 //init
-static MOVEMENT movement= STILL;
-static PROGRESS progress = INIT;
+MOVEMENT movement= STILL;
+PROGRESS progress = INIT;
 u32 escape_ticks = 0; //time of start turning
 u8 move_count = 0; //no. of grip+turn to go
 
@@ -66,7 +66,6 @@ u16 const motor1_fullSpeed =100, motor2_fullSpeed =100; // test value, range ~10
 int32_t const motor_turnTO_OC = 0, motor_turnAWAY_OC = 0;// test vlaue, turn TO the direction(TO < AWAY). range: -100 to 100
 u32 const turn_90_ticks = 100, turn_180_ticks = 200; // test value, for ticks difference of turning 90 or 180 degree
 u32 const turn_30_ticks = 20; //test value, for ticks difference of turning 30 degree(to face to house)
-
 
 void compensate_cal(int L_reading, int R_reading) { //time difference from left&right reading from line sensors
 	//edwin: change the speed of each motor
@@ -100,12 +99,7 @@ void motor_action(u32 this_ticks) {
 			break;
 		}
 		case PICK_RACK: {
-			// some code below
-			
-			
-			if (1) {// picked, can be moved to other function
-				movement = STILL; //indicate end of action
-			}
+			// code in "movement" switch-> action
 			if (movement == STILL) { 
 				//init next stage
 				progress = TO_TZ_1TURN; //about turn
@@ -194,13 +188,11 @@ void motor_action(u32 this_ticks) {
 			}
 			break;
 		}
-		default:
-			break;
+		default: break;
 	}
 	
 	switch (movement) {
 		case STILL:
-			motor_move(0,0);
 			break;
 		case FORWARD: {
 			if (move_count > 0) {
@@ -260,14 +252,31 @@ void motor_action(u32 this_ticks) {
 			}
 			break;
 		}
-		case MANUAL: {
-			if (this_ticks - escape_ticks > 1000) {
-				motor_move(0,0);
+		case ACTION: {
+			switch (progress) {
+				case PICK_RACK: {
+					// some code below
+					
+					
+					if (1) {// picked, can be moved to next progress
+						movement = STILL; //indicate end of action
+					}
+					break;
+				}
+				case THROWING: {
+					// some code below
+					//throw:
+					
+					
+					if (1) {// throwed, can be moved to next progress
+						movement = STILL; //indicate end of action
+					}
+					break;
+				}
+				default: break;
 			}
-			break;
 		}
-		default:
-			break;
+		default: break;
 	}
 }
 
@@ -283,17 +292,37 @@ void UARTOnReceiveHandler(const u8 received){
 	led_on(LED2);
 	movement = MANUAL;
 	switch (received) {
-		case 1:
-		case '1':
+		case '1': led_on(LED1);break; //testing
 		case 'W':
 		case 'w': {
 			motor_move(motor1_fullSpeed, motor2_fullSpeed);
 			led_on(LED1);break;
 			break;
 		}
+		case 'A':
+		case 'a': {
+			motor_move(motor_turnTO_OC, motor_turnAWAY_OC);
+			break;
+		}
 		case 'S':
 		case 's': {
-		
+			motor_move(-motor1_fullSpeed, -motor2_fullSpeed);
+			break;
+		}
+		case 'D':
+		case 'd': {
+			motor_move(motor_turnAWAY_OC, motor_turnTO_OC);
+			break;
+		}
+		case 'T':
+		case 't': {
+				//throw
+			break;
+		}
+		case 'P':
+		case 'p': {
+				//pick rack or shuttlecock
+			break;
 		}
 	}
     return;

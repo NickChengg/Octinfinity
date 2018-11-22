@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\ustrobo18_internal.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\ustrobo18_internal.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu Nov 22 14:46:17 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu Nov 22 14:57:07 2018
 <BR><P>
 <H3>Maximum Stack Usage =        416 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1215,7 +1215,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_init
 </UL>
 
-<P><STRONG><a name="[3f]"></a>UARTOnReceiveHandler</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, main.o(i.UARTOnReceiveHandler))
+<P><STRONG><a name="[3f]"></a>UARTOnReceiveHandler</STRONG> (Thumb, 158 bytes, Stack size 8 bytes, main.o(i.UARTOnReceiveHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = UARTOnReceiveHandler &rArr; motor_move &rArr; motor_control &rArr; gpio_write
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_on
@@ -1336,7 +1336,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[c1]"></a>motor_action</STRONG> (Thumb, 550 bytes, Stack size 8 bytes, main.o(i.motor_action))
+<P><STRONG><a name="[c1]"></a>motor_action</STRONG> (Thumb, 548 bytes, Stack size 8 bytes, main.o(i.motor_action))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = motor_action &rArr; motor_move &rArr; motor_control &rArr; gpio_write
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_move
