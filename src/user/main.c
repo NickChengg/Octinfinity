@@ -25,9 +25,9 @@
 #include "adc.h"
 #include "ultrasonic.h"
 
-//const int cycle=5;//in ms, 1 cycle for signal, 5 cycle after receive echo
-//int TOTAL=0;
-//static long int output= 0;
+const int cycle=5;//in ms, 1 cycle for signal, 5 cycle after receive echo
+int TOTAL=0;
+static long int output= 0;
 const double TRAN_CM=1*340.0*100/72000000.0;
 float dist_cm=0;
 static u32 this_ticks = 0;
@@ -40,7 +40,11 @@ void EXTI8_IRQHandler()
 	FLAG=1;
 }
 */
-
+void EchoPrint()
+{
+	//FLAG=1;
+	TOTAL=0;
+}
 
 
 void EXTI7_IRQHandler()
@@ -86,10 +90,11 @@ int main() {
 	
 	tft_init(0, WHITE, RED, GREEN, DARK_RED);
 	tft_clear();
-	tft_prints(0,0,"hello");
+	tft_prints(0,0,"hello"	,TOTAL);
 	tft_update();
 	
 	us_init();
+	setReceive_listener(EchoPrint);//set interupt to receive ultrasonic
 	gpio_exti_init(GPIO8,EXTI_Trigger_Rising_Falling);
 	//gpio_exti_init(GPIO8,EXTI_Trigger_Rising);
 	ULTRA_EMIT=SysTick->VAL;
@@ -102,10 +107,15 @@ int main() {
 		{
 			
 		}
+<<<<<<< HEAD
 		this_ticks =get_ticks(); 
 		//this_ticks =SysTick->VAL;//
 		
 		set_cycle(this_ticks);
+=======
+		output = set_cycle(0,cycle);
+		this_ticks = SysTick->VAL;//get_ticks();
+>>>>>>> parent of 00ecc8b... trial to larger distance
 		
 		
 		if(FLAG)
