@@ -333,6 +333,7 @@ int main() {
 	rcc_init();
 	ticks_init();
 	oled_init();
+	leds_init();
 	motor_init(MOTOR1, 144, 100, 100, 1); //at rest
 	motor_init(MOTOR2, 144, 100, 100, 1); //at rest
 	tft_init(PIN_ON_TOP, WHITE, BLACK, RED, YELLOW); //debug
