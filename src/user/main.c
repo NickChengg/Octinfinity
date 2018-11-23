@@ -1,48 +1,207 @@
-#define LT_F GPIO1;
-#define LT_L GPIO2;
-#define LT_R GPIO3;
-#define LT_B GPIO4;
+//Definition
+#define LT_F GPIO5
+#define LT_L GPIO6
+#define LT_R GPIO8
+#define LT_B GPIO7
 
+#define HALF_HEIGHT 20 //mm
+#define HALF_WIDTH 40 //mm
+
+#define LT_UPPERTOLERANCE 1.3
+#define LT_LOWERTOLERANCE 0.7
+
+#define PI 3.14159265
+
+//Headers
 #include "main.h"
-
-
-// Include Library Headers Here
 
 #include "rcc.h"
 #include "ticks.h"
 #include "gpio.h"
 #include "lcd_main.h"
 
+#include <math.h>
+
+typedef enum {
+	DIR_F,
+	DIR_L,
+	DIR_R,
+	DIR_B
+} LT_DIRECTION;
+
+typedef enum {
+	PATTERN_FLRB = 0b00100100, PATTERN_FLBR = 0b00110100, PATTERN_FRLB = 0b00011000,
+	PATTERN_FRBL = 0b00111000, PATTERN_FBLR = 0b00011100, PATTERN_FBRL = 0b00101100,
+	PATTERN_LFRB = 0b00100001, PATTERN_LFBR = 0b00110001, PATTERN_LRFB = 0b00001001,
+	PATTERN_LRBF = 0b00111001, PATTERN_LBFR = 0b00001101, PATTERN_LBRF = 0b00101101,
+	PATTERN_RFLB = 0b00010010, PATTERN_RFBL = 0b00110010, PATTERN_RLFB = 0b00000110,
+	PATTERN_RLBF = 0b00110110, PATTERN_RBFL = 0b00001110, PATTERN_RBLF = 0b00011110,
+	PATTERN_BFLR = 0b00010011, PATTERN_BFRL = 0b00100011, PATTERN_BLFR = 0b00000111,
+	PATTERN_BLRF = 0b00100111, PATTERN_BRFL = 0b00001011, PATTERN_BRLF = 0b00011011
+} LT_PATTERN;
+
+//TODO Interrupt
+
+double arctan(double input){
+	double output = input;
+	for(u8 i=3; i<=11; i+=2){
+		double temp = 1;
+		for(u8 j=0; j<i; ++j) temp*=input;
+		if((i-1)%4) output-=temp/i; else output+=temp/i;
+	}
+	return output/PI * 180.0;
+}
+
 int main(){
-// Initialize Everything Here
-rcc_init();
-ticks_init();
-gpio_init(LT_F, GPIO_Mode_IPU);
-gpio_init(LT_L, GPIO_Mode_IPU);
-gpio_init(LT_R, GPIO_Mode_IPD);
-gpio_init(LT_B, GPIO_Mode_IPD);
-tft_init(PIN_ON_TOP, WHITE, BLACK, BLUE, RED);
+  // Hardware Initialization
+  rcc_init();																				//rcc
+  ticks_init();																			//ticks
+	gpio_init(LT_F, GPIO_Mode_IPU);										//gpio
+	gpio_init(LT_L, GPIO_Mode_IPU);
+	gpio_init(LT_R, GPIO_Mode_IPD);
+	gpio_init(LT_B, GPIO_Mode_IPD);
+	tft_init(PIN_ON_TOP, BLUE, WHITE, YELLOW, GREEN);	//tft
+	tft_clear();
+	
+	// Variables Initialization
+	u32 this_ticks = 0;
+	u32 last_ticks_5 = 0;
 
-while (1) {
-  static u32 this_ticks = 0;
-  static u32 last_ticks_50 = 0;
+	u8 lt_value[4], lt_last_value[4] = {0};
+	u8 lt_pattern=0;
+	u32 lt_basetime, lt_deltatime[3];
+	u8 lt_stage = 0;
+	double tandeltatheta, deltatheta, deltax;
+	s32 deltascaledtheta;
+	double ratio_discrepancy; //temp
+	
+	char translate_dir[4] = {'F', 'L', 'R', 'B'};
+	
+	// Main Program
+  while (1) {
+    while (get_ticks() == this_ticks);
+    this_ticks = get_ticks();
 
-  static u8 lt_f, lt_l, lt_r, lt_b;
-  while (get_ticks() == this_ticks);
-  this_ticks = get_ticks();
+    if(this_ticks - last_ticks_5 >= 5){
+      last_ticks_5 = this_ticks;
+			
+			//Read values from sensors
+			lt_value[DIR_F] = gpio_read(LT_F);
+			lt_value[DIR_L] = gpio_read(LT_L);
+			lt_value[DIR_R] = gpio_read(LT_R);
+			lt_value[DIR_B] = gpio_read(LT_B);
+			
+			//Append and display pattern, time
+			for(u8 i=0; i<4; ++i){
+				//If direction i, reading changes from 0 to 1,
+				if(lt_value[i]==1 && lt_last_value[i]==0){
+					lt_last_value[i] = 1;
+					if(lt_stage<3) lt_pattern += i<<(2*i);
+					if(lt_stage==0){
+						lt_basetime = this_ticks;
+				  }else{
+						lt_deltatime[lt_stage-1] = this_ticks - lt_basetime;
+						tft_prints(2, 2 + lt_stage-1, "%d", lt_deltatime[lt_stage-1]);
+					}
+					tft_prints(0, 2 + lt_stage, "%c", translate_dir[i]);
+					lt_stage++;
+				}
+			}
+			
+			//Determine pattern, calculate deviation
+				//TODO lt_stage==4
+				//TODO Categorize cases
+			if(lt_stage==4){
+				switch(lt_pattern){
+					case PATTERN_FLRB:
+						//based on ffff
+						tandeltatheta = (double)(HALF_HEIGHT*((s32)lt_deltatime[0]-(s32)lt_deltatime[1]))/(double)(HALF_WIDTH*((s32)lt_deltatime[0]+(s32)lt_deltatime[1]));
+						deltatheta = arctan(tandeltatheta);
+						deltascaledtheta = atan((s32)(tandeltatheta * 32768));
+						ratio_discrepancy = ((double)lt_deltatime[0]/(double)lt_deltatime[2]) / (double)(HALF_HEIGHT + HALF_WIDTH * tandeltatheta)/(double)(2 * HALF_HEIGHT);
+						if(LT_LOWERTOLERANCE < ratio_discrepancy && ratio_discrepancy < LT_UPPERTOLERANCE)
+							tft_prints(0, 6, "Rot %f", deltatheta); //confirm ffff
+							//motor_adjust(0, deltatheta);
+						else ;//flff OR ffrf
+						break;
+					case PATTERN_FLBR:
+						break;
+					case PATTERN_FRLB:
+						tandeltatheta = (double)(HALF_HEIGHT*((s32)lt_deltatime[1]-(s32)lt_deltatime[0]))/(double)(HALF_WIDTH*((s32)lt_deltatime[0]+(s32)lt_deltatime[1]));
+						deltatheta = arctan(tandeltatheta);
+						deltascaledtheta = atan((s32)(tandeltatheta * 32768));
+						ratio_discrepancy = ((double)lt_deltatime[0]/(double)lt_deltatime[2]) / (double)(HALF_HEIGHT - HALF_WIDTH * tandeltatheta)/(double)(2 * HALF_HEIGHT);
+						if(LT_LOWERTOLERANCE < ratio_discrepancy && ratio_discrepancy < LT_UPPERTOLERANCE)
+							tft_prints(0, 6, "Rot %f", deltatheta); //confirm ffff
+							//motor_adjust(0, deltatheta);
+						else ;//flff OR ffrf
+						break;
+					case PATTERN_FRBL:
+						break;
+					case PATTERN_FBLR:
+						break;
+					case PATTERN_FBRL:
+						break;
+					case PATTERN_LFRB:
+						break;
+					case PATTERN_LFBR:
+						break;
+					case PATTERN_LRFB:
+						break;
+					case PATTERN_LRBF:
+						break;
+					case PATTERN_LBFR:
+						break;
+					case PATTERN_LBRF:
+						break;
+					case PATTERN_RFLB:
+						break;
+					case PATTERN_RFBL:
+						break;
+					case PATTERN_RLFB:
+						break;
+					case PATTERN_RLBF:
+						break;
+					case PATTERN_RBFL:
+						break;
+					case PATTERN_RBLF:
+						break;
+					case PATTERN_BFLR:
+						break;
+					case PATTERN_BFRL:
+						break;
+					case PATTERN_BLFR:
+						break;
+					case PATTERN_BLRF:
+						break;
+					case PATTERN_BRFL:
+						break;
+					case PATTERN_BRLF:
+						;
+				}	
+			}
 
-  // every 50ms
-  if (this_ticks - last_ticks_50 >= 1) { 
-    last_ticks_50 = this_ticks;
-    lt_f = gpio_read(LT_F);
-    lt_l = gpio_read(LT_L);
-    lt_r = gpio_read(LT_R);
-    lt_b = gpio_read(LT_B);
-    tft_clear();
-    tft_prints(3, 0, "F %d", lt_f);
-    tft_prints(0, 1, "L %d", lt_l);
-    tft_prints(6, 1, "R %d", lt_r);
-    tft_prints(3, 2, "B %d", lt_b);
-    tft_update();
-  }
+			//Display visual white/black
+			for(u8 i=8; i<16; ++i){
+				for(u8 j=0; j<8; ++j)
+					if(lt_value[DIR_F]) tft_put_pixel(i, j, WHITE);
+					else tft_put_pixel(i, j, BLACK);
+				for(u8 j=16; j<24; ++j)
+					if(lt_value[DIR_B]) tft_put_pixel(i, j, WHITE);
+					else tft_put_pixel(i, j, BLACK);
+			}
+			for(u8 j=8; j<16; ++j){
+				for(u8 i=0; i<8; ++i)
+					if(lt_value[DIR_L]) tft_put_pixel(i, j, WHITE);
+					else tft_put_pixel(i, j, BLACK);
+				for(u8 i=16; i<24; ++i)
+					if(lt_value[DIR_R]) tft_put_pixel(i, j, WHITE);
+					else tft_put_pixel(i, j, BLACK);
+			}
+			
+			tft_update();
+    }
+
+    
+	}
 }
