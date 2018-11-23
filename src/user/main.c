@@ -31,6 +31,12 @@ static long int output= 0;
 const double TRAN_CM=1*340.0*100/72000000.0;
 float dist_cm=0;
 static uint32_t this_ticks = 0;
+static uint32_t us_ticks = 0;
+
+#define GRAB_PIN &PB8
+#define GRAB_UP_PIN &PB9
+#define THROW_PIN &PB10
+
 void EchoPrint()
 {
 	//FLAG=1;
@@ -68,8 +74,18 @@ void EXTI7_IRQHandler()
 }
 
 
+
 int main() {
 	// Initialize Everything Here
+	//init camera pin as output vcc for thrower
+	gpio_init(GRAB_PIN,GPIO_Mode_Out_PP);
+	gpio_init(GRAB_UP_PIN,GPIO_Mode_Out_PP);
+	gpio_init(THROW_PIN,GPIO_Mode_Out_PP);
+	//set all of them to zero
+	gpio_write(GRAB_PIN,0);
+	gpio_write(GRAB_UP_PIN,0);
+	gpio_write(THROW_PIN,0);
+	
 	rcc_init();
 	ticks_init();
 	oled_init();
@@ -89,12 +105,12 @@ int main() {
 		
 		
 		//while (get_ticks() == this_ticks)
-		while(SysTick->VAL==this_ticks)//the speed of code become 1/72,000,000
+		while(SysTick->VAL==us_ticks)//the speed of code become 1/72,000,000
 		{
 			
 		}
 		//this_ticks =get_ticks(); 
-		this_ticks =SysTick->VAL;//
+		us_ticks =SysTick->VAL;//
 		
 		set_cycle(this_ticks);
 		//this_ticks = SysTick->VAL;//get_ticks();
@@ -108,16 +124,51 @@ int main() {
 			FLAG=0;
 		}
 		
-		//long int reflection=set_cycle(TOTAL,cycle);
-		static u32 last_led_ticks=0;
-		if ((this_ticks - last_led_ticks) >= 25) {
-			last_led_ticks = this_ticks;
+		
+		
+		
+		if(this_ticks!=get_ticks())
+		{
+			//long int reflection=set_cycle(TOTAL,cycle);
+			static u32 last_led_ticks=0;
+			if ((this_ticks - last_led_ticks) >= 25) 
+			{
+				last_led_ticks = this_ticks;
 			
+			
+			}
 		
-		
-
 			//Code in here will run every 25ms
-			
+			this_ticks=get_ticks();
 		}
 	}
+}
+
+
+
+void grabStart()
+{
+	gpio_write(GRAB_PIN,1);
+}
+void grabRelease()
+{
+	gpio_write(GRAB_PIN,0);
+}
+
+void grabUp()
+{
+	gpio_write(GRAB_PIN,1);
+}
+void grabDown()
+{
+	gpio_write(GRAB_PIN,0);
+}
+
+void throwSet()
+{
+	gpio_write(THROW_PIN,1);
+}
+void throwReset()
+{
+	gpio_write(THROW_PIN,0);
 }
