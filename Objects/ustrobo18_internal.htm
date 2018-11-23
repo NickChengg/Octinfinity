@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Objects\ustrobo18_internal.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\ustrobo18_internal.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri Nov 09 22:23:59 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri Nov 23 22:14:25 2018
 <BR><P>
-<H3>Maximum Stack Usage =        136 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        152 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 __rt_entry_main &rArr; main &rArr; tft_init &rArr; tft_update &rArr; tft_set_region &rArr; tft_write_data &rArr; spi_tx
 <P>
@@ -200,7 +200,7 @@ Global Symbols
 <P><STRONG><a name="[b0]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[44]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 136 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 152 + Unknown Stack Size
 <LI>Call Chain = __rt_entry_main &rArr; main &rArr; tft_init &rArr; tft_update &rArr; tft_set_region &rArr; tft_write_data &rArr; spi_tx
 </UL>
 <BR>[Calls]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -643,22 +643,22 @@ Global Symbols
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_reset
 </UL>
 
-<P><STRONG><a name="[68]"></a>get_ticks</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, ticks.o(i.get_ticks))
+<P><STRONG><a name="[69]"></a>get_ticks</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, ticks.o(i.get_ticks))
 <BR><BR>[Called By]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[45]"></a>main</STRONG> (Thumb, 372 bytes, Stack size 8 bytes, main.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = main &rArr; tft_init &rArr; tft_update &rArr; tft_set_region &rArr; tft_write_data &rArr; spi_tx
+<P><STRONG><a name="[45]"></a>main</STRONG> (Thumb, 490 bytes, Stack size 24 bytes, main.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = main &rArr; tft_init &rArr; tft_update &rArr; tft_set_region &rArr; tft_write_data &rArr; spi_tx
 </UL>
 <BR>[Calls]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ticks_init
-<LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_ticks
+<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_ticks
 <LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_read
 <LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_init
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rcc_init
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_update
 <LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_put_pixel
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_init
-<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_clear
+<LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_clear
 </UL>
 <BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
@@ -705,7 +705,7 @@ Global Symbols
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_write_command
 </UL>
 
-<P><STRONG><a name="[69]"></a>tft_clear</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, lcd_main.o(i.tft_clear))
+<P><STRONG><a name="[68]"></a>tft_clear</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, lcd_main.o(i.tft_clear))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = tft_clear &rArr; tft_clear_line
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_clear_line
@@ -717,7 +717,7 @@ Global Symbols
 <P><STRONG><a name="[7a]"></a>tft_clear_line</STRONG> (Thumb, 120 bytes, Stack size 8 bytes, lcd_main.o(i.tft_clear_line))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = tft_clear_line
 </UL>
-<BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_clear
+<BR>[Called By]<UL><LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_clear
 </UL>
 
 <P><STRONG><a name="[88]"></a>tft_enable</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, lcd_main.o(i.tft_enable))
@@ -746,7 +746,7 @@ Global Symbols
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_reset
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_fill_color
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_enable
-<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_clear
+<LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft_clear
 </UL>
 <BR>[Called By]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>

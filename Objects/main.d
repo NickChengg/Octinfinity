@@ -23,13 +23,10 @@
 .\objects\main.o: .\src\library\rcc.h
 .\objects\main.o: .\src\library\ticks.h
 .\objects\main.o: .\src\library\gpio.h
-.\objects\main.o: .\src\library\leds.h
-.\objects\main.o: .\src\library\buttons.h
-.\objects\main.o: .\src\library\buzzer.h
-.\objects\main.o: .\src\library\uart.h
 .\objects\main.o: .\src\library\lcd_main.h
 .\objects\main.o: .\src\library\spi.h
 .\objects\main.o: .\src\library\oled.h
 .\objects\main.o: .\src\library\camera.h
 .\objects\main.o: .\src\library\pwm.h
 .\objects\main.o: .\src\library\adc.h
+.\objects\main.o: C:\software\Keil\ARM\ARMCC\Bin\..\include\math.h
