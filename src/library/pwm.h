@@ -21,9 +21,8 @@
 
 #include "gpio.h"
 
-#define MOTOR_TIM TIM3
+#define MOTOR_TIM TIM8
 #define SERVO_TIM TIM2
-#define PWMIO_TIM TIM5
 
 typedef enum {
 	PWM_CHANNEL_1,
@@ -41,7 +40,10 @@ typedef struct {
 
 typedef PWMChannel ServoPort;
 
-typedef PWMChannel PwmIOPort;
+typedef struct {
+	PWMChannel pwm;
+	TIM_TypeDef* tim;
+} PwmIOPort;
 
 typedef struct {
 	PWMChannel pwm;
@@ -51,7 +53,7 @@ typedef struct {
 //** Feel free to extend the library **//
 
 /**
- * @brief      Initialize a PWM Timer
+ * @brief      Initialize a custom PWM Timer
  *
  * @param      timer       The timer
  * @param[in]  channel     The channel
@@ -121,7 +123,7 @@ void pwm_io_control(const PwmIOPort* io, u16 duty);
 
 extern const ServoPort __SERVO1, __SERVO2, __SERVO3;
 extern const MotorPort __MOTOR1, __MOTOR2, __MOTOR3;
-extern const PwmIOPort __PWM_IO1, __PWM_IO2, __PWM_IO3, __PWM_IO4;
+extern const PwmIOPort __PWM_IO1, __PWM_IO2, __PWM_IO3, __PWM_IO4, __PWM_IO8, __PWM_IO7;
 #define SERVO1 &__SERVO1
 #define SERVO2 &__SERVO2
 #define SERVO3 &__SERVO3
@@ -132,5 +134,7 @@ extern const PwmIOPort __PWM_IO1, __PWM_IO2, __PWM_IO3, __PWM_IO4;
 #define PWMIO2 &__PWM_IO2
 #define PWMIO3 &__PWM_IO3
 #define PWMIO4 &__PWM_IO4
+#define PWMIO7 &__PWM_IO7
+#define PWMIO8 &__PWM_IO8
 
 #endif

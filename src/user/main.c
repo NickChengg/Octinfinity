@@ -59,14 +59,20 @@
 #include "camera.h"
 #include "pwm.h"
 #include "adc.h"
-
+#include "ultrasonic.h"
 
 #include <math.h>
 
 static u32 this_ticks = 0;
-  static u32 last_ticks_50 = 0;
+static u32 last_ticks_50 = 0;
+static u8 lt_f, lt_l, lt_r, lt_b;
 
-  static u8 lt_f, lt_l, lt_r, lt_b;
+const int cycle=5;//in ms, 1 cycle for signal, 5 cycle after receive echo
+int TOTAL=0;
+static long int output= 0;
+const double TRAN_CM=1*340.0*100/72000000.0;
+float dist_cm=0;
+static u32 us_ticks=0;
 	
 typedef enum {
 	DIR_F,
@@ -88,14 +94,44 @@ typedef enum {
 
 //TODO Interrupt
 
-double arctan(double input){
+double arctan(double input) {
 	double output = input;
-	for(u8 i=3; i<=11; i+=2){
+	for(u8 i=3; i<=11; i+=2)
+	{
 		double temp = 1;
 		for(u8 j=0; j<i; ++j) temp*=input;
 		if((i-1)%4) output-=temp/i; else output+=temp/i;
 	}
 	return output/PI * 180.0;
+}
+
+
+
+void EXTI7_IRQHandler()
+{
+	uint32_t temp=SysTick->VAL;//fix the clock cycle
+	if(temp-ULTRA_EMIT>10)
+	{
+			if(temp-ULTRA_EMIT>10)
+			{
+				OUT_NUM=temp-ULTRA_EMIT;//now sysclock-sysclock of sending signal
+			}
+			else
+			{
+				//OUT_NUM=temp+72000000-ULTRA_EMIT;
+				OUT_NUM=temp;
+			}
+			
+			//if(temp>1000000)//check out of bound by clock
+			if(OUT_NUM>1000000)
+			{
+				OUT_NUM=1000000;
+			}
+			ULTRA_EMIT=SysTick->VAL;
+			//translate into cm
+			dist_cm=OUT_NUM*TRAN_CM;
+			FLAG=1;
+		}
 }
 
 int main(){
@@ -130,11 +166,33 @@ int main(){
 
 
 while (1) {
-  
-  while (get_ticks() == this_ticks);
-  this_ticks = get_ticks();
-
-  // every 50ms
+	oled_init();
+	
+	tft_init(0, WHITE, RED, GREEN, DARK_RED);
+	tft_clear();
+	tft_prints(0,0,"hello",TOTAL);
+	tft_update();
+	
+	us_init();
+	gpio_exti_init(GPIO8,EXTI_Trigger_Rising_Falling);
+	ULTRA_EMIT=SysTick->VAL;
+	
+	while (1) {
+		
+		//while (get_ticks() == this_ticks)
+		while(SysTick->VAL==us_ticks)//the speed of code become 1/72,000,000
+		{
+			
+		}
+		//this_ticks =get_ticks(); 
+		us_ticks =SysTick->VAL;//
+		
+		set_cycle(us_ticks);
+		//this_ticks = SysTick->VAL;//get_ticks();
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		if(this_ticks!=get_ticks())
+		{
+			// every 50ms
   if (this_ticks - last_ticks_50 >= 50) { 
     last_ticks_50 = this_ticks;
     lt_f = gpio_read(GPIO5);
@@ -392,10 +450,34 @@ while (1) {
 					if(lt_value[DIR_R]) tft_put_pixel(i, j, WHITE);
 					else tft_put_pixel(i, j, BLACK);
 			}
-			
+		
 			tft_update();
+			//////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-	}
+			
+			
+		}
+		
+		if(FLAG)
+		{
+			tft_clear();
+			tft_prints(0,0,"??? %lu \nDetected at distances:%f\n%f"	,OUT_NUM,dist_cm,TRAN_CM);
+			tft_update();
+			FLAG=0;
+		}
+		
+		//long int reflection=set_cycle(TOTAL,cycle);
+		static u32 last_led_ticks=0;
+		if ((this_ticks - last_led_ticks) >= 25) {
+			last_led_ticks = this_ticks;
+			
+		
+		
 
+			//Code in here will run every 25ms
+			
+		}
+	}
+	}
 }

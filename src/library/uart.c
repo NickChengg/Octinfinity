@@ -46,8 +46,8 @@ static IRQn_Type uart_get_irq(USART_TypeDef* uart) {
 		case ((u32) USART1): return USART1_IRQn;
 		case ((u32) USART2): return USART2_IRQn;
 		case ((u32) USART3): return USART3_IRQn;
-		case ((u32) UART4):  return UART4_IRQn;
-		case ((u32) UART5):  return UART5_IRQn;
+		// case ((u32) UART4):  return UART4_IRQn;
+		// case ((u32) UART5):  return UART5_IRQn;
 	}
 }
 
