@@ -1,5 +1,6 @@
-src not uploaded yet
-bat file is default path, do not download the bat file unless you use the default path
+the .gitnore file controls files not update, please do not delete it
 
-the .gitnore file please do not delete it
-Maybe need two create two separate project or just replace the main.c?
+the bat and project file won't update now
+
+The given libray is updated!!!
+Please confirm the library is work as expected after the update
