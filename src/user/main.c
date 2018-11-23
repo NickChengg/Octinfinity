@@ -35,6 +35,7 @@ static long int output= 0;
 const double TRAN_CM=1*340.0*100/72000000.0;
 float dist_cm=0;
 static uint32_t this_ticks = 0;
+
 void EchoPrint()
 {
 	//FLAG=1;
@@ -44,6 +45,7 @@ void EchoPrint()
 
 void EXTI7_IRQHandler()
 {
+	led_on(LED1);
 	uint32_t temp=SysTick->VAL;//fix the clock cycle
 	if(temp-ULTRA_EMIT>10)
 	{
@@ -76,8 +78,8 @@ int main() {
 	// Initialize Everything Here
 	rcc_init();
 	ticks_init();
-	//oled_init();
-	
+	oled_init();
+	leds_init();
 	tft_init(0, WHITE, RED, GREEN, DARK_RED);
 	tft_clear();
 	tft_prints(0,0,"hello",TOTAL);

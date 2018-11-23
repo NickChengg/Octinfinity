@@ -12,13 +12,13 @@ typedef struct {
 	listener receive_action;
 } UltrasonicStruct;
 */
-
+/*
 void us_init();
 void set_send_signal();
 void reset_send_signal();
 void setReceive_listener(listener event);
-void set_cycle(u32 this_ticks);
-
+void set_cycle(u32 us_ticks);
+*/
 
 static UltrasonicStruct TRIG_pin = {trig_PIN, 0};
 
@@ -47,7 +47,7 @@ void setReceive_listener(listener event)
 		TRIG_pin.receive_action=event;
 }
 
-void set_cycle(u32 this_ticks)//set cycle got problem
+void set_cycle(u32 us_ticks)//set cycle got problem
 {
 	
 	//1 cycle no receive
@@ -63,8 +63,7 @@ void set_cycle(u32 this_ticks)//set cycle got problem
 	{
 		if(SysTick->VAL-ULTRA_EMIT>100000)
 		{
-			ULTRA_EMIT=SysTick->VAL;
-			
+			ULTRA_EMIT=SysTick->VAL;	
 		}
 	}
 	
