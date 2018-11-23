@@ -24,6 +24,10 @@
 #include "pwm.h"
 #include "adc.h"
 
+#define GRAB_PIN &PB3 //grapping hold/release
+#define GRAB_UP_PIN &PB2 //grapping up/down
+#define THROW_PIN &PB0 //throw /reset
+
 
 //def
 typedef enum {	//movement
@@ -33,7 +37,18 @@ BACKWARD = 2, //for manual mode only
 LEFTTURN = 3, // 90 degree left turn
 RIGHTTURN = 4, // 90 degree right turn
 ABOUTTURN = 5, // 180 degree right turn
-ACTION = 6,	//non-movement: picking or throwing
+	
+GRAB_PICK = 10,	//picking, up and hold
+GRAB_RELEASE = 11, //releasing, down and release
+	
+MANUAL_GRAB_UP = 15,	//picking, up
+MANUAL_GRAB_DOWN = 16, //releasing, down 
+MANUAL_GRAB_HOLD = 17, //picking, hold
+MANUAL_GRAB_RELEASE = 18, //releasing, loose
+MANUAL_THROW_SET = 19, //throwing
+MANUAL_THROW_RESET = 20, //threw, restore position
+	
+THROW = 25, //inclde set ans reset
 } MOVEMENT;
 
 
@@ -50,7 +65,7 @@ TO_TZ_5TURN = 7, // right turn
 TO_TZ_6MOVE = 8, // forward
 TO_TZ_7TURN = 9, // about turn (~150 degree to right)
 	
-THROWING = 10, // action
+THROWING = 10, // action (include throw set and reset)
 LEAVE_TZ_TURN = 11, // right turn (~30 degree)
 
 STAY = 15,
@@ -62,15 +77,39 @@ MANUAL = 20, //enter manual mode
 
 //init
 MOVEMENT movement= STILL;
-PROGRESS progress = INIT;
+//PROGRESS progress = INIT;
+PROGRESS progress = MANUAL;////////////////////////////////////////////////////////////////////////////////////CHAGEEEEEE
 u32 escape_ticks, difference_ticks = 0; //time of start turning; record the ticks difference(manual mode)
 u8 move_count = 0; //no. of grip+turn to go
+u8 picked = 0, grabbed = 0, threw = 0;
 
 //testing value
-u16 motor1_fullSpeed =100, motor2_fullSpeed =100; // test value, range ~100, <=100
+u16 const motor1_fullSpeed =50, motor2_fullSpeed =50; // test value, range ~100, <=100
 double const motor_turnTO_proportion = -1, motor_turnAWAY_proportion = 1;// test vlaue, turn TO the direction(TO < AWAY). 
 u32 const turn_90_ticks = 100, turn_180_ticks = 200; // test value, for ticks difference of turning 90 or 180 degree
 u32 const turn_30_ticks = 20; //test value, for ticks difference of turning 30 degree(to face to house)
+
+void grabHold() {
+	gpio_write(GRAB_PIN,1);
+}
+void grabRelease() {
+	gpio_write(GRAB_PIN,0);
+}
+
+void grabUp() {
+	gpio_write(GRAB_PIN,1);
+}
+void grabDown() {
+	gpio_write(GRAB_PIN,0);
+}
+
+void throwSet() {
+	gpio_write(THROW_PIN,1);
+}
+void throwReset() {
+	gpio_write(THROW_PIN,0);
+}
+
 
 void compensate_cal(int L_reading, int R_reading) { //time difference from left&right reading from line sensors
 	//edwin: change the speed of each motor
@@ -101,7 +140,7 @@ void motor_action(u32 this_ticks) {
 			if (movement == STILL) { //finish movement, arrived LZ
 				//init next stage
 				progress = PICK_RACK;
-				movement = ACTION;
+				movement = GRAB_PICK;
 			}
 			break;
 		}
@@ -169,15 +208,13 @@ void motor_action(u32 this_ticks) {
 		case TO_TZ_7TURN: { //about turn (~150 degree to right)
 			if (movement == STILL) { 
 				//init next stage
-				progress = THROWING; //action
-				movement = ACTION;
+				progress = STAY; //stop here
+				movement = GRAB_RELEASE;
 			}
 			break;
 		}
+		/*
 		case THROWING: {
-			// more code below, controlling the moving component
-			
-			
 			if (movement == STILL) { 
 				//init next stage
 				progress = LEAVE_TZ_TURN; //
@@ -186,6 +223,7 @@ void motor_action(u32 this_ticks) {
 			}
 			break;
 		}
+		
 		case LEAVE_TZ_TURN: { //turn ~30 degree to right
 			if (movement == STILL) { 
 				//init next stage
@@ -195,21 +233,27 @@ void motor_action(u32 this_ticks) {
 			}
 			break;
 		}
+		*/
 		
 		
 		case MANUAL: {
 			if (this_ticks - escape_ticks>1000) {
 				buzzer_off();
 			}
-			switch (movement) {
-				case STILL: motor_move(0,0);break;
-				case FORWARD: motor_move(motor1_fullSpeed, motor2_fullSpeed);break;
-				case BACKWARD: motor_move(-motor1_fullSpeed, -motor2_fullSpeed);break;
-				case LEFTTURN: motor_move(motor1_fullSpeed * motor_turnTO_proportion, motor2_fullSpeed * motor_turnAWAY_proportion);break;
-				case RIGHTTURN: motor_move(motor1_fullSpeed * motor_turnAWAY_proportion, motor2_fullSpeed * motor_turnTO_proportion);break;
+			switch (movement) { //override moving functions
+				case STILL: motor_move(0,0); return;
+				case FORWARD: motor_move(motor1_fullSpeed, motor2_fullSpeed); return;
+				case BACKWARD: motor_move(-motor1_fullSpeed, -motor2_fullSpeed); return;
+				case LEFTTURN: motor_move(motor1_fullSpeed * motor_turnTO_proportion, motor2_fullSpeed * motor_turnAWAY_proportion); return;
+				case RIGHTTURN: motor_move(motor1_fullSpeed * motor_turnAWAY_proportion, motor2_fullSpeed * motor_turnTO_proportion); return;
+				case MANUAL_GRAB_HOLD: break;
+				case MANUAL_GRAB_RELEASE: break;
+				case MANUAL_GRAB_UP: break;
+				case MANUAL_GRAB_DOWN: break;
+				case MANUAL_THROW_SET: break;
+				case MANUAL_THROW_RESET: break;
 				default:break;
 			}
-			return;
 		}
 		default: break;
 	}
@@ -289,33 +333,94 @@ void motor_action(u32 this_ticks) {
 			}
 			break;
 		}
-		case ACTION: {
-			switch (progress) {
-				case PICK_RACK: {
-					// some code below
-					
-					
-					if (1) {// picked, can be moved to next progress
-						movement = STILL; //indicate end of action
-					}
-					break;
-				}
-				case THROWING: {
-					// some code below
-					//throw:
-					
-					
-					if (1) {// throwed, can be moved to next progress
-						movement = STILL; //indicate end of action
-					}
-					break;
-				}
-				default: break;
-			}
+		
+		case GRAB_PICK: {
+			delay(100);
+			grabHold(); //hold
+			
+			delay(100);
+			grabUp(); //up
+			
+			picked = 1;
+			movement = STILL;
+			break;
 		}
-		default: break;
+		case GRAB_RELEASE: {
+			delay(100);
+			grabRelease(); //release
+			
+			delay(100);
+			grabDown(); //down
+			
+			picked = 0;
+			movement = STILL;
+			break;
+		}
+		
+		case MANUAL_GRAB_HOLD: {
+			delay(100);
+			grabHold();
+			
+			grabbed = 1;
+			movement = STILL;
+			break;
+		}
+		case MANUAL_GRAB_RELEASE: {
+			delay(100);
+			grabRelease();
+			
+			grabbed = 0;
+			movement = STILL;
+			break;
+		}
+		case MANUAL_GRAB_UP: {
+			delay(100);
+			grabUp();
+			
+			picked = 1;
+			movement = STILL;
+			break;
+		}
+		case MANUAL_GRAB_DOWN: {
+			delay(100);
+			grabDown();
+			
+			picked = 0;
+			movement = STILL;
+			break;
+		}
+		case MANUAL_THROW_SET: {
+			delay(100);
+			throwSet();
+			
+			threw = 1;
+			movement = STILL;
+			break;
+		}
+		case MANUAL_THROW_RESET: {
+			delay(100);
+			throwReset();
+			
+			threw = 0;
+			movement = STILL;
+			break;
+		}
+
+		
+		case THROW: {
+			delay(100);
+			throwSet();
+			delay(1000);
+			throwReset();
+			movement = STILL;
+			break;
+		}
+
+		default: buzzer_on();break;
 	}
 }
+
+
 
 void UARTOnReceiveHandler(const u8 received){
     //whenever you type something in coolterm, 
@@ -357,11 +462,29 @@ void UARTOnReceiveHandler(const u8 received){
 			case 'T':
 			case 't': {
 					//throw
+					if (! threw) 
+						movement = MANUAL_THROW_SET;
+					else
+						movement = MANUAL_THROW_RESET;
 				break;
 			}
+			case 'G':
+			case 'g': {
+					//
+					if (! grabbed) 
+						movement = MANUAL_GRAB_HOLD;
+					else
+						movement = MANUAL_GRAB_RELEASE;
+				break;
+			}
+				
 			case 'P':
 			case 'p': {
-					//pick rack or shuttlecock
+					//
+					if (! picked) 
+						movement = MANUAL_GRAB_UP;
+					else
+						movement = MANUAL_GRAB_DOWN;
 				break;
 			}
 			case ' ': movement = STILL;
@@ -375,7 +498,6 @@ int main() {
 	ticks_init();
 	oled_init();
 	buzzer_init();
-	buttons_init();
 	leds_init();
 	motor_init(MOTOR1, 144, 100, 100, 0); //at rest
 	motor_init(MOTOR2, 144, 100, 100, 0); //at rest
@@ -386,6 +508,7 @@ int main() {
 	
 	
 	while (1) {
+		
 		static u32 this_ticks = 0;
 		while (get_ticks() == this_ticks);
 		this_ticks = get_ticks();
@@ -396,28 +519,6 @@ int main() {
 			//Code in here will run every 25ms
 			tft_clear();
 			
-			static u8 adjusting_button = 0;
-		if(button_pressed(BUTTON1)){
-			if(adjusting_button) motor2_fullSpeed = (motor2_fullSpeed + 1)%100;
-			else motor1_fullSpeed = (motor1_fullSpeed + 1)%100;
-		}
-		
-		if(button_pressed(BUTTON2)){
-			if(adjusting_button) motor2_fullSpeed = (motor2_fullSpeed+99)%100;
-			else motor1_fullSpeed = (motor1_fullSpeed+99)%100;
-		}
-		
-		if(button_pressed(BUTTON3)){
-			adjusting_button ^= 1;
-		}
-		if(adjusting_button){
-			tft_prints(0,5," m1 %d", motor1_fullSpeed);
-			tft_prints(0,6,"[m2]%d", motor2_fullSpeed);
-		} else {
-			tft_prints(0,5,"[m1]%d", motor1_fullSpeed);
-			tft_prints(0,6," m2 %d", motor2_fullSpeed);		
-		}
-		
 			motor_action(this_ticks);
 			
 			uart_tx_str(COM1, "movement: %d\nprogress: %d", movement,progress);
