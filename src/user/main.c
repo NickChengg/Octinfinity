@@ -33,9 +33,9 @@ float dist_cm=0;
 static uint32_t this_ticks = 0;
 static uint32_t us_ticks = 0;
 
-#define GRAB_PIN &PB8
-#define GRAB_UP_PIN &PB9
-#define THROW_PIN &PB10
+#define GRAB_PIN &PB0
+#define GRAB_UP_PIN &PB1
+#define THROW_PIN &PB2
 
 void EchoPrint()
 {

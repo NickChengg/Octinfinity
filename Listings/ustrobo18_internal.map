@@ -482,13 +482,13 @@ Section Cross References
     main.o(i.gpio_write) refers to stm32f10x_gpio.o(i.GPIO_SetBits) for GPIO_SetBits
     main.o(i.gpio_write) refers to stm32f10x_gpio.o(i.GPIO_ResetBits) for GPIO_ResetBits
     main.o(i.grabDown) refers to main.o(i.gpio_write) for gpio_write
-    main.o(i.grabDown) refers to main.o(.constdata) for PB8
+    main.o(i.grabDown) refers to main.o(.constdata) for PB0
     main.o(i.grabRelease) refers to main.o(i.gpio_write) for gpio_write
-    main.o(i.grabRelease) refers to main.o(.constdata) for PB8
+    main.o(i.grabRelease) refers to main.o(.constdata) for PB0
     main.o(i.grabStart) refers to main.o(i.gpio_write) for gpio_write
-    main.o(i.grabStart) refers to main.o(.constdata) for PB8
+    main.o(i.grabStart) refers to main.o(.constdata) for PB0
     main.o(i.grabUp) refers to main.o(i.gpio_write) for gpio_write
-    main.o(i.grabUp) refers to main.o(.constdata) for PB8
+    main.o(i.grabUp) refers to main.o(.constdata) for PB0
     main.o(i.main) refers to main.o(i.gpio_init) for gpio_init
     main.o(i.main) refers to main.o(i.gpio_write) for gpio_write
     main.o(i.main) refers to rcc.o(i.rcc_init) for rcc_init
@@ -503,12 +503,12 @@ Section Cross References
     main.o(i.main) refers to ultrasonic.o(i.set_cycle) for set_cycle
     main.o(i.main) refers to f2d.o(x$fpl$f2d) for __aeabi_f2d
     main.o(i.main) refers to ticks.o(i.get_ticks) for get_ticks
-    main.o(i.main) refers to main.o(.constdata) for PB8
+    main.o(i.main) refers to main.o(.constdata) for PB0
     main.o(i.main) refers to main.o(.data) for TOTAL
     main.o(i.throwReset) refers to main.o(i.gpio_write) for gpio_write
-    main.o(i.throwReset) refers to main.o(.constdata) for PB10
+    main.o(i.throwReset) refers to main.o(.constdata) for PB2
     main.o(i.throwSet) refers to main.o(i.gpio_write) for gpio_write
-    main.o(i.throwSet) refers to main.o(.constdata) for PB10
+    main.o(i.throwSet) refers to main.o(.constdata) for PB2
     arm_cos_q15.o(.text) refers to arm_common_tables.o(.constdata) for sinTable_q15
     arm_sin_q15.o(.text) refers to arm_common_tables.o(.constdata) for sinTable_q15
     vsprintf.o(.text) refers (Special) to _printf_a.o(.ARM.Collect$$_printf_percent$$00000006) for _printf_a
@@ -2136,9 +2136,9 @@ Image Symbol Table
     PA7                                      0x0800417c   Data           8  ultrasonic.o(.constdata)
     .constdata                               0x08004188   Section       48  main.o(.constdata)
     PA7                                      0x08004188   Data           8  main.o(.constdata)
-    PB8                                      0x08004190   Data           8  main.o(.constdata)
-    PB9                                      0x08004198   Data           8  main.o(.constdata)
-    PB10                                     0x080041a0   Data           8  main.o(.constdata)
+    PB0                                      0x08004190   Data           8  main.o(.constdata)
+    PB1                                      0x08004198   Data           8  main.o(.constdata)
+    PB2                                      0x080041a0   Data           8  main.o(.constdata)
     .constdata                               0x080041b8   Section        8  _printf_wctomb.o(.constdata)
     initial_mbstate                          0x080041b8   Data           8  _printf_wctomb.o(.constdata)
     .constdata                               0x080041c0   Section       40  _printf_hex_int_ll_ptr.o(.constdata)
