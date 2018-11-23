@@ -67,7 +67,7 @@ u32 escape_ticks, difference_ticks = 0; //time of start turning; record the tick
 u8 move_count = 0; //no. of grip+turn to go
 
 //testing value
-u16 const motor1_fullSpeed =100, motor2_fullSpeed =100; // test value, range ~100, <=100
+u16 motor1_fullSpeed =100, motor2_fullSpeed =100; // test value, range ~100, <=100
 double const motor_turnTO_proportion = -1, motor_turnAWAY_proportion = 1;// test vlaue, turn TO the direction(TO < AWAY). 
 u32 const turn_90_ticks = 100, turn_180_ticks = 200; // test value, for ticks difference of turning 90 or 180 degree
 u32 const turn_30_ticks = 20; //test value, for ticks difference of turning 30 degree(to face to house)
@@ -375,6 +375,7 @@ int main() {
 	ticks_init();
 	oled_init();
 	buzzer_init();
+	buttons_init();
 	leds_init();
 	motor_init(MOTOR1, 144, 100, 100, 0); //at rest
 	motor_init(MOTOR2, 144, 100, 100, 0); //at rest
@@ -395,6 +396,28 @@ int main() {
 			//Code in here will run every 25ms
 			tft_clear();
 			
+			static u8 adjusting_button = 0;
+		if(button_pressed(BUTTON1)){
+			if(adjusting_button) motor2_fullSpeed = (motor2_fullSpeed + 1)%100;
+			else motor1_fullSpeed = (motor1_fullSpeed + 1)%100;
+		}
+		
+		if(button_pressed(BUTTON2)){
+			if(adjusting_button) motor2_fullSpeed = (motor2_fullSpeed+99)%100;
+			else motor1_fullSpeed = (motor1_fullSpeed+99)%100;
+		}
+		
+		if(button_pressed(BUTTON3)){
+			adjusting_button ^= 1;
+		}
+		if(adjusting_button){
+			tft_prints(0,5," m1 %d", motor1_fullSpeed);
+			tft_prints(0,6,"[m2]%d", motor2_fullSpeed);
+		} else {
+			tft_prints(0,5,"[m1]%d", motor1_fullSpeed);
+			tft_prints(0,6," m2 %d", motor2_fullSpeed);		
+		}
+		
 			motor_action(this_ticks);
 			
 			uart_tx_str(COM1, "movement: %d\nprogress: %d", movement,progress);
