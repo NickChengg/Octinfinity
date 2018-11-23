@@ -1,11 +1,37 @@
+/*******************************************
+
+				   	 # Octinfinity #
+			  	Line Tracking Algorithm
+
+											Carefully crafted by
+														Edwin Ng Ka Ho
+
+********************************************
+[TODO]
+0. test current codes
+1. test inverse trig function and type casting
+2. test sqrt function
+3. fully distinguish all cases
+4. count grids
+5. hard code path
+6. varied grid width
+********************************************
+[Reminder]
+1. sqrt: int32_t -> uint32_t (scaled by 1024)
+2. atan: int32_t (scaled by 32768) -> int32_t (scaled by 100)
+3. s32 = int32_t = signed int
+	 u32 = uint32_t = unsigned int
+*******************************************/
+
 //Definition
 #define LT_F GPIO5
 #define LT_L GPIO6
 #define LT_R GPIO8
 #define LT_B GPIO7
 
-#define HALF_HEIGHT 20 //mm
-#define HALF_WIDTH 40 //mm
+#define H_HEIGHT 20 //mm	//half height
+#define H_WIDTH 40 //mm		//half width
+#define H_GRID 467.5 //mm	//half grid width
 
 #define LT_UPPERTOLERANCE 1.3
 #define LT_LOWERTOLERANCE 0.7
@@ -69,10 +95,10 @@ int main(){
 
 	u8 lt_value[4], lt_last_value[4] = {0};
 	u8 lt_pattern=0;
-	u32 lt_basetime, lt_deltatime[3];
+	u32 lt_basetime, lt_deltime[3];										//"del" = delta
 	u8 lt_stage = 0;
-	double tandeltatheta, deltatheta, deltax;
-	s32 deltascaledtheta;
+	double tandeltheta, deltheta, delx;
+	s32 delscaledtheta;
 	double ratio_discrepancy; //temp
 	
 	char translate_dir[4] = {'F', 'L', 'R', 'B'};
@@ -100,8 +126,8 @@ int main(){
 					if(lt_stage==0){
 						lt_basetime = this_ticks;
 				  }else{
-						lt_deltatime[lt_stage-1] = this_ticks - lt_basetime;
-						tft_prints(2, 2 + lt_stage-1, "%d", lt_deltatime[lt_stage-1]);
+						lt_deltime[lt_stage-1] = this_ticks - lt_basetime;
+						tft_prints(2, 2 + lt_stage-1, "%d", lt_deltime[lt_stage-1]);
 					}
 					tft_prints(0, 2 + lt_stage, "%c", translate_dir[i]);
 					lt_stage++;
@@ -109,31 +135,53 @@ int main(){
 			}
 			
 			//Determine pattern, calculate deviation
-				//TODO lt_stage==4
-				//TODO Categorize cases
+				//TODO Fully Categorize cases
 			if(lt_stage==4){
 				switch(lt_pattern){
 					case PATTERN_FLRB:
-						//based on ffff
-						tandeltatheta = (double)(HALF_HEIGHT*((s32)lt_deltatime[0]-(s32)lt_deltatime[1]))/(double)(HALF_WIDTH*((s32)lt_deltatime[0]+(s32)lt_deltatime[1]));
-						deltatheta = arctan(tandeltatheta);
-						deltascaledtheta = atan((s32)(tandeltatheta * 32768));
-						ratio_discrepancy = ((double)lt_deltatime[0]/(double)lt_deltatime[2]) / (double)(HALF_HEIGHT + HALF_WIDTH * tandeltatheta)/(double)(2 * HALF_HEIGHT);
-						if(LT_LOWERTOLERANCE < ratio_discrepancy && ratio_discrepancy < LT_UPPERTOLERANCE)
-							tft_prints(0, 6, "Rot %f", deltatheta); //confirm ffff
-							//motor_adjust(0, deltatheta);
-						else ;//flff OR ffrf
+						//check ffff
+						tandeltheta = (double)(H_HEIGHT*((s32)lt_deltime[0]-(s32)lt_deltime[1]))/(double)(H_WIDTH*((s32)lt_deltime[0]+(s32)lt_deltime[1]));
+						ratio_discrepancy = ((double)lt_deltime[0]/(double)lt_deltime[2]) / (double)(H_HEIGHT + H_WIDTH * tandeltheta)/(double)(2 * H_HEIGHT);
+						if(LT_LOWERTOLERANCE < ratio_discrepancy && ratio_discrepancy < LT_UPPERTOLERANCE){
+							//confirmed ffff
+							deltheta = arctan(tandeltheta);
+							delscaledtheta = atan((s32)(tandeltheta * 32768));
+							tft_prints(0, 6, "Rot %f", deltheta); 
+							//motor_adjust(0, deltheta);
+						}else{
+							//check flff
+							tandeltheta = (double)H_HEIGHT * (lt_deltime[2] - 2 * lt_deltime[1]) / ((double)H_WIDTH * lt_deltime[2]);
+							if(tandeltheta > 0){
+								//confirmed flff
+								deltheta = arctan(tandeltheta);
+								delscaledtheta = atan((s32)(tandeltheta * 32768));
+								delx = (2*H_HEIGHT*(double)lt_deltime[0]/lt_deltime[2] + (double)H_WIDTH/tandeltheta) * (double)sqrt(1000000/(double)(1+tandeltheta*tandeltheta))/1024000 - H_GRID;
+								tft_prints(0, 6, "Rot %f", deltheta); 
+							}else{
+								//check ffrf
+								tandeltheta = (double)H_HEIGHT * (2 * lt_deltime[0] - lt_deltime[2]) / ((double)H_WIDTH * lt_deltime[2]);
+								if(tandeltheta > 0){
+									//confirmed ffrf
+									deltheta = arctan(tandeltheta);
+									delscaledtheta = atan((s32)(tandeltheta * 32768));
+									delx = ((double)H_WIDTH/tandeltheta - 2*H_HEIGHT*(double)lt_deltime[1]/lt_deltime[2]) * (double)sqrt(1000000/(double)(1+tandeltheta*tandeltheta))/1024000 - H_GRID;
+									tft_prints(0, 6, "Rot %f", deltheta); 
+								}else{
+									//unrecognized case
+								}
+							}
+						}
 						break;
 					case PATTERN_FLBR:
 						break;
 					case PATTERN_FRLB:
-						tandeltatheta = (double)(HALF_HEIGHT*((s32)lt_deltatime[1]-(s32)lt_deltatime[0]))/(double)(HALF_WIDTH*((s32)lt_deltatime[0]+(s32)lt_deltatime[1]));
-						deltatheta = arctan(tandeltatheta);
-						deltascaledtheta = atan((s32)(tandeltatheta * 32768));
-						ratio_discrepancy = ((double)lt_deltatime[0]/(double)lt_deltatime[2]) / (double)(HALF_HEIGHT - HALF_WIDTH * tandeltatheta)/(double)(2 * HALF_HEIGHT);
+						tandeltheta = (double)(H_HEIGHT*((s32)lt_deltime[1]-(s32)lt_deltime[0]))/(double)(H_WIDTH*((s32)lt_deltime[0]+(s32)lt_deltime[1]));
+						deltheta = arctan(tandeltheta);
+						delscaledtheta = atan((s32)(tandeltheta * 32768));
+						ratio_discrepancy = ((double)lt_deltime[0]/(double)lt_deltime[2]) / (double)(H_HEIGHT - H_WIDTH * tandeltheta)/(double)(2 * H_HEIGHT);
 						if(LT_LOWERTOLERANCE < ratio_discrepancy && ratio_discrepancy < LT_UPPERTOLERANCE)
-							tft_prints(0, 6, "Rot %f", deltatheta); //confirm ffff
-							//motor_adjust(0, deltatheta);
+							tft_prints(0, 6, "Rot %f", deltheta); //confirm ffff
+							//motor_adjust(0, deltheta);
 						else ;//flff OR ffrf
 						break;
 					case PATTERN_FRBL:
