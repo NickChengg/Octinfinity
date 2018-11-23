@@ -644,9 +644,9 @@
               <FilePath>.\src\library\oled.c</FilePath>
             </File>
             <File>
-              <FileName>dma.c</FileName>
+              <FileName>ultrasonic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\library\dma.c</FilePath>
+              <FilePath>.\src\library\ultrasonic.c</FilePath>
             </File>
           </Files>
         </Group>
