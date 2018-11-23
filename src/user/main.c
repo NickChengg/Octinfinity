@@ -6,14 +6,17 @@
  *						68925193
  *
  */
-
+ 
+ 
+#include "gpio.h"
+#include "ticks.h"
 #include "main.h"
 
 // Include Library Headers Here
-#include "math.h"
+
 #include "rcc.h"
-#include "ticks.h"
-#include "gpio.h"
+
+
 #include "leds.h"
 #include "buttons.h"
 #include "buzzer.h"
@@ -23,6 +26,7 @@
 #include "camera.h"
 #include "pwm.h"
 #include "adc.h"
+#include "math.h"
 #include "ultrasonic.h"
 
 const int cycle=5;//in ms, 1 cycle for signal, 5 cycle after receive echo
@@ -72,7 +76,7 @@ int main() {
 	// Initialize Everything Here
 	rcc_init();
 	ticks_init();
-	oled_init();
+	//oled_init();
 	
 	tft_init(0, WHITE, RED, GREEN, DARK_RED);
 	tft_clear();
