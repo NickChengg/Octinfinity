@@ -63,13 +63,12 @@ MANUAL = 20, //enter manual mode
 //init
 MOVEMENT movement= STILL;
 PROGRESS progress = INIT;
-MOVEMENT manual_move = STILL; //for manual
 u32 escape_ticks, difference_ticks = 0; //time of start turning; record the ticks difference(manual mode)
 u8 move_count = 0; //no. of grip+turn to go
 
 //testing value
 u16 const motor1_fullSpeed =100, motor2_fullSpeed =100; // test value, range ~100, <=100
-int32_t const motor_turnTO_OC = -100, motor_turnAWAY_OC = 100;// test vlaue, turn TO the direction(TO < AWAY). range: -100 to 100
+double const motor_turnTO_proportion = -1, motor_turnAWAY_proportion = 1;// test vlaue, turn TO the direction(TO < AWAY). 
 u32 const turn_90_ticks = 100, turn_180_ticks = 200; // test value, for ticks difference of turning 90 or 180 degree
 u32 const turn_30_ticks = 20; //test value, for ticks difference of turning 30 degree(to face to house)
 
@@ -79,9 +78,11 @@ void compensate_cal(int L_reading, int R_reading) { //time difference from left&
 	 // 
 }
 
-void motor_move(int motor_left_OC, int motor_right_OC) {
+void motor_move(double motor_left_OC, double motor_right_OC) {
 	u8 moveDirection_left = motor_left_OC > 0 ? 0 : 1; //
 	u8 moveDirection_right = motor_right_OC > 0 ? 0 : 1; //
+	motor_left_OC = motor_left_OC > 100? 100 : motor_left_OC < -100? -100 : motor_left_OC;
+	motor_right_OC = motor_right_OC > 100? 100 : motor_right_OC < -100? -100 : motor_right_OC;
 	motor_control(MOTOR1, 100 - ABS((int)motor_left_OC), moveDirection_left);
 	motor_control(MOTOR2, 100 - ABS((int)motor_right_OC), moveDirection_right);
 }
@@ -200,12 +201,12 @@ void motor_action(u32 this_ticks) {
 			if (this_ticks - escape_ticks>1000) {
 				buzzer_off();
 			}
-			switch (manual_move) {
+			switch (movement) {
 				case STILL: motor_move(0,0);break;
-				case FORWARD: motor_move(50,50);break;
-				case BACKWARD: motor_move(-50,-50);break;
-				case LEFTTURN: motor_move(50,50);break;
-				case RIGHTTURN: motor_move(50,50);break;
+				case FORWARD: motor_move(motor1_fullSpeed, motor2_fullSpeed);break;
+				case BACKWARD: motor_move(-motor1_fullSpeed, -motor2_fullSpeed);break;
+				case LEFTTURN: motor_move(motor1_fullSpeed * motor_turnTO_proportion, motor2_fullSpeed * motor_turnAWAY_proportion);break;
+				case RIGHTTURN: motor_move(motor1_fullSpeed * motor_turnAWAY_proportion, motor2_fullSpeed * motor_turnTO_proportion);break;
 				default:break;
 			}
 			return;
@@ -230,13 +231,26 @@ void motor_action(u32 this_ticks) {
 			else movement = STILL;
 			break;
 		}
+		case BACKWARD: {
+			if (move_count > 0) {
+				motor_move(-motor1_fullSpeed, -motor2_fullSpeed);
+				/*edwin: line sensor
+				
+				if (cross line)*/ {
+					move_count--;
+					escape_ticks = this_ticks;//need?
+				}
+			}
+			else movement = STILL;
+			break;
+		}
 		case LEFTTURN: {
 			if (escape_ticks == 0) { //init escape ticks
 				escape_ticks = this_ticks;
 			}
 			else { //start turning
 				if ((this_ticks - escape_ticks) <= turn_90_ticks) { //turn
-					motor_move(motor_turnTO_OC, motor_turnAWAY_OC);
+					motor_move(motor1_fullSpeed * motor_turnTO_proportion, motor2_fullSpeed * motor_turnAWAY_proportion);
 				}
 				else { //stop turning
 					escape_ticks = 0;
@@ -251,7 +265,7 @@ void motor_action(u32 this_ticks) {
 			}
 			else { //start turning
 				if ((this_ticks - escape_ticks) <= turn_90_ticks) { //turn
-					motor_move(motor_turnAWAY_OC, motor_turnTO_OC);
+					motor_move(motor1_fullSpeed *  motor_turnAWAY_proportion, motor2_fullSpeed * motor_turnTO_proportion);
 				}
 				else { //stop turning
 					escape_ticks = 0;
@@ -260,13 +274,13 @@ void motor_action(u32 this_ticks) {
 			}
 			break;
 		}
-		case ABOUTTURN: {
+		case ABOUTTURN: { //180 degree to the right
 			if (escape_ticks == 0) { //init escape ticks
 				escape_ticks = this_ticks;
 			}
 			else { //start turning
 				if ((this_ticks - escape_ticks) <= turn_180_ticks) { //turn
-					motor_move(motor_turnAWAY_OC, motor_turnTO_OC);
+					motor_move(motor1_fullSpeed *  motor_turnAWAY_proportion, motor2_fullSpeed * motor_turnTO_proportion);
 				}
 				else { //stop turning
 					escape_ticks = 0;
@@ -307,10 +321,13 @@ void UARTOnReceiveHandler(const u8 received){
     //whenever you type something in coolterm, 
     //each character will triger this function 
     //the character will be the argument for this function
-	progress = MANUAL;
+	if (progress != MANUAL) {
+		progress = MANUAL;
+		movement = STILL;
+	}
 	
-	if (manual_move != STILL) {
-		manual_move = STILL;
+	if (movement != STILL) {
+		movement = STILL;
 		difference_ticks = get_ticks() - escape_ticks; 
 	}
 	else {
@@ -319,22 +336,22 @@ void UARTOnReceiveHandler(const u8 received){
 			case '1': buzzer_on();break; //testing
 			case 'W':
 			case 'w': {
-				manual_move = FORWARD;
+				movement = FORWARD;
 				break;
 			}
 			case 'A':
 			case 'a': {
-				manual_move = LEFTTURN;
+				movement = LEFTTURN;
 				break;
 			}
 			case 'S':
 			case 's': {
-				manual_move = BACKWARD;
+				movement = BACKWARD;
 				break;
 			}
 			case 'D':
 			case 'd': {
-				manual_move = RIGHTTURN;;
+				movement = RIGHTTURN;;
 				break;
 			}
 			case 'T':
@@ -347,6 +364,7 @@ void UARTOnReceiveHandler(const u8 received){
 					//pick rack or shuttlecock
 				break;
 			}
+			case ' ': movement = STILL;
 		}
 	}
 }
@@ -358,8 +376,8 @@ int main() {
 	oled_init();
 	buzzer_init();
 	leds_init();
-	motor_init(MOTOR1, 144, 100, 100, 1); //at rest
-	motor_init(MOTOR2, 144, 100, 100, 1); //at rest
+	motor_init(MOTOR1, 144, 100, 100, 0); //at rest
+	motor_init(MOTOR2, 144, 100, 100, 0); //at rest
 	tft_init(PIN_ON_TOP, WHITE, BLACK, RED, YELLOW); //debug
 	uart_init(COM1,115200); //debug
   uart_rx_init(COM1,&UARTOnReceiveHandler);
@@ -382,8 +400,8 @@ int main() {
 			uart_tx_str(COM1, "movement: %d\nprogress: %d", movement,progress);
 			tft_prints(0, 0, "movement: %d\nprogress: %d", movement,progress);
 			if (progress == MANUAL) {
-				uart_tx_str(COM1, "maual_movement: %d\nticks diff: %d", manual_move,difference_ticks);
-				tft_prints(0, 5, "maual_movement: %d\nticks diff: %d", manual_move,difference_ticks);
+				uart_tx_str(COM1, "maual_movement: %d\nticks diff: %d", movement,difference_ticks);
+				tft_prints(0, 5, "maual_movement: %d\nticks diff: %d", movement,difference_ticks);
 			}
 			tft_update();
 		}
