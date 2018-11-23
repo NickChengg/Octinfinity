@@ -29,8 +29,9 @@
 u16 const servo_OC_min = 275, servo_OC_midd = 300, servo_OC_max = 425; //min->left, max->right (160,285,410)
 u16 mag_FL = 0, mag_FR = 0, mag_BL = 0, mag_BR = 0; //magnetic reading in (front/back)(left/right)
 u16 servo_OC = 300; //midd
-u16 const motor_fullSpeed =100;
-u16 motor1_OC = 0, motor2_OC = 0;// test vlaue, or changed by encoder. range: -100 to 100
+u16 const motor1_maxSpeed =60,motor2_maxSpeed =60;
+u16 const motor1_minSpeed = 35, motor2_minSpeed = 35;// test vlaue, or changed by encoder. range: -100 to 100
+static u16 turning_proportion; //from reading of mag sensors
 
 typedef enum {
 	forward = 0,
@@ -59,7 +60,7 @@ void mag_read() {
 	}
 }
 
-int mag_OC_cal(int L_reading, int R_reading) { //left right reading from magnetic sensors
+double proportion_cal(int L_reading, int R_reading) { //left right reading from magnetic sensors
 	switch (1) { //test diff algo
 		case 1: {
 			const u32 max_reading = 1200; //max reading of sensor(closest), test! 
@@ -76,11 +77,11 @@ int mag_OC_cal(int L_reading, int R_reading) { //left right reading from magneti
 			tft_prints(0, 5, "TURN: %d\n ", turning_percentage);
 			uart_tx_str(COM1, "TURN: %d\n ", turning_percentage);
 			
-			return (int) servo_OC_midd + (servo_OC_max - servo_OC_midd) * turning_percentage / 100; //(5000 * (1.5 + turning_percentage * 0.006) / 20); // OC servo
+			return  turning_percentage / 100; //(5000 * (1.5 + turning_percentage * 0.006) / 20); // OC servo
 		}
 		case 2: {
-			float distance_diff = 0;
-			float static distance_max_diff = 0;
+			double distance_diff = 0;
+			double static distance_max_diff = 0;
 			u8 servo_max_angle = 150; //max angle of servo
 			if (ABS(1/sqrt(mag_FR) - 1/sqrt(mag_FL)) < distance_max_diff) {
 				distance_diff = (1/sqrt(mag_FR) - 1/sqrt(mag_FL)) ;
@@ -91,7 +92,7 @@ int mag_OC_cal(int L_reading, int R_reading) { //left right reading from magneti
 			tft_prints(0, 5, "TURN: %d\n ", (int) distance_diff/distance_max_diff * 100);
 			uart_tx_str(COM1, "TURN: %d\n ", (int) distance_diff/distance_max_diff * 100);
 			
-			return (int) servo_OC_midd + (servo_OC_max - servo_OC_midd) * distance_diff/distance_max_diff;
+			return distance_diff/distance_max_diff;
 		}
 	}
 }
@@ -100,23 +101,28 @@ void mag_compare() {
 	const u32 acceptable_diff = 0; //turn only when excess acceptable difference, test! really need??
 
 	if (ABS(mag_FL - mag_FR) > acceptable_diff) {
-		servo_OC = mag_OC_cal(mag_FL, mag_FR);//L>R -> turn L
+		turning_proportion = proportion_cal(mag_FL, mag_FR);
+		servo_OC = (int) servo_OC_midd + (servo_OC_max - servo_OC_midd) * turning_proportion;//L>R -> turn L
 	}
 	else if (ABS(mag_BL - mag_BR) > acceptable_diff) {
-		servo_OC = mag_OC_cal(mag_BR, mag_BL); //L>R -> turn R
+		turning_proportion = proportion_cal(mag_BR, mag_BL);
+		servo_OC = (int) servo_OC_midd + (servo_OC_max - servo_OC_midd) * turning_proportion; //L>R -> turn R
 	}
 	
 	if (ABS(servo_OC - servo_OC_midd) > servo_OC_max - servo_OC_midd) {
 		servo_OC =  servo_OC > servo_OC_max? servo_OC_max: servo_OC_min;
 	}
 	
-	//servo_OC = mag_OC_cal(mag_FL, mag_FR) - mag_OC_cal(mag_BR, mag_BL); //alternative
+	//servo_OC = turning_porportion(mag_FL, mag_FR) - turning_porportion(mag_BR, mag_BL); //alternative
 }
 
 
 void motor_move() {
-	motor_control(MOTOR1, (int)motor1_OC, moveDirection);
-	motor_control(MOTOR2, (int)motor2_OC, moveDirection);
+	u16 motor1_OC = (motor1_maxSpeed - motor1_minSpeed)* turning_proportion + motor1_minSpeed;
+	u16 motor2_OC = (motor2_maxSpeed - motor2_minSpeed)* turning_proportion + motor2_minSpeed;
+	
+	motor_control(MOTOR1, 100-(int)motor1_OC, moveDirection);
+	motor_control(MOTOR2, 100-(int)motor2_OC, moveDirection);
 }
 int main() {
 	// Initialize Everything Here
@@ -130,8 +136,8 @@ int main() {
 	adc_init();
 	//buzzer_init();
 	servo_init(SERVO2, 287, 5000, servo_OC_midd); //5000 * x /20	//x=1.5->mid//375
-	motor_init(MOTOR1, 144, motor_fullSpeed, motor1_OC, moveDirection); //at rest
-	motor_init(MOTOR2, 144, motor_fullSpeed, motor2_OC, moveDirection); //at rest
+	motor_init(MOTOR1, 144, 100, 100, moveDirection); //at rest
+	motor_init(MOTOR2, 144, 100, 100, moveDirection); //at rest
 	tft_init(PIN_ON_TOP, WHITE, BLACK, RED, YELLOW); //debug
 	uart_init(COM1,115200); //debug
 	
