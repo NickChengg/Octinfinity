@@ -28,6 +28,8 @@ char text_buf[2][CHAR_MAX_X][CHAR_MAX_Y];
 u16 text_color_buf[2][CHAR_MAX_X][CHAR_MAX_Y];
 u16 bg_color_buf[2][CHAR_MAX_X][CHAR_MAX_Y];
 
+//u16 pixel_buf[MAX_WIDTH][MAX_HEIGHT] = {0};
+
 /**
   * @brief  Initialization of SPI for TFT
   * @param  None
@@ -136,6 +138,8 @@ void tft_init(TFT_ORIENTATION orientation, u16 in_bg_color, u16 in_text_color, u
 
 	tft_clear();
 	tft_update();
+	tft_clear();
+	tft_update();
 }
 
 /**
@@ -222,6 +226,8 @@ void tft_set_region(u16 x, u16 y, u16 w, u16 h) {
 	tft_write_data((endy)     & 0xFF);
 
 	tft_write_command(WRITE_RAM_COMMAND);
+
+	gpio_set(TFT_DC);
 }
 
 #define buf_coord(x, y) (((u16)(y)) * ((u16)char_max_x) + ((u16)(x)))
@@ -299,17 +305,13 @@ void tft_fill_color(u16 color) {
   * @retval None
   */
 void tft_force_clear(void) {
-	for (u8 i = 0; i < CHAR_MAX_X; i++) {
-		for (u8 j = 0; j < CHAR_MAX_Y; j++) {
-			text_buf[0][i][j] = ' ';
-			text_buf[1][i][j] = ' ';
-		}
-	}
+	tft_clear();
 	tft_fill_color(curr_bg_color);
 }
 
 inline static void tft_incr_line() {
-    tft_y_index++;
+	tft_y_index++;
+	tft_x_index = 0;
 	if (tft_y_index >= char_max_y) tft_y_index = 0;
 }
 
@@ -321,12 +323,11 @@ static void tft_set_buffer(u8 x, u8 y, u8 * fp) {
 	u8 is_underlined = 0;
 	// u8 escaped = 0;
 	
-	while (*fp && i < char_max_x && j < char_max_y) {
+	while (*fp && j < char_max_y) {
 		switch(*fp) {
 			case '\r':
 			case '\n':
-				j++;
-				i = 0;
+				j++; i=0;
 				tft_incr_line();
 				break;
 			case '[':
@@ -344,6 +345,10 @@ static void tft_set_buffer(u8 x, u8 y, u8 * fp) {
 				text_buf[cur_screen][i][j] = ((*fp) | (is_underlined ? 0x80 : 0x00));
 				text_color_buf[cur_screen][i][j] = is_special     ? curr_text_color_sp   : curr_text_color;
 				bg_color_buf[cur_screen][i++][j] = is_highlighted ? curr_highlight_color : curr_bg_color;
+				if (i==char_max_x) {
+					j++; i=0;
+					tft_incr_line();
+				}
 				break;
 		}
 		fp++;

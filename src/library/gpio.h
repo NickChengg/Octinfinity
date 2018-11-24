@@ -99,18 +99,7 @@ static const GPIOPin
  * @brief      Initialize a GPIO Pin in a specific mode
  *
  * @param[in]  gpio  The GPIO Pin
- * @param[in]  mode  The Mode of the GPIO:
- * 	
- * 	On the menu for GPIO Modes is:
- * 		Analog Pin              - GPIO_Mode_AIN
- * 		Direct Input Pin        - GPIO_Mode_IN_FLOATING
- * 		Input with Pull-Down    - GPIO_Mode_IPD
- * 		Input with Pull-Up      - GPIO_Mode_IPU
- * 		Output as Open Drain    - GPIO_Mode_Out_OD
- * 		Output as Push-Pull     - GPIO_Mode_Out_PP
- * 		HW Peripheral output OD - GPIO_Mode_AF_OD
- * 		HW Peripheral output PP - GPIO_Mode_AF_PP
- * 	
+ * @param[in]  mode  The Mode of GPIO pin
  */
 static inline void gpio_init(const GPIOPin* gpio, GPIOMode_TypeDef mode) {
 	// gpio_rcc_init(gpio->port);
@@ -123,6 +112,20 @@ static inline void gpio_init(const GPIOPin* gpio, GPIOMode_TypeDef mode) {
 
 	GPIO_Init(gpio->port, &GPIO_InitStructure);
 }
+
+
+/**
+ * @brief      Initialize the external interrupt for a specific gpio pin
+ * 
+ * @NOTE the exti is split into lines where each of the 16 pins on one port is attached to a line.
+ * however pin 1 on every port (A,B,C) is on the same line, some only one of them may be used
+ *
+ * @NOTE It will call EXTIXY_IRQHandler where XY is the pin number.
+ *
+ * @param[in]  gpio     The GPIO Pin
+ * @param[in]  trigger  The trigger mode, Rising, Falling or Both
+ */
+void gpio_exti_init(const GPIOPin* gpio, EXTITrigger_TypeDef trigger);
 
 /**
  * @brief      Read the input value of the GPIO Pin
@@ -147,8 +150,8 @@ static inline void gpio_write(const GPIOPin* gpio, u8 bit) {
 }
 
 /**
- * @brief      Quickly set the output of the GPIO Pin (High)
- *	functionally equivalent but sometimes faster than gpio_write(1)
+ * @brief      Quickly set the output of the GPIO Pin (High) functionally
+ *             equivalent but sometimes faster than gpio_write(1)
  *
  * @param[in]  gpio  The GPIO Pin
  */
@@ -157,8 +160,8 @@ static inline void gpio_set(const GPIOPin* gpio) {
 }
 
 /**
- * @brief      Quickly reset the output of the GPIO Pin (Low)
- *	functionally equivalent but sometimes faster than gpio_write(0)
+ * @brief      Quickly reset the output of the GPIO Pin (Low) functionally
+ *             equivalent but sometimes faster than gpio_write(0)
  *
  * @param[in]  gpio  The GPIO Pin
  */
