@@ -18,3 +18,6 @@ void set_cycle(u32 this_ticks);
 static int FLAG=0;
 static uint32_t OUT_NUM=0;
 static uint32_t ULTRA_EMIT=0;//used to store hardware emit signal time
+
+//newly added;
+static float US_TO_SYS = 1000.0/13.8;
