@@ -24,9 +24,9 @@
 #include "pwm.h"
 #include "adc.h"
 
-#define GRAB_PIN &PB3 //grapping hold/release
-#define GRAB_UP_PIN &PB2 //grapping up/down
-#define THROW_PIN &PB0 //throw /reset
+#define GRAB_PIN GPIO6 //grapping hold/release
+#define GRAB_UP_PIN GPIO7 //grapping up/down
+#define THROW_PIN GPIO8 //throw /reset
 
 
 //def
@@ -78,7 +78,7 @@ MANUAL = 20, //enter manual mode
 //init
 MOVEMENT movement= STILL;
 //PROGRESS progress = INIT;
-PROGRESS progress = MANUAL;////////////////////////////////////////////////////////////////////////////////////CHAGEEEEEE
+PROGRESS progress = MANUAL;//////////CHAGEEEEEE
 u32 escape_ticks, difference_ticks = 0; //time of start turning; record the ticks difference(manual mode)
 u8 move_count = 0; //no. of grip+turn to go
 u8 picked = 0, grabbed = 0, threw = 0;
@@ -237,8 +237,9 @@ void motor_action(u32 this_ticks) {
 		
 		
 		case MANUAL: {
-			if (this_ticks - escape_ticks>1000) {
+			if (get_ticks()-	 escape_ticks>1000){
 				buzzer_off();
+				movement=STILL;
 			}
 			switch (movement) { //override moving functions
 				case STILL: motor_move(0,0); return;
@@ -430,12 +431,12 @@ void UARTOnReceiveHandler(const u8 received){
 		progress = MANUAL;
 		movement = STILL;
 	}
-	
+	/*
 	if (movement != STILL) {
 		movement = STILL;
 		difference_ticks = get_ticks() - escape_ticks; 
 	}
-	else {
+	else {*/
 		escape_ticks = get_ticks();
 		switch (received) {
 			case '1': buzzer_on();break; //testing
@@ -488,7 +489,7 @@ void UARTOnReceiveHandler(const u8 received){
 				break;
 			}
 			case ' ': movement = STILL;
-		}
+		//}
 	}
 }
 
