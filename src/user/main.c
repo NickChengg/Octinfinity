@@ -24,9 +24,10 @@
 #include "pwm.h"
 #include "adc.h"
 
-#define GRAB_PIN GPIO6 //grapping hold/release
-#define GRAB_UP_PIN GPIO7 //grapping up/down
-#define THROW_PIN GPIO8 //throw /reset
+#define GRAB_PIN &PB12 //grapping hold/release
+#define GRAB_UP_PIN &PB15 //grapping up/down
+#define THROW_PIN &PB13 //throw /reset
+//&PB14
 
 
 //def
@@ -84,7 +85,7 @@ u8 move_count = 0; //no. of grip+turn to go
 u8 picked = 0, grabbed = 0, threw = 0;
 
 //testing value
-u16 const motor1_fullSpeed =50, motor2_fullSpeed =50; // test value, range ~100, <=100
+u16 const motor1_fullSpeed =100, motor2_fullSpeed =100; // test value, range ~100, <=100
 double const motor_turnTO_proportion = -1, motor_turnAWAY_proportion = 1;// test vlaue, turn TO the direction(TO < AWAY). 
 u32 const turn_90_ticks = 100, turn_180_ticks = 200; // test value, for ticks difference of turning 90 or 180 degree
 u32 const turn_30_ticks = 20; //test value, for ticks difference of turning 30 degree(to face to house)
@@ -502,7 +503,7 @@ int main() {
 	leds_init();
 	motor_init(MOTOR1, 144, 100, 100, 0); //at rest
 	motor_init(MOTOR2, 144, 100, 100, 0); //at rest
-	tft_init(PIN_ON_TOP, WHITE, BLACK, RED, YELLOW); //debug
+	//tft_init(PIN_ON_TOP, WHITE, BLACK, RED, YELLOW); //debug
 	uart_init(COM1,115200); //debug
   uart_rx_init(COM1,&UARTOnReceiveHandler);
 	
