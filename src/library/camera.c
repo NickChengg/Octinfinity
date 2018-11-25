@@ -8,7 +8,6 @@
  */
 
 #include "camera.h"
-#include "dma.h"
 #include "pwm.h"
 #include "stm32f10x_tim.h"
 #include "rcc.h"
