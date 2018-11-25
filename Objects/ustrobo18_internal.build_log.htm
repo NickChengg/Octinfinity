@@ -30,15 +30,29 @@ Build target 'Default'
 compiling main.c...
 C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\DSP\Include\arm_math.h(5742): warning:  #223-D: function "sqrtf" declared implicitly
         *pOut = sqrtf(in);
-src\user\main.c(78): warning:  #188-D: enumerated type mixed with another type
-  	tft_init(0, WHITE, RED, GREEN, DARK_RED);
-src\user\main.c(34): warning:  #177-D: variable "output"  was declared but never referenced
-  static long int output= 0;
-src\user\main.c: 3 warnings, 0 errors
+src\user\main.c(95): warning:  #186-D: pointless comparison of unsigned integer with zero
+  			if (ABS(1/sqrt(mag_FR) - 1/sqrt(mag_FL)) < distance_max_diff) {
+src\user\main.c(99): warning:  #186-D: pointless comparison of unsigned integer with zero
+  				distance_max_diff = ABS(1/sqrt(mag_FR) - 1/sqrt(mag_FL));
+src\user\main.c(94): warning:  #177-D: variable "servo_max_angle"  was declared but never referenced
+  			u8 servo_max_angle = 150; //max angle of servo
+src\user\main.c(107): warning:  #940-D: missing return statement at end of non-void function "proportion_cal" 
+  }
+src\user\main.c(157): warning:  #188-D: enumerated type mixed with another type
+  	moveDirection=0;
+src\user\main.c(216): warning:  #188-D: enumerated type mixed with another type
+  				moveDirection = 0;
+src\user\main.c(220): warning:  #188-D: enumerated type mixed with another type
+  				moveDirection = 1;
+src\user\main.c(266): warning:  #188-D: enumerated type mixed with another type
+  				moveDirection=!moveDirection;
+src\user\main.c(273): warning:  #1-D: last line of file ends without a newline
+  }
+src\user\main.c: 10 warnings, 0 errors
 linking...
-Program Size: Code=14916 RO-data=2460 RW-data=2016 ZI-data=3728  
+Program Size: Code=23272 RO-data=2876 RW-data=2048 ZI-data=3728  
 FromELF: creating hex file...
-".\Objects\ustrobo18_internal.axf" - 0 Error(s), 3 Warning(s).
+".\Objects\ustrobo18_internal.axf" - 0 Error(s), 10 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -65,9 +79,9 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE:5.1.2
 
    * Component: ARM::CMSIS:DSP:1.5.2
-      Include file:  CMSIS\DSP\Include\arm_math.h
       Library file:  CMSIS\Lib\ARM\arm_cortexM3l_math.lib
-Build Time Elapsed:  00:00:03
+      Include file:  CMSIS\DSP\Include\arm_math.h
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

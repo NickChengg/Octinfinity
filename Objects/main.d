@@ -1,6 +1,5 @@
 .\objects\main.o: src\user\main.c
-.\objects\main.o: .\src\library\gpio.h
-.\objects\main.o: .\src\stm32f10x_std\inc\stm32f10x_gpio.h
+.\objects\main.o: src\user\main.h
 .\objects\main.o: .\src\stm32f10x_std\inc\stm32f10x.h
 .\objects\main.o: C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm3.h
 .\objects\main.o: C:\software\Keil\ARM\ARMCC\Bin\..\include\stdint.h
@@ -19,9 +18,15 @@
 .\objects\main.o: .\src\stm32f10x_std\inc\stm32f10x_spi.h
 .\objects\main.o: .\src\stm32f10x_std\inc\stm32f10x_usart.h
 .\objects\main.o: .\src\stm32f10x_std\inc\misc.h
-.\objects\main.o: .\src\library\ticks.h
-.\objects\main.o: src\user\main.h
+.\objects\main.o: .\src\library\math.h
+.\objects\main.o: C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\DSP\Include\arm_math.h
+.\objects\main.o: C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm3.h
+.\objects\main.o: C:\software\Keil\ARM\ARMCC\Bin\..\include\string.h
+.\objects\main.o: .\src\library\math.h
+.\objects\main.o: C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\DSP\Include\arm_common_tables.h
 .\objects\main.o: .\src\library\rcc.h
+.\objects\main.o: .\src\library\ticks.h
+.\objects\main.o: .\src\library\gpio.h
 .\objects\main.o: .\src\library\leds.h
 .\objects\main.o: .\src\library\buttons.h
 .\objects\main.o: .\src\library\buzzer.h
@@ -32,10 +37,3 @@
 .\objects\main.o: .\src\library\camera.h
 .\objects\main.o: .\src\library\pwm.h
 .\objects\main.o: .\src\library\adc.h
-.\objects\main.o: .\src\library\math.h
-.\objects\main.o: C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\DSP\Include\arm_math.h
-.\objects\main.o: C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm3.h
-.\objects\main.o: C:\software\Keil\ARM\ARMCC\Bin\..\include\string.h
-.\objects\main.o: .\src\library\math.h
-.\objects\main.o: C:\software\Keil\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\DSP\Include\arm_common_tables.h
-.\objects\main.o: .\src\library\ultrasonic.h

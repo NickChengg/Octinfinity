@@ -1,8 +1,8 @@
 #include "ultrasonic.h"
 #include "gpio.h"	
 
-#define echo_PIN GPIO7
-#define trig_PIN GPIO8
+#define echo_PIN &PA6 //GPIO7
+#define trig_PIN &PA7 //GPIO8
 
 typedef void (*listener)(void);
 
