@@ -506,8 +506,8 @@ int main() {
 	motor_init(MOTOR1, 144, 100, 100, 0); //at rest
 	motor_init(MOTOR2, 144, 100, 100, 0); //at rest
 	tft_init(PIN_ON_TOP, WHITE, BLACK, RED, YELLOW); //debug
-	uart_init(COM1,115200); //debug
-  uart_rx_init(COM1,&UARTOnReceiveHandler);
+	uart_init(COM3,115200); //debug
+  uart_rx_init(COM3,&UARTOnReceiveHandler);
 	
 	
 	
@@ -525,10 +525,10 @@ int main() {
 			
 			motor_action(this_ticks);
 			
-			uart_tx_str(COM1, "movement: %d\nprogress: %d", movement,progress);
+			uart_tx_str(COM3, "movement: %d\nprogress: %d", movement,progress);
 			tft_prints(0, 0, "movement: %d\nprogress: %d", movement,progress);
 			if (progress == MANUAL) {
-				uart_tx_str(COM1, "maual_movement: %d\nticks diff: %d", movement,difference_ticks);
+				uart_tx_str(COM3, "maual_movement: %d\nticks diff: %d", movement,difference_ticks);
 				tft_prints(0, 5, "maual_movement: %d\nticks diff: %d", movement,difference_ticks);
 			}
 			tft_update();
