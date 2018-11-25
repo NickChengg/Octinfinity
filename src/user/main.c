@@ -157,7 +157,7 @@ int main() {
 		if ((this_ticks - last_led_ticks) >= 25) {
 			last_led_ticks = this_ticks;
 			//Code in here will run every 25ms
-			if (!started) {
+			while (!started || button_pressed(BUTTON1)) {
 				started = 1;
 				escape_ticks = this_ticks;
 			}
