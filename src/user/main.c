@@ -245,19 +245,20 @@ void motor_action(u32 this_ticks) {
 			}
 			
 			switch (movement) { //override moving functions
-				
-				case STILL: motor_move(0,0); return;
-				case FORWARD: motor_move(motor_fullSpeed * motor1_compensate * , motor_fullSpeed * motor2_compensate); return;
-				case BACKWARD: motor_move(-motor_fullSpeed * motor1_compensate, -motor_fullSpeed * motor2_compensate); return;
-				case LEFTTURN: motor_move(motor_fullSpeed * motor1_compensate * motor_manual_turnTO_proportion , motor_fullSpeed * motor2_compensate * motor_manual_turnAWAY_proportion); return;
-				case RIGHTTURN: motor_move(motor_fullSpeed * motor1_compensate * motor_manual_turnAWAY_proportion, motor_fullSpeed * motor2_compensate *motor_manual_turnAWAY_proportion); return;
-				case MANUAL_GRAB_HOLD: break;
-				case MANUAL_GRAB_RELEASE: break;
-				case MANUAL_GRAB_UP: break;
-				case MANUAL_GRAB_DOWN: break;
-				case MANUAL_THROW_SET: break;
-				case MANUAL_THROW_RESET: break;
-				default:break;
+				if ((get_ticks() - escape_ticks) =< 1000) {
+					case STILL: motor_move(0,0); return;
+					case FORWARD: motor_move(motor_fullSpeed * motor1_compensate * (get_ticks() - escape_ticks) / 1000, motor_fullSpeed * motor2_compensate * (get_ticks() - escape_ticks) / 1000); return;
+					case BACKWARD: motor_move(-motor_fullSpeed * motor1_compensate * (get_ticks() - escape_ticks) / 1000, -motor_fullSpeed * motor2_compensate * (get_ticks() - escape_ticks) / 1000); return;
+					case LEFTTURN: motor_move(motor_fullSpeed * motor1_compensate * motor_manual_turnTO_proportion * (get_ticks() - escape_ticks) / 1000, motor_fullSpeed * motor2_compensate * motor_manual_turnAWAY_proportion * (get_ticks() - escape_ticks) / 1000); return;
+					case RIGHTTURN: motor_move(motor_fullSpeed * motor1_compensate * motor_manual_turnAWAY_proportion * (get_ticks() - escape_ticks) / 1000, motor_fullSpeed * motor2_compensate *motor_manual_turnAWAY_proportion * (get_ticks() - escape_ticks) / 1000); return;
+					case MANUAL_GRAB_HOLD: break;
+					case MANUAL_GRAB_RELEASE: break;
+					case MANUAL_GRAB_UP: break;
+					case MANUAL_GRAB_DOWN: break;
+					case MANUAL_THROW_SET: break;
+					case MANUAL_THROW_RESET: break;
+					default:break;
+				}
 				
 			}
 		}
