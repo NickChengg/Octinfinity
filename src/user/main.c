@@ -24,9 +24,9 @@
 #include "pwm.h"
 #include "adc.h"
 
-#define GRAB_PIN &PB0 //grapping hold/release
-#define GRAB_UP_PIN &PB1 //grapping up/down
-#define THROW_PIN &PB2 //throw /reset (&PB12 WORK)
+#define GRAB_PIN &PA0 //grapping hold/release
+#define GRAB_UP_PIN &PA2 //grapping up/down
+#define THROW_PIN &PA1 //th8row /reset (&PB12 WORK)
 
 
 //def
@@ -84,9 +84,10 @@ u8 move_count = 0; //no. of grip+turn to go
 u8 picked = 0, grabbed = 0, threw = 0;
 
 //testing value
-u16 const motor1_fullSpeed =70, motor2_fullSpeed =70; // tNiest value, range ~100, <=100
-double const motor_turnTO_proportion = -1, motor_turnAWAY_proportion = 1;// test vlaue, turn TO the direction(TO < AWAY). 
-u32 const turn_90_ticks = 100, turn_180_ticks = 200; // test value, for ticks difference of turning 90 or 180 degree
+u16 const motor_fullSpeed = 90;
+double const motor1_compensate =1, motor2_compensate =1; // tNiest value, range ~100, <=100
+double const motor_turnTO_proportion = 0.3, motor_turnAWAY_proportion = 1, motor_manual_turning_compensate = 0.7;// test vlaue, turn TO the direction(TO < AWAY). 
+u32 const forward_ticks = 750, turn_left_ticks = 1950, turn_right_ticks = 1500, turn_180_ticks = 950; // test value, for ticks difference of turning 90 or 180 degree
 u32 const turn_30_ticks = 20; //test value, for ticks difference of turning 30 degree(to face to house)
 
 void grabHold() {
@@ -105,6 +106,7 @@ void grabDown() {
 
 void throwSet() {
 	gpio_write(THROW_PIN,1);
+	buzzer_on();
 }
 void throwReset() {
 	gpio_write(THROW_PIN,0);
@@ -244,10 +246,10 @@ void motor_action(u32 this_ticks) {
 			
 			switch (movement) { //override moving functions
 				case STILL: motor_move(0,0); return;
-				case FORWARD: motor_move(motor1_fullSpeed, motor2_fullSpeed); return;
-				case BACKWARD: motor_move(-motor1_fullSpeed, -motor2_fullSpeed); return;
-				case LEFTTURN: motor_move(motor1_fullSpeed * motor_turnTO_proportion, motor2_fullSpeed * motor_turnAWAY_proportion); return;
-				case RIGHTTURN: motor_move(motor1_fullSpeed * motor_turnAWAY_proportion, motor2_fullSpeed * motor_turnTO_proportion); return;
+				case FORWARD: motor_move(motor_fullSpeed * motor1_compensate , motor_fullSpeed * motor2_compensate); return;
+				case BACKWARD: motor_move(-motor_fullSpeed * motor1_compensate, -motor_fullSpeed * motor2_compensate); return;
+				case LEFTTURN: motor_move(motor_fullSpeed * motor1_compensate * motor_turnTO_proportion * motor_manual_turning_compensate, motor_fullSpeed * motor2_compensate * motor_turnAWAY_proportion * motor_manual_turning_compensate); return;
+				case RIGHTTURN: motor_move(motor_fullSpeed * motor1_compensate * motor_turnAWAY_proportion * motor_manual_turning_compensate, motor_fullSpeed * motor2_compensate * motor_turnTO_proportion * motor_manual_turning_compensate); return;
 				case MANUAL_GRAB_HOLD: break;
 				case MANUAL_GRAB_RELEASE: break;
 				case MANUAL_GRAB_UP: break;
@@ -266,7 +268,7 @@ void motor_action(u32 this_ticks) {
 			break;
 		case FORWARD: {
 			if (move_count > 0) {
-				motor_move(motor1_fullSpeed, motor2_fullSpeed);
+				motor_move(motor_fullSpeed * motor1_compensate, motor_fullSpeed * motor2_compensate);
 				/*edwin: line sensor
 				
 				if (cross line)*/ {
@@ -279,7 +281,7 @@ void motor_action(u32 this_ticks) {
 		}
 		case BACKWARD: {
 			if (move_count > 0) {
-				motor_move(-motor1_fullSpeed, -motor2_fullSpeed);
+				motor_move(-motor_fullSpeed * motor1_compensate, -motor_fullSpeed * motor2_compensate);
 				/*edwin: line sensor
 				
 				if (cross line)*/ {
@@ -296,7 +298,7 @@ void motor_action(u32 this_ticks) {
 			}
 			else { //start turning
 				if ((this_ticks - escape_ticks) <= turn_90_ticks) { //turn
-					motor_move(motor1_fullSpeed * motor_turnTO_proportion, motor2_fullSpeed * motor_turnAWAY_proportion);
+					motor_move(motor_fullSpeed * motor1_compensate * motor_turnTO_proportion, motor_fullSpeed * motor2_compensate * motor_turnAWAY_proportion);
 				}
 				else { //stop turning
 					escape_ticks = 0;
@@ -311,7 +313,7 @@ void motor_action(u32 this_ticks) {
 			}
 			else { //start turning
 				if ((this_ticks - escape_ticks) <= turn_90_ticks) { //turn
-					motor_move(motor1_fullSpeed *  motor_turnAWAY_proportion, motor2_fullSpeed * motor_turnTO_proportion);
+					motor_move(motor_fullSpeed * motor1_compensate *  motor_turnAWAY_proportion, motor_fullSpeed * motor2_compensate * motor_turnTO_proportion);
 				}
 				else { //stop turning
 					escape_ticks = 0;
@@ -326,7 +328,7 @@ void motor_action(u32 this_ticks) {
 			}
 			else { //start turning
 				if ((this_ticks - escape_ticks) <= turn_180_ticks) { //turn
-					motor_move(motor1_fullSpeed *  motor_turnAWAY_proportion, motor2_fullSpeed * motor_turnTO_proportion);
+					motor_move(motor_fullSpeed * motor1_compensate *  motor_turnAWAY_proportion, motor_fullSpeed * motor2_compensate * motor_turnTO_proportion);
 				}
 				else { //stop turning
 					escape_ticks = 0;
@@ -503,11 +505,14 @@ int main() {
 	oled_init();
 	buzzer_init();
 	leds_init();
+	gpio_init(GRAB_UP_PIN, GPIO_Mode_Out_PP);
+	gpio_init(GRAB_PIN, GPIO_Mode_Out_PP);
+	gpio_init(THROW_PIN, GPIO_Mode_Out_PP);
 	motor_init(MOTOR1, 144, 100, 100, 0); //at rest
 	motor_init(MOTOR2, 144, 100, 100, 0); //at rest
 	tft_init(PIN_ON_TOP, WHITE, BLACK, RED, YELLOW); //debug
-	uart_init(COM3,115200); //debug
-  uart_rx_init(COM3,&UARTOnReceiveHandler);
+	uart_init(COM1,115200); //debug
+  uart_rx_init(COM1,&UARTOnReceiveHandler);
 	
 	
 	
@@ -525,10 +530,10 @@ int main() {
 			
 			motor_action(this_ticks);
 			
-			uart_tx_str(COM3, "movement: %d\nprogress: %d", movement,progress);
+			uart_tx_str(COM1, "movement: %d\nprogress: %d", movement,progress);
 			tft_prints(0, 0, "movement: %d\nprogress: %d", movement,progress);
 			if (progress == MANUAL) {
-				uart_tx_str(COM3, "maual_movement: %d\nticks diff: %d", movement,difference_ticks);
+				uart_tx_str(COM1, "maual_movement: %d\nticks diff: %d", movement,difference_ticks);
 				tft_prints(0, 5, "maual_movement: %d\nticks diff: %d", movement,difference_ticks);
 			}
 			tft_update();
