@@ -86,7 +86,7 @@ u8 picked = 0, grabbed = 0, threw = 0;
 //testing value
 u16 const motor_fullSpeed = 90;
 double const motor1_compensate =1, motor2_compensate =1; // tNiest value, range ~100, <=100
-double const motor_turnTO_proportion = 0.3, motor_turnAWAY_proportion = 1, motor_manual_turning_compensate = 0.7;// test vlaue, turn TO the direction(TO < AWAY). 
+double const motor_turnTO_proportion = 0.3, motor_turnAWAY_proportion = 1, motor_manual_turnTO_proportion = -0.7, motor_manual_turnAWAY_proportion = 0.7;// test vlaue, turn TO the direction(TO < AWAY). 
 u32 const forward_ticks = 750, turn_left_ticks = 1950, turn_right_ticks = 1500, turn_180_ticks = 950; // test value, for ticks difference of turning 90 or 180 degree
 u32 const turn_30_ticks = 20; //test value, for ticks difference of turning 30 degree(to face to house)
 
@@ -245,11 +245,12 @@ void motor_action(u32 this_ticks) {
 			}
 			
 			switch (movement) { //override moving functions
+				
 				case STILL: motor_move(0,0); return;
-				case FORWARD: motor_move(motor_fullSpeed * motor1_compensate , motor_fullSpeed * motor2_compensate); return;
+				case FORWARD: motor_move(motor_fullSpeed * motor1_compensate * , motor_fullSpeed * motor2_compensate); return;
 				case BACKWARD: motor_move(-motor_fullSpeed * motor1_compensate, -motor_fullSpeed * motor2_compensate); return;
-				case LEFTTURN: motor_move(motor_fullSpeed * motor1_compensate * motor_turnTO_proportion * motor_manual_turning_compensate, motor_fullSpeed * motor2_compensate * motor_turnAWAY_proportion * motor_manual_turning_compensate); return;
-				case RIGHTTURN: motor_move(motor_fullSpeed * motor1_compensate * motor_turnAWAY_proportion * motor_manual_turning_compensate, motor_fullSpeed * motor2_compensate * motor_turnTO_proportion * motor_manual_turning_compensate); return;
+				case LEFTTURN: motor_move(motor_fullSpeed * motor1_compensate * motor_manual_turnTO_proportion , motor_fullSpeed * motor2_compensate * motor_manual_turnAWAY_proportion); return;
+				case RIGHTTURN: motor_move(motor_fullSpeed * motor1_compensate * motor_manual_turnAWAY_proportion, motor_fullSpeed * motor2_compensate *motor_manual_turnAWAY_proportion); return;
 				case MANUAL_GRAB_HOLD: break;
 				case MANUAL_GRAB_RELEASE: break;
 				case MANUAL_GRAB_UP: break;
@@ -257,6 +258,7 @@ void motor_action(u32 this_ticks) {
 				case MANUAL_THROW_SET: break;
 				case MANUAL_THROW_RESET: break;
 				default:break;
+				
 			}
 		}
 		default: break;
@@ -297,7 +299,7 @@ void motor_action(u32 this_ticks) {
 				escape_ticks = this_ticks;
 			}
 			else { //start turning
-				if ((this_ticks - escape_ticks) <= turn_90_ticks) { //turn
+				if ((this_ticks - escape_ticks) <= turn_left_ticks) { //turn
 					motor_move(motor_fullSpeed * motor1_compensate * motor_turnTO_proportion, motor_fullSpeed * motor2_compensate * motor_turnAWAY_proportion);
 				}
 				else { //stop turning
@@ -312,7 +314,7 @@ void motor_action(u32 this_ticks) {
 				escape_ticks = this_ticks;
 			}
 			else { //start turning
-				if ((this_ticks - escape_ticks) <= turn_90_ticks) { //turn
+				if ((this_ticks - escape_ticks) <= turn_right_ticks) { //turn
 					motor_move(motor_fullSpeed * motor1_compensate *  motor_turnAWAY_proportion, motor_fullSpeed * motor2_compensate * motor_turnTO_proportion);
 				}
 				else { //stop turning
