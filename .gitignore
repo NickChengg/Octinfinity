@@ -5,3 +5,7 @@ ustrobo18_internal
 *.uvoptx
 *.uvprojx
 flash.bat
+*.o
+*.crf
+*.d
+*.axf
