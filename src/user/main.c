@@ -24,10 +24,9 @@
 #include "pwm.h"
 #include "adc.h"
 
-#define GRAB_PIN &PB12 //grapping hold/release
-#define GRAB_UP_PIN &PB15 //grapping up/down
-#define THROW_PIN &PB13 //throw /reset
-//&PB14
+#define GRAB_PIN &PB0 //grapping hold/release
+#define GRAB_UP_PIN &PB1 //grapping up/down
+#define THROW_PIN &PB2 //throw /reset (&PB12 WORK)
 
 
 //def
@@ -57,7 +56,7 @@ typedef enum {	//progress
 INIT = 0, //wait to start
 TO_LZ = 1, //move forward
 PICK_RACK = 2, // action
-	
+
 TO_TZ_1TURN = 3, // about turn
 TO_TZ_2MOVE = 4, // forward
 TO_TZ_3TURN = 5, // leftturn
@@ -85,7 +84,7 @@ u8 move_count = 0; //no. of grip+turn to go
 u8 picked = 0, grabbed = 0, threw = 0;
 
 //testing value
-u16 const motor1_fullSpeed =100, motor2_fullSpeed =100; // test value, range ~100, <=100
+u16 const motor1_fullSpeed =70, motor2_fullSpeed =70; // tNiest value, range ~100, <=100
 double const motor_turnTO_proportion = -1, motor_turnAWAY_proportion = 1;// test vlaue, turn TO the direction(TO < AWAY). 
 u32 const turn_90_ticks = 100, turn_180_ticks = 200; // test value, for ticks difference of turning 90 or 180 degree
 u32 const turn_30_ticks = 20; //test value, for ticks difference of turning 30 degree(to face to house)
@@ -98,10 +97,10 @@ void grabRelease() {
 }
 
 void grabUp() {
-	gpio_write(GRAB_PIN,1);
+	gpio_write(GRAB_UP_PIN,1);
 }
 void grabDown() {
-	gpio_write(GRAB_PIN,0);
+	gpio_write(GRAB_UP_PIN,0);
 }
 
 void throwSet() {
@@ -240,8 +239,9 @@ void motor_action(u32 this_ticks) {
 		case MANUAL: {
 			if (get_ticks()-	 escape_ticks>1000){
 				buzzer_off();
-				movement=STILL;
+				//movement=STILL;
 			}
+			
 			switch (movement) { //override moving functions
 				case STILL: motor_move(0,0); return;
 				case FORWARD: motor_move(motor1_fullSpeed, motor2_fullSpeed); return;
@@ -432,13 +432,15 @@ void UARTOnReceiveHandler(const u8 received){
 		progress = MANUAL;
 		movement = STILL;
 	}
-	/*
+	
 	if (movement != STILL) {
 		movement = STILL;
 		difference_ticks = get_ticks() - escape_ticks; 
+		
 	}
-	else {*/
+	else {
 		escape_ticks = get_ticks();
+		
 		switch (received) {
 			case '1': buzzer_on();break; //testing
 			case 'W':
@@ -490,7 +492,7 @@ void UARTOnReceiveHandler(const u8 received){
 				break;
 			}
 			case ' ': movement = STILL;
-		//}
+		}
 	}
 }
 
@@ -503,7 +505,7 @@ int main() {
 	leds_init();
 	motor_init(MOTOR1, 144, 100, 100, 0); //at rest
 	motor_init(MOTOR2, 144, 100, 100, 0); //at rest
-	//tft_init(PIN_ON_TOP, WHITE, BLACK, RED, YELLOW); //debug
+	tft_init(PIN_ON_TOP, WHITE, BLACK, RED, YELLOW); //debug
 	uart_init(COM1,115200); //debug
   uart_rx_init(COM1,&UARTOnReceiveHandler);
 	
